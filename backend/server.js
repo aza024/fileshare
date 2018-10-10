@@ -3,7 +3,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const { Client } = require('pg')
 const multer = require('multer')
-var env = require('node-env-file');
+const jwt = require('jsonwebtoken')
+const env = require('node-env-file');
 
 const AWS = require('aws-sdk')
 env(__dirname + '/.env');
@@ -59,7 +60,7 @@ app.post('/user', (req,res)=>{
         
     client.query(
         'SELECT * FROM users WHERE username = $1',[username],
-        (err,psql_res)=>{
+        (err,psql_res) => {
             console.log(psql_res)
             if(psql_res.rows.length!=0) {
                 console.log('Username Exists: ' + username)
@@ -70,7 +71,7 @@ app.post('/user', (req,res)=>{
                      VALUES($1, $2, $3)`,
                      [username, password, email],
              
-                     (err,psql_res)=>{
+                     (err,psql_res) => {
              
                          console.log(psql_res)
                          console.log('query')
@@ -84,7 +85,7 @@ app.post('/user', (req,res)=>{
      )
 })
 
-app.post('/files', upload.single('myfile') , (req, res)=>{
+app.post('/files', upload.single('myfile'), (req, res) => {
     const name = req.file.originalname
     const data = req.file.buffer
 
@@ -105,7 +106,7 @@ app.post('/files', upload.single('myfile') , (req, res)=>{
         Key: `userfiles/${username}/${urlName}`,
         Body: data
     }
-    s3.putObject(params, (err, data)=>{
+    s3.putObject(params, (err, data) => {
         if (err){
             console.log("Error " + err)
             res.sendStatus(500)
@@ -114,9 +115,51 @@ app.post('/files', upload.single('myfile') , (req, res)=>{
         console.log("Data " + data)
         res.sendStatus(200)
     })
-
 })
 
-app.listen(3001, () =>{
+app.post('/account', verifyToken, (req,res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData)=>{
+        if(err) {
+            res.sendStatus(403)
+        } else {
+            res.json({
+                message:'Account Created',
+                authData
+            })
+        }
+    })
+})
+
+app.post('/login', (req, res) => {
+    //TODO: Mock User (make request to login - send username and password)
+    const user = {
+        id: 1, 
+        username: 'andrea',
+        email: 'andrea@example.com'
+    }
+    jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
+        res.json({
+            token
+        })
+    });
+})
+
+//verify token ** take with app.post ** 
+function verifyToken (req, res, next) {
+    //Get auth header value
+    const bearerHeader = req.headers['authorization']
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ')
+        const bearerToken = bearer[1]
+        req.token = bearerToken
+        next()
+
+    } else {
+        console.log('FORBIDDEN')
+        res.sendStatus(403)
+    }
+}
+
+app.listen(3001, () => {
     console.log('Listening on port 3001')
 })
