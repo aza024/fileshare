@@ -1,0 +1,14 @@
+node_modules
+.env
+uninstall-postgresql.app/
+stackbuilder.app/
+bin/
+doc/
+installer/
+lib/
+share/
+commandlinetools_3rd_party_licences.txt
+installation_summary.log/
+pgAdmin*
+server_license.txt
+StackBuilder_3rd_party_licences.txt
