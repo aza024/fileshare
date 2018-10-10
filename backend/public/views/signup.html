@@ -10,15 +10,14 @@
 	</head>
 
   <body>
-
     <nav class="main-nav">
-	<ul>
-		<li><a class="signin" href="#0">Sign in</a></li>
-		<li><a class="signup" href="#0">Sign up</a></li>
-	</ul>
-</nav>
+		<ul>
+			<li><a class="signin" href="#0">Sign in</a></li>
+			<li><a class="signup" href="#0">Sign up</a></li>
+		</ul>
+	</nav>
 
-<div class="user-modal">
+	<div class="user-modal">
 		<div class="user-modal-container">
 			<ul class="switcher">
 				<li><a href="#0">Sign in</a></li>
@@ -26,18 +25,18 @@
 			</ul>
 
 			<div id="login">
-				<form class="form">
+				<form class="form" id="sign-in-form">
 					<p class="fieldset">
 						<label class="image-replace email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="Username">
+						<input class="full-width has-padding has-border"  id="signin-email" name="sign-in-email" type="email" placeholder="Username">
 						<span class="error-message">An account with this username address does not exist!</span>
 					</p>
 
 					<p class="fieldset">
 						<label class="image-replace password" for="signin-password">Password</label>
-						<input class="full-width has-padding has-border" id="signin-password" type="password"  placeholder="Password">
+						<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password">
 						<a href="#0" class="hide-password">Show</a>
-						<span class="error-message">Wrong password! Try again.</span>
+						<span class="error-message">Incorrect password! Please try again.</span>
 					</p>
 
 					<p class="fieldset">
@@ -49,15 +48,13 @@
 						<input class="full-width" type="submit" value="Login">
 					</p>
 				</form>
-			
-				<!-- <a href="#0" class="close-form">Close</a> -->
 			</div>
 
 			<div id="signup">
 				<form class="form">
 					<p class="fieldset">
 						<label class="image-replace username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+						<input class="full-width has-padding has-border" name ="signup-username" id="signup-username" type="text" placeholder="Username">
 						<span class="error-message">Please enter a valid username!</span>
 					</p>
 
@@ -78,26 +75,7 @@
 						<input class="full-width has-padding" type="submit" value="Create account">
 					</p>
 				</form>
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div>
-
-			<div id="reset-password">
-				<p class="form-message">Lost your password? Please enter your email address.</br> You will receive a link to create a new password.</p>
-
-				<form class="form">
-					<p class="fieldset">
-						<label class="image-replace email" for="reset-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-						<span class="error-message">An account with this email does not exist!</span>
-					</p>
-
-					<p class="fieldset">
-						<input class="full-width has-padding" type="submit" value="Reset password">
-					</p>
-				</form>
-
-			</div>
-			<a href="#0" class="close-form">Close</a>
 		</div>
 	</div>
   </body>
