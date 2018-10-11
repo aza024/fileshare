@@ -89,7 +89,13 @@ $('#signin-form').on('submit',function(e){
             email,
             password
         },
-        success: function(){console.log("success")},
+        success: function(res){
+            let token = res.token
+            console.log('TOKEN'+JSON.stringify(token))
+            localStorage.setItem('User Token', token);
+            localStorage.setItem('User Email', email);
+            console.log("success " + JSON.stringify(res))
+        },
         error: function(res){console.log('Error:' + JSON.stringify(res))}
     })
     

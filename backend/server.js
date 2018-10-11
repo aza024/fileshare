@@ -67,12 +67,17 @@ app.get('/user', (req,res) => {
                 res.status(400)
             } else {
                //redirect to page with results from query
-               client.query(
-                   'SELECT username FROM users WHERE email = $1',[email],
-                   (err,psq_res => {
-                    //    console.log(psql_res)
-                   })
-               )
+                console.log(psql_res.rows[0])
+                const user = {
+                    id: psql_res.rows[0].user_id, 
+                    username: psql_res.rows[0].username,
+                    email: psql_res.rows[0].email
+                }
+               jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
+                res.json({
+                    token
+                })
+            });
                console.log('redirect to profile page')
             }
         }
@@ -144,6 +149,10 @@ app.post('/files', upload.single('myfile'), (req, res) => {
     })
 })
 
+app.get('/test', verifyToken, (req, res)=>{
+    console.log('TOKEN ')
+})
+
 // #TODO change secret key and add to .env file
 app.post('/account', verifyToken, (req,res) => {
     jwt.verify(req.token, 'secretkey', (err, authData)=>{
@@ -160,6 +169,8 @@ app.post('/account', verifyToken, (req,res) => {
 
 app.post('/login', (req, res) => {
     //TODO: Mock User (make request to login - send username and password)
+    console.log("dgn ghn" +JSON.stringify(req.body))
+    
     const user = {
         id: 1, 
         username: 'andrea',
