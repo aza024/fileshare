@@ -1,22 +1,21 @@
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const { Client } = require('pg')
-const multer = require('multer')
-const jwt = require('jsonwebtoken')
-const env = require('node-env-file');
-
-const AWS = require('aws-sdk')
+const express = require('express'),
+      app = express(),
+      bodyParser = require('body-parser'),
+      { Client } = require('pg'),
+      multer = require('multer'),
+      jwt = require('jsonwebtoken'),
+      env = require('node-env-file'),
+      AWS = require('aws-sdk'),
+      upload = multer()
+      
 env(__dirname + '/.env');
 
 const client = new Client(process.env.DB_CONNECT)
-
 client.connect()
 // create s3 client to talk to S3 service
+
 const s3 = new AWS.S3()
 AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-
-var upload = multer()
 
 // ------------------APP.USE----------------------
 app.use(express.static('public'))
@@ -30,6 +29,8 @@ app.use(function(req, res, next) {
 // ------------------APP.GET----------------------
 app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/index.html');});
 app.get('/files', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
+app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
+
 app.get('/files/:username', (req, res)=>{
     const username = req.params.username
     const params2 = {
@@ -48,15 +49,45 @@ app.get('/files/:username', (req, res)=>{
         res.sendStatus(200)
     })
 })
+app.get('/user', (req,res) => {
+    console.log('IN app.get ')
+    // console.log(req)
+    const email = req.query.email, 
+          password = req.query.password 
+
+    console.log(email)
+    console.log(password)
+
+    client.query(
+        'SELECT * FROM users WHERE email = $1',[email],
+        (err,psql_res) => {
+            // console.log(psql_res)
+            if(psql_res.rows.length === 0) {
+                console.log('Email Does Not Exists: ' + email)
+                res.status(400)
+            } else {
+               //redirect to page with results from query
+               client.query(
+                   'SELECT username FROM users WHERE email = $1',[email],
+                   (err,psq_res => {
+                    //    console.log(psql_res)
+                   })
+               )
+               console.log('redirect to profile page')
+            }
+        }
+     )
+})
 
 // ------------------APP.POST----------------------
 
 app.post('/user', (req,res)=>{
-    console.log('in post user ' + req.body)
-    const username = req.body.username
-    const password = req.body.password
-    const email = req.body.email
-    console.log('insert')
+    // console.log(req.body)
+    const username = req.body.username,
+          password = req.body.password,
+          email = req.body.email
+ 
+    console.log('BEFORE INSERT')
         
     client.query(
         'SELECT * FROM users WHERE username = $1',[username],
@@ -70,14 +101,10 @@ app.post('/user', (req,res)=>{
                     `INSERT INTO users (username, password, email)
                      VALUES($1, $2, $3)`,
                      [username, password, email],
-             
                      (err,psql_res) => {
-             
-                         console.log(psql_res)
-                         console.log('query')
-
+                        //  console.log(psql_res)
+                        //  console.log('query')
                         res.status(200)
-             
                      }
                  )
             }
@@ -91,7 +118,7 @@ app.post('/files', upload.single('myfile'), (req, res) => {
 
     // TODO: add username instead of hardcode: const username = req.body.username
     const username = "Andrea"
-    console.log(req.body)
+    // console.log(req.body)
 
     if (!username){
         console.log("Username required")
@@ -117,6 +144,7 @@ app.post('/files', upload.single('myfile'), (req, res) => {
     })
 })
 
+// #TODO change secret key and add to .env file
 app.post('/account', verifyToken, (req,res) => {
     jwt.verify(req.token, 'secretkey', (err, authData)=>{
         if(err) {
