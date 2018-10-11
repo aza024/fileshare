@@ -22,9 +22,6 @@ client.connect()
 const s3 = new AWS.S3()
 AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
 
-
-
-
 // ------------------APP.USE----------------------
 app.use(express.static('public'))
 app.use(bodyParser());
@@ -141,27 +138,6 @@ app.post('/user', (req,res)=>{
                                     res.json({token})
                                     res.status(200)
                                 });
-
-                                // client.query(`SELECT user_id FROM users WHERE email=$1`,
-                                //     [email],
-                                //     (err, psql_res)=>{
-                                //         if (err) {
-                                //             console.log('err' + JSON.stringify(err))
-                                //             res.status(500)
-                                //             return
-                                //         }
-                                //         const user = {
-                                //             id: psql_res.rows[0].user_id, 
-                                //             username: psql_res.rows[0].username,
-                                //             email: psql_res.rows[0].email
-                                //         }
-                                //         jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
-                                //             res.json({token})
-                                //         });
-                                //     }
-                                // )
-                                // console.log(psql_res)
-                                // //  console.log('query')
                             }
                         )
                 }
@@ -219,21 +195,6 @@ app.post('/account', verifyToken, (req,res) => {
     })
 })
 
-// app.post('/login', (req, res) => {
-//     //TODO: Mock User (make request to login - send username and password)
-//     console.log("dgn ghn" +JSON.stringify(req.body))
-    
-//     const user = {
-//         id: 1, 
-//         username: 'andrea',
-//         email: 'andrea@example.com'
-//     }
-//     jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
-//         res.json({
-//             token
-//         })
-//     });
-// })
 
 //verify token ** take with app.post ** 
 function verifyToken (req, res, next) {
