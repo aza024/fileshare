@@ -74,6 +74,8 @@ var $form_modal = $('.user-modal'),
 // ---------------End Modal----------------
 // ----------------------------------------
 
+
+
 // Validate user in DB
 $('#signin-form').on('submit',function(e){
     e.preventDefault();
@@ -99,7 +101,7 @@ $('#signin-form').on('submit',function(e){
 }
 )
 
-$('#signup-form').on('submit', function(e){
+$('#sign-up-submit').on('click', function(e){
         e.preventDefault();
         let username = ($('#signup-username').val()),
             email = ($('#signup-email').val()),
@@ -119,6 +121,8 @@ $('#signup-form').on('submit', function(e){
                 localStorage.setItem('User Name', username);
                 localStorage.setItem('User Token', token);
                 localStorage.setItem('User Email', email);
+                $form_modal.removeClass('is-visible');
+                $('.profile-page').addClass('is-visible')
             },
             error: function(res){console.log('Error:' + JSON.stringify(res))}
         })

@@ -10,8 +10,6 @@
     padding: 0;
   }
   
-  body {background: #008080;}
-  
   .main-nav {
     width: 90%;
     max-width: 240px;
@@ -203,6 +201,13 @@
   .form input.has-padding {
     padding: 12px 20px 12px 50px;
   }
+  #sign-up-submit{
+    background-color: #008080;
+    width: 100%;
+    padding: 12px 20px 12px 50px;
+    color: white;
+    border: 1px solid #d2d8d8;
+  }
   .form input.has-border {
     border: 1px solid #d2d8d8;
     -webkit-appearance: none;
@@ -353,3 +358,23 @@
   #login.is-selected, #signup.is-selected, #reset-password.is-selected {display: block;
   }
   
+  .landing-page.is-visible{  
+    visibility: visible
+  }
+ .hide{
+    visibility: hidden;
+  }
+
+  /* do not show profile page until form is successfully submitted */
+  .profile-page{
+    visibility: hidden;
+  }
+  .profile-page.is-visible {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity 0.3s 0, visibility 0 0;
+    -moz-transition: opacity 0.3s 0, visibility 0 0;
+    transition: opacity 0.3s 0, visibility 0 0;
+  }
+
+ 

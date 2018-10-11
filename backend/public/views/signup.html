@@ -10,73 +10,80 @@
 	</head>
 
   <body>
-    <nav class="main-nav">
-		<ul>
-			<li><a class="signin" href="#0">Sign in</a></li>
-			<li><a class="signup" href="#0">Sign up</a></li>
-		</ul>
-	</nav>
-
-	<div class="user-modal">
-		<div class="user-modal-container">
-			<ul class="switcher">
-				<li><a href="#0">Sign in</a></li>
-				<li><a href="#0">New account</a></li>
+	<div class = "landing_page">
+		<nav class="main-nav">
+			<ul>
+				<li><a class="signin" href="#0">Sign in</a></li>
+				<li><a class="signup" href="#0">Sign up</a></li>
 			</ul>
+		</nav>
 
-			<div id="login">
-				<form class="form" id="signin-form">
-					<p class="fieldset">
-						<label class="image-replace email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border"  id="signin-email" name="signin-email" type="email" placeholder="Username">
-						<span class="error-message">An account with this username address does not exist!</span>
-					</p>
+		<div class="user-modal">
+			<div class="user-modal-container">
+				<ul class="switcher">
+					<li><a href="#0">Sign in</a></li>
+					<li><a href="#0">New account</a></li>
+				</ul>
 
-					<p class="fieldset">
-						<label class="image-replace password" for="signin-password">Password</label>
-						<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password">
-						<a href="#0" class="hide-password">Show</a>
-						<span class="error-message">Incorrect password! Please try again.</span>
-					</p>
+				<div id="login">
+					<form class="form" id="signin-form">
+						<p class="fieldset">
+							<label class="image-replace email" for="signin-email">E-mail</label>
+							<input class="full-width has-padding has-border"  id="signin-email" name="signin-email" type="email" placeholder="Username">
+							<span class="error-message">An account with this username address does not exist!</span>
+						</p>
 
-					<p class="fieldset">
-						<input type="checkbox" id="remember-me" checked>
-						<label for="remember-me">Remember me</label>
-					</p>
+						<p class="fieldset">
+							<label class="image-replace password" for="signin-password">Password</label>
+							<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password">
+							<a href="#0" class="hide-password">Show</a>
+							<span class="error-message">Incorrect password! Please try again.</span>
+						</p>
 
-					<p class="fieldset">
-						<input class="full-width" type="submit" value="Login">
-					</p>
-				</form>
-			</div>
+						<p class="fieldset">
+							<input type="checkbox" id="remember-me" checked>
+							<label for="remember-me">Remember me</label>
+						</p>
 
-			<div id="signup">
-				<form class="form" id='signup-form'>
-					<p class="fieldset">
-						<label class="image-replace username" for="signup-username">Username</label>
-						<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username">
-						<span class="error-message">Please enter a valid username!</span>
-					</p>
+						<p class="fieldset">
+							<input class="full-width" type="submit" value="Login">
+						</p>
+					</form>
+				</div>
 
-					<p class="fieldset">
-						<label class="image-replace email" for="signup-email">E-mail</label>
-						<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="Official E-mail">
-						<span class="error-message">Enter a valid official email address!</span>
-					</p>
+				<div id="signup">
+					<form class="form" id='signup-form'>
+						<p class="fieldset">
+							<label class="image-replace username" for="signup-username">Username</label>
+							<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username">
+							<span class="error-message">Please enter a valid username!</span>
+						</p>
 
-					<p class="fieldset">
-						<label class="image-replace password" for="signup-password">Password</label>
-						<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password">
-						<a href="#0" class="hide-password">Show</a>
-						<span class="error-message">Your password has to be at least 6 characters long!</span>
-					</p>
+						<p class="fieldset">
+							<label class="image-replace email" for="signup-email">E-mail</label>
+							<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="Official E-mail">
+							<span class="error-message">Enter a valid official email address!</span>
+						</p>
 
-					<p class="fieldset">
-						<input class="full-width has-padding" type="submit" value="Create account">
-					</p>
-				</form>
+						<p class="fieldset">
+							<label class="image-replace password" for="signup-password">Password</label>
+							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password">
+							<a href="#0" class="hide-password">Show</a>
+							<span class="error-message">Your password has to be at least 6 characters long!</span>
+						</p>
+
+						<p class="fieldset">
+							<button id = "sign-up-submit" class="full-width has-padding" type="submit" value="Create account">Submit</button>
+						</p>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-  </body>
+
+
+	<div class = "profile-page"> 
+		<h1> Hello - On next page </h1>
+	</div>
+ </body>
 </html>
