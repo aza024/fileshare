@@ -1,7 +1,9 @@
 <html >
    <head>
     <meta charset="UTF-8">
-    <title>Fileshare</title>
+	<title>Fileshare</title>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
       <!-- Custom Styles -->
       <link rel="stylesheet" media="screen" href="styles/signup.css" />
       <!-- Custom Script -->
@@ -89,10 +91,9 @@
 	<!-- file upload -->
 	<div class = "profile-page"> 
 		<nav>
-			<ul>
-				<li>Nav 1</li>
-				<li>Nav 2</li>
-			</ul>
+				<h1>Fileshare</h1>
+				<button class = "logout">Logout</button>
+				<hr>
 		</nav>
 
 		<!-- file upload form -->
@@ -104,6 +105,17 @@
 			</div>
 
 			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+
+		<!-- search bar -->
+		<div class = "searchBar">
+			<form>
+				<form id='search' method='GET' enctype="multipart/form-data" type="submit">
+				<input id = "search" name = "serach" type = "text" placeholder = "Search">
+				<button><i class="fas fa-search"></i>
+				</button> 
+			</form>
+		</div>
+
 
 	<!-- list of files -->
 		<div class = "file">
