@@ -74,15 +74,11 @@ var $form_modal = $('.user-modal'),
 // ---------------End Modal----------------
 // ----------------------------------------
 
-
-
 // Validate user in DB
 $('#signin-form').on('submit',function(e){
     e.preventDefault();
     let email = ($('#signin-email').val()),
         password = ($('#signin-password').val())
-        console.log(email)
-        console.log(password)
     $.ajax({
         dataType: 'json',
         method: 'GET',
@@ -93,8 +89,11 @@ $('#signin-form').on('submit',function(e){
         },
         success: function(res){
             let token = res.token
-            localStorage.setItem('User Token', token);
-            localStorage.setItem('User Email', email);
+            console.log(res.token)
+            localStorage.setItem('usertoken', token);
+            localStorage.setItem('useremail', email);
+
+            localStorage.getItem(email)
         },
         error: function(res){console.log('Error:' + JSON.stringify(res))}
     })
@@ -110,7 +109,8 @@ $('#sign-up-submit').on('click', function(e){
         $.ajax({
             dataType: 'json',
             method: 'POST',
-            url:'/user',
+            // changed from /user
+            url:`/user/${username}`,
             data:{
                 username,
                 email,
@@ -118,11 +118,19 @@ $('#sign-up-submit').on('click', function(e){
             },
             success: function(res){
                 let token = res.token
-                localStorage.setItem('User Name', username);
-                localStorage.setItem('User Token', token);
-                localStorage.setItem('User Email', email);
-                $form_modal.removeClass('is-visible');
-                $('.profile-page').addClass('is-visible')
+                localStorage.setItem('username', username);
+                localStorage.setItem('usertoken', token);
+                localStorage.setItem('useremail', email);
+                // $form_modal.removeClass('is-visible');
+                // $('.profile-page').addClass('is-visible')
+                // redirect = () => {
+                //     window.location = '/views/files.html'}
+                // redirect()
+                // redirect= ()=>{
+                //     res.redirect('/views/file.html')
+                // }
+                // redirect()
+                
             },
             error: function(res){console.log('Error:' + JSON.stringify(res))}
         })

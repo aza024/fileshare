@@ -33,8 +33,9 @@ app.use(function(req, res, next) {
 
 // ------------------APP.GET----------------------
 app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/index.html');});
-app.get('/files', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
+app.get('/files/:username', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
 app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
+
 app.get('/files/:username', (req, res)=>{
     const username = req.params.username
     const params2 = {
@@ -53,45 +54,85 @@ app.get('/files/:username', (req, res)=>{
         res.sendStatus(200)
     })
 })
+
+function login(email, password, hashed_password, res) {
+    const str_hashed_password = ''+hashed_password
+    bcrypt.compare(password, str_hashed_password, (err, hash_result) => {
+        if(err){
+            console.log('Bcrypt Error ' + err)
+            res.status(500)
+            return
+        }
+        console.log(hash_result)
+        console.log(str_hashed_password)
+        if(!hash_result) {
+            console.log('Email or password did not match')
+            res.status(400)
+            return
+        }             
+        // Passwords match
+        client.query(
+            'SELECT * FROM users WHERE email = $1 and password = $2',
+                [email, hashed_password],
+            (err,psql_res) => {
+                if (psql_res.rows.length === 0) {
+                    console.log('Email or password is incorrect.')
+                    res.status(400)
+                } else {
+                    //redirect to page with results from query
+                    // console.log(psql_res.rows[0])
+                    const user = {
+                        id: psql_res.rows[0].user_id, 
+                        username: psql_res.rows[0].username,
+                        email: psql_res.rows[0].email
+                    }
+                    
+                    jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token) => {
+                        res.json({token})
+                        res.status(200)
+                    });
+                    console.log('redirect to profile page')
+                }
+            }
+        )
+    
+      }); 
+}
+
 app.get('/user', (req,res) => {
-    console.log('IN app.get ')
+    console.log('In app.get(/user) ')
     // console.log(req)
     const 
     email = req.query.email, 
     password = req.query.password 
-
     console.log(email)
     console.log(password)
 
-    client.query(
-        'SELECT * FROM users WHERE email = $1 and password = $2',
-            [email, password],
-        (err,psql_res) => {
-            if (psql_res.rows.length === 0) {
-                console.log('Email or password is incorrect.')
-                res.status(400)
-            } else {
-                //redirect to page with results from query
-                console.log(psql_res.rows[0])
-                const user = {
-                    id: psql_res.rows[0].user_id, 
-                    username: psql_res.rows[0].username,
-                    email: psql_res.rows[0].email
-                }
-                
-                jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token) => {
-                    res.json({token})
-                    res.status(200)
-                });
-                console.log('redirect to profile page')
-            }
+    client.query('SELECT password FROM users WHERE email = $1',
+    [email], (err, psql_res)=>{
+        if(err){
+            console.log('Login query error ' + err)
+            res.status(500)
+            return
         }
-    )
+
+        if (psql_res.rows.length === 0 ){
+            console.log('Email does not exist')
+            res.status(400)
+            return
+        }
+
+        const hashed_password = psql_res.rows[0].password
+        login(email, password, hashed_password, res)
+        
+
+    })
+    
 })
 
 // ------------------APP.POST----------------------
 
-app.post('/user', (req,res)=>{
+app.post('/user/:username', (req,res) => {
     const 
         username = req.body.username,
         password = req.body.password,
@@ -99,7 +140,6 @@ app.post('/user', (req,res)=>{
         console.log('username ' + username)   
 
     bcrypt.hash(password, 10, (err, hash)=>{ 
-        
         if (err){
             res.status(500)
             return
@@ -135,7 +175,15 @@ app.post('/user', (req,res)=>{
                                     email
                                 }
                                 jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
+
+                                    console.log('IN SECRET KEY')
                                     res.json({token})
+                                    console.log('after token')
+                                    //GET REQUEST
+                                    console.log('before redir')
+                                    // res.redirect('/views/files.html')
+                                    console.log('after redir b4 windo.rep')
+                                    window.location.replace('views/files.html')
                                     res.status(200)
                                 });
                             }

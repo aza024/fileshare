@@ -6,20 +6,22 @@
     <title>FileShare</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    
     <!-- Custom Styles -->
-    <link rel="stylesheet" media="screen" href="styles/main.css" />
+    <!-- <link rel="stylesheet" media="screen" href="styles/main.css" /> -->
     <!-- Axios for eventual transition to React -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <!-- Custom Script -->
-    <script src="scripts/files.js" defer></script> 
+    <script src="/scripts/files.js" defer></script> 
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>myFiles Working</h1>
+    <h1>Files</h1>
+    <div class = "username" ></div>
 
     <!-- onsubmit="return false;"  -->
     <!-- method="post" action="/files -->
-
+    <h1> File Upload</h1>
     <div class="fileUploadForm">
         <form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
             <input id="fileupload" name="myfile" type="file" />
