@@ -37,7 +37,7 @@ if (loggedIn = true){
         $('.dlBtnAppend').append(
           `<button class="downBtn">Download</button>`
         )
-        //refactor into seprate AJAX call or figure out how to get both
+        //TODO refactor into seprate AJAX call or figure out how to get both
         $('.downBtn').on('click',(e)=>{
           console.log('DOWNLOAD CLICKED')
           $.ajax({
