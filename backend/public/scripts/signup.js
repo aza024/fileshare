@@ -136,15 +136,6 @@ $('#sign-up-submit').on('click', function(e){
                 $('.landing-page').css('display','none')
 
                 localStorage.setItem('logged-in', true);
-
-                // redirect = () => {
-                //     window.location = '/views/files.html'}
-                // redirect()
-                // redirect= ()=>{
-                //     res.redirect('/views/file.html')
-                // }
-                // redirect()
-                
             },
             error: function(res){console.log('Error:' + JSON.stringify(res))}
         })

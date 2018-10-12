@@ -17,5 +17,4 @@ $('#uploadBtn').on('click',(e)=>{
       }).fail(function(){
         console.log("An error occurred, the files couldn't be sent!");
       });
-
 })

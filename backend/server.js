@@ -36,22 +36,52 @@ app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html'
 // app.get('/files/:username', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
 // app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
 
-app.get('/files/:username', (req, res)=>{
-    const username = req.params.username
-    const params2 = {
-        Bucket: "fileshare-uploads",
-        Key: `userfiles/${username}/myFile`,
-    }
-    s3.getObject(params2, (err, data)=>{
+app.get('/files/:username/:filename', (req, res)=>{
+    const 
+        username = encodeURIComponent(req.params.username),
+        filename = encodeURIComponent(req.params.filename),
+        
+        params = {
+            Bucket: "fileshare-uploads",
+            Key: `userfiles/${username}/${filename}`,
+        }
+        // console.log(`userfiles/${username}/${filename}`)
+        // console.log(username)
+        // console.log(filename)
+
+    s3.getObject(params, (err, data)=>{
         if (err){
-            console.log("Error " + err)
+            console.log("S3.getObject Error " + err)
             res.sendStatus(500)
             return
         }
+        
         console.log("Data " + JSON.stringify(data))
+        //Body - file content
         const fileData = data.Body
         console.log("DATA"+fileData)
-        res.sendStatus(200)
+        
+        res.json(data)
+    })
+})
+
+app.get('/listfiles/:username', (req, res)=> {
+    const 
+    username = encodeURIComponent(req.params.username)
+    console.log(username)
+
+    s3.listObjects({ 
+        Bucket:'fileshare-uploads', 
+        Prefix:`userfiles/${username}/`
+    },
+    (err,data)=>{
+        if(err){
+            console.log("S3.listFile Error " + err)
+            res.sendStatus(500)
+            return 
+        }
+        console.log('LIST OF FILES' + JSON.stringify(data))
+        res.send(data)
     })
 })
 
@@ -129,10 +159,7 @@ app.get('/user', (req,res) => {
 
         const hashed_password = psql_res.rows[0].password
         login(email, password, hashed_password, res)
-        
-
     })
-    
 })
 
 // ------------------APP.POST----------------------
@@ -230,9 +257,9 @@ app.post('/files/:username', upload.single('myfile'), (req, res) => {
     })
 })
 
-app.get('/test', verifyToken, (req, res)=>{
-    console.log('TOKEN ')
-})
+// app.get('/test', verifyToken, (req, res)=>{
+//     console.log('TOKEN ')
+// })
 
 // #TODO change secret key and add to .env file
 app.post('/account', verifyToken, (req,res) => {
