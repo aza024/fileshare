@@ -3,9 +3,11 @@
 // File Upload
 $('#uploadBtn').on('click',(e)=>{
     e.preventDefault();
+    console.log(localStorage.getItem('username'))
+    let username = localStorage.getItem('username')
   
     $.ajax({
-        url: '/files', 
+        url: `/files/${username}`, 
         type: 'POST',
         data: new FormData($('#uploadbanner')[0]), 
         processData: false,

@@ -5,12 +5,15 @@
       <!-- Custom Styles -->
       <link rel="stylesheet" media="screen" href="styles/signup.css" />
       <!-- Custom Script -->
-      <script src="scripts/signup.js" defer></script> 
+	  <script src="scripts/signup.js" defer></script> 
+	  <script src="/scripts/files.js" defer></script> 
       <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 	</head>
 
   <body>
-	<div class = "landing_page">
+
+	<!-- Main Page w. option to sign in or sign up -->
+	<div class = "landing-page">
 		<nav class="main-nav">
 			<ul>
 				<li><a class="signin" href="#0">Sign in</a></li>
@@ -21,8 +24,8 @@
 		<div class="user-modal">
 			<div class="user-modal-container">
 				<ul class="switcher">
-					<li><a href="#0">Sign in</a></li>
-					<li><a href="#0">New account</a></li>
+					<li><a href="#0">Sign In</a></li>
+					<li><a href="#0">Sign Up</a></li>
 				</ul>
 
 				<div id="login">
@@ -79,11 +82,21 @@
 				</div>
 			</div>
 		</div>
+	<!-- end landing-page div -->
 	</div>
 
 
+	<!-- file upload -->
 	<div class = "profile-page"> 
-		<h1> Hello - On next page </h1>
+			<h1> File Upload</h1>
+			<div class="fileUploadForm">
+				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
+					<input id="fileupload" name="myfile" type="file" />
+					<input type="submit" value="Upload" id="uploadBtn" />
+				</form>
+			</div>
+			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+	<!-- end profile-page div -->
 	</div>
  </body>
 </html>

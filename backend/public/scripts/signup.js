@@ -1,5 +1,12 @@
-// jQuery(document).ready(function($){
+jQuery(document).ready(function($){
+    if (localStorage.getItem('logged-in')){
+     
+        $form_modal.removeClass('is-visible');
+        $('.profile-page').addClass('is-visible')
+        $('.landing-page').css('display','none')
 
+    }
+})
 
 // #TODO Change function declaration to es6 format
 // ----------------------------------------
@@ -95,7 +102,9 @@ $('#signin-form').on('submit',function(e){
 
             localStorage.getItem(email)
         },
-        error: function(res){console.log('Error:' + JSON.stringify(res))}
+        error: function(res){
+            console.log('Error:' + JSON.stringify(res))
+        }
     })
 }
 )
@@ -121,8 +130,13 @@ $('#sign-up-submit').on('click', function(e){
                 localStorage.setItem('username', username);
                 localStorage.setItem('usertoken', token);
                 localStorage.setItem('useremail', email);
-                // $form_modal.removeClass('is-visible');
-                // $('.profile-page').addClass('is-visible')
+        
+                $form_modal.removeClass('is-visible');
+                $('.profile-page').addClass('is-visible')
+                $('.landing-page').css('display','none')
+
+                localStorage.setItem('logged-in', true);
+
                 // redirect = () => {
                 //     window.location = '/views/files.html'}
                 // redirect()

@@ -358,11 +358,14 @@
   #login.is-selected, #signup.is-selected, #reset-password.is-selected {display: block;
   }
   
-  .landing-page.is-visible{  
-    visibility: visible
-  }
- .hide{
-    visibility: hidden;
+
+  .landing-page.is-visible {
+    display:block;
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity 0.3s 0, visibility 0 0;
+    -moz-transition: opacity 0.3s 0, visibility 0 0;
+    transition: opacity 0.3s 0, visibility 0 0;
   }
 
   /* do not show profile page until form is successfully submitted */

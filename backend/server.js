@@ -32,9 +32,9 @@ app.use(function(req, res, next) {
 });
 
 // ------------------APP.GET----------------------
-app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/index.html');});
-app.get('/files/:username', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
-app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
+app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
+// app.get('/files/:username', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
+// app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
 
 app.get('/files/:username', (req, res)=>{
     const username = req.params.username
@@ -87,15 +87,19 @@ function login(email, password, hashed_password, res) {
                         email: psql_res.rows[0].email
                     }
                     
-                    jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token) => {
-                        res.json({token})
-                        res.status(200)
-                    });
+                    jwt.sign(
+                        {user},
+                        'secretkey',
+                        { expiresIn: '12h'},
+                        (err,token) => {
+                            res.json({token})
+                            res.status(200)
+                        }
+                    );
                     console.log('redirect to profile page')
                 }
             }
         )
-    
       }); 
 }
 
@@ -107,6 +111,7 @@ app.get('/user', (req,res) => {
     password = req.query.password 
     console.log(email)
     console.log(password)
+    
 
     client.query('SELECT password FROM users WHERE email = $1',
     [email], (err, psql_res)=>{
@@ -194,11 +199,11 @@ app.post('/user/:username', (req,res) => {
     )
 })
 
-app.post('/files', upload.single('myfile'), (req, res) => {
+app.post('/files/:username', upload.single('myfile'), (req, res) => {
     const name = req.file.originalname
     const data = req.file.buffer
     // TODO: add username instead of hardcode: const username = req.body.username
-    const username = "Andrea"
+    const username = req.params.username
     // console.log(req.body)
 
     if (!username){
