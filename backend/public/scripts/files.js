@@ -12,30 +12,30 @@ if (loggedIn = true){
     data:{username},
     success: (res)=>{
       let files = res.Contents
-      for(var i =0; i < res.Contents.length; i++){
-        let
-          modified = (files[i].LastModified),
-          key = (files[i].Key),
-          size = (files[i].Size),
-          filename = key.replace(/^.*[\\\/]/, '')
-          extension = filename.split('.').pop();
-          console.log(extension)
+        for(var i =0; i < res.Contents.length; i++){
+          let
+            modified = (files[i].LastModified),
+            key = (files[i].Key),
+            size = (files[i].Size),
+            filename = key.replace(/^.*[\\\/]/, '')
+            extension = filename.split('.').pop();
 
-          $('.filesInfo').append(
-            `<div class = "fileInfo"> 
-              <div class = "fileDetail"> 
-                <h1>${extension}</h1>
-              </div>
-                <h3>Filename: ${filename}</h3>
-                <h3>Last Modified Date: ${modified}</h3>
-                <h3>Size: ${size} </h3>
-            </div>`)
+            $('.filesInfo').append(
+              `<div class = "fileInfo"> 
+                <div class = "fileExt"> 
+                  <h1>.${extension}</h1>
+                </div>
+                <div class = "fileDetail">
+                  <h3>Filename: ${filename}</h3>
+                  <h3>Last Modified Date: ${modified}</h3>
+                  <h3>Size: ${size} </h3>
+                </div>
+              </div>`)
+        }
 
-        console.log(filename)
-        console.log(modified)
-        console.log(key)
-        console.log(size)
-      }
+        $('.downbtn').on('click',(e)=>{
+          console.log('DOWNLOAD CLICKED')
+        })
     },
     error: (res)=>{
       console.log('Error: Unable to retrieve files ' + JSON.stringify(res))
@@ -61,3 +61,4 @@ if (loggedIn = true){
         });
   })
 )}
+
