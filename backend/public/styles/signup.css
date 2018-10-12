@@ -380,4 +380,9 @@
     transition: opacity 0.3s 0, visibility 0 0;
   }
 
- 
+/* ------------------------------
+----------PROFILE PAGE-----------
+--------------------------------- */
+.file{
+  border: 1px solid black;
+}

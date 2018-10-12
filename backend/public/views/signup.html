@@ -85,18 +85,36 @@
 	<!-- end landing-page div -->
 	</div>
 
-
+	<!-- profile page start -->
 	<!-- file upload -->
 	<div class = "profile-page"> 
-			<h1> File Upload</h1>
+		<nav>
+			<ul>
+				<li>Nav 1</li>
+				<li>Nav 2</li>
+			</ul>
+		</nav>
+
+		<h1> Username's Files</h1>
+		<!-- file upload form -->
 			<div class="fileUploadForm">
 				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
 					<input id="fileupload" name="myfile" type="file" />
 					<input type="submit" value="Upload" id="uploadBtn" />
 				</form>
 			</div>
+
 			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+
+	<!-- list of files -->
+		<div class = "file">
+			<div class = "filesInfo">
+				<h3>Filename: </h3> 
+				<h3>File Date: </h3>
+			</div>
+		</div>
 	<!-- end profile-page div -->
 	</div>
+	<!-- end -->
  </body>
 </html>

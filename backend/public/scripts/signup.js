@@ -141,4 +141,3 @@ $('#sign-up-submit').on('click', function(e){
         })
     }
 )
-
