@@ -108,13 +108,15 @@
 
 		<!-- search bar -->
 		<div class = "searchBar">
-			<form>
-				<form id='search' method='GET' enctype="multipart/form-data" type="submit">
-				<input id = "search" name = "serach" type = "text" placeholder = "Search">
-				<button><i class="fas fa-search"></i>
-				</button> 
-			</form>
+			<div>
+				<input type="text" name="search" id="search" placeholder="Search"class="form-control" />
+				<button><i class="fas fa-search"></i></button>   
+			</div>
+			<ul class="list-group" id="result"></ul>
+			<ul class = "file-list" id = "result"></ul>
+			
 		</div>
+		
 
 
 	<!-- list of files -->

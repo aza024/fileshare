@@ -1,7 +1,18 @@
-// const axios = require('axios')
+// Global Variables
 let 
   loggedIn = localStorage.getItem('logged-in'),
   username = localStorage.getItem('username')
+
+//Global Functions
+// Text conversion: decode bytes to utf-8 string
+function pad(segment) { 
+    return (segment.length < 2 ? '0' + segment : segment); 
+  }
+function decodeUtf8(data) {
+  return decodeURIComponent(
+    data.map(byte => ('%' + pad(byte.toString(16)))).join('')
+  );
+}
 
 if (loggedIn = true){
   console.log('IN LOGGED IN')
@@ -32,7 +43,30 @@ if (loggedIn = true){
                   <h3>Size: ${size} </h3>
                 </div>
               </div>`)
-        }
+        
+
+        // $('#search').keyup(function(){
+        //   $('#result').html('');
+        //   $('#state').val('');
+        //   var searchField = $('#search').val();
+        //   var expression = new RegExp(searchField, "i");
+         
+        //   $.getJSON('data.json', function(data) {
+        //    $.each(data, function(key, value){
+        //     if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
+        //     {
+        //      $('#result').append('<li class="list-group-item link-class"><img src="'+value.image+'" height="40" width="40" class="img-thumbnail" /> '+value.name+' | <span class="text-muted">'+value.location+'</span></li>');
+        //     }
+        //    });   
+        //   });
+        //  });
+            }
+         $('#result').on('click', 'li', function() {
+          var click_text = $(this).text().split('|');
+          $('#search').val($.trim(click_text[0]));
+          $("#result").html('');
+         });
+        
 
         $('.dlBtnAppend').append(
           `<button class="downBtn">Download</button>`
@@ -50,13 +84,28 @@ if (loggedIn = true){
             //     },
             success: (res)=>{
               //get data field
-              console.log('Success '+ JSON.stringify(res))
-      
+
+              console.log('Success '+ JSON.stringify(res.Body))
+
+            
+
+              console.log(decodeUtf8(res.Body.data))
+              fileContent = decodeUtf8(res.Body.data)
+
+              // if (res.Body.data.length >= 65535){
+              //   console.log('File is too large to display')
+              //   return
+              // } else {
+              //   let fileContent = String.fromCharCode.apply(null, res.Body.data)
+              //   //display file content 
+              //   console.log(fileContent )
+              // }
+              
             },
             error:   (res) =>{
               console.log('Error')
             }
-        })
+          })
         })
     },
     error: (res)=>{
@@ -100,9 +149,12 @@ if (loggedIn = true){
           console.log('Error')
         }
     })
+  }),
+  $('.logout').on('click',()=>{
+    localStorage.removeItem('logged-in')
+    localStorage.removeItem('usertoken')
+    loggedIn = false
   })
-
-
 // end logged in condition
 )}
 
