@@ -109,11 +109,10 @@ let
     const username = localStorage.getItem('username')
     let filenameBtn = $(`#${fileid}Btn`)
     filenameBtn.append(`
-    <form action="./createfile" onsubmit="createdownload();return false;" method="post">
-    
+    <form onsubmit="createdownload();return false;">
     <button class="downBtn" id=${fileid}DwBtn >Download</button>
-    
     </form>`)
+
 
     $(`#${fileid}DwBtn`).on('click',(e)=>{
       $.ajax({
@@ -139,6 +138,7 @@ let
       })
     })
   }
+
 
 
   $('#search').keyup(function(){
@@ -273,7 +273,7 @@ if (loggedIn = true){
 
 //
 function createdownload(data,filename) {
-  const filenameEdit = document.getElementById('filenameEdit').value
+  const filenameEdit = filename
   const url = window.URL.createObjectURL(new Blob([data]))
   const link = document.createElement('a')
   link.href = url
@@ -282,3 +282,23 @@ function createdownload(data,filename) {
   link.click()
   document.body.removeChild(link)
 }
+
+function createFile() {
+  const data = document.getElementById('txt').value
+  const filename = document.getElementById('filename').value
+  const url = window.URL.createObjectURL(new Blob([data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', filename || `filename.txt`)
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+
+
+  $('.trigger').click(function() {
+     $('.modal-wrapper').toggleClass('open');
+    $('.page-wrapper').toggleClass('blur');
+     return false;
+  });

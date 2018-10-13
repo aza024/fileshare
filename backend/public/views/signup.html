@@ -4,18 +4,13 @@
 	<title>Fileshare</title>
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-		<!-- Bootstrap Style -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
       <!-- Custom Styles -->
 	  <link rel="stylesheet" media="screen" href="styles/signup.css" />
-	  <!-- Bootstrap Style -->
-	  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <link rel="stylesheet" media="screen" href="styles/createfile.css" />
       <!-- Custom Script -->
 	  <script src="scripts/signup.js" defer></script> 
 	  <script src="/scripts/files.js" defer></script> 
-     
+      <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 	</head>
 
   <body>
@@ -90,11 +85,11 @@
 				</div>
 			</div>
 		</div>
-	<!-- end landing-page div -->
+	<!-- END LANDING PAGE DIV -->
 	</div>
 
-	<!-- profile page start -->
-	<!-- file upload -->
+	<!-- PROFILE PAGE START -->
+	<!-- FILE UPLOAD -->
 	<div class = "profile-page"> 
 		<nav>
 				<h1>Fileshare</h1>
@@ -102,7 +97,7 @@
 				<hr>
 		</nav>
 
-		<!-- file upload form -->
+		<!-- FILE UPLOAD FORM -->
 			<div class="fileUploadForm">
 				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
 					<input id="fileupload" name="myfile" type="file" />
@@ -112,7 +107,7 @@
 
 			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 
-		<!-- search bar -->
+		<!-- SEARCH -->
 		<div class = "searchBar">
 			<div>
 				<i class="fas fa-search"></i> 
@@ -139,58 +134,49 @@
 		</form>
 	</div>
 
-	<!-- list of files -->
+	<!-- LIST FILES -->
 		<div class = "file">
 			<div class = "filesInfo"></div>
 		</div>
-	<!-- create file -->
 
 
+	<!-- CREATE FILE -->
 
-	<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-		Create File
-	  </button>
-	  
-	  <!-- Modal -->
-	  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h3 class="modal-title" id="exampleModalLabel">Create File</h3>
-			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
-			</div>
-			<div class="modal-body">
-					<form action="./createfile" onsubmit="createdownload();return false;" method="post">
-						<p>
-							<label for="filenameEdit">Filename</label>
-							<input placeholder="filename.txt" type="text" id="filenameEdit" />
-						</p>
-						<p>
-							<label for="txt">Document</label>
-							<textarea id="txt">txt</textarea>
-						</p>
-						<p>
-							
-						<!-- file upload -->
-							
-						</p>
-					</form>
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-			  <button type="submit" class="btn btn-primary">Download</button>
-			  <button type="submit" class="btn btn-primary">Add to File Share</button>
-			</div>
-		  </div>
-		</div>
-	  </div>
-
-	<!-- end profile-page div -->
+	<!-- MODAL -->
+	<div class="page-wrapper">
+		<a class="btn trigger" href="javascript:;">New Document</a>
 	</div>
-	<!-- end -->
+
+	<div class="modal-wrapper">
+		<div class="modal">
+		<div class="head">
+			<a class="btn-close trigger" href="javascript:;"></a>
+		</div>
+
+		<div class="content">
+				<form onsubmit="createFile();return false;">
+					<p>
+						<label for="filename">Filename</label>
+						<input placeholder="filename.txt" type="text" id="filename" />
+					</p>
+					<p>
+						<label for="txt">Document</label>
+						<textarea id="txt"></textarea>
+					</p>
+					<p>
+						<button id="downloadNewFile" type="submit">Download </button>
+						
+					</p>
+				</form>
+		</div>
+		</div>
+	</div>
+	<!-- END MODAL -->
+
+
+
+	<!-- END PROFILE PAGE DIV -->
+	</div>
+	<!-- END -->
  </body>
 </html>
