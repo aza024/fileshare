@@ -4,12 +4,18 @@
 	<title>Fileshare</title>
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+		<!-- Bootstrap Style -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
       <!-- Custom Styles -->
-      <link rel="stylesheet" media="screen" href="styles/signup.css" />
+	  <link rel="stylesheet" media="screen" href="styles/signup.css" />
+	  <!-- Bootstrap Style -->
+	  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <!-- Custom Script -->
 	  <script src="scripts/signup.js" defer></script> 
 	  <script src="/scripts/files.js" defer></script> 
-      <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+     
 	</head>
 
   <body>
@@ -138,22 +144,50 @@
 			<div class = "filesInfo"></div>
 		</div>
 	<!-- create file -->
-	<h1>Create File</h1>
-	<form action="./createfile" onsubmit="createdownload();return false;" method="post">
-		<p>
-			<label for="filenameEdit">Filename</label>
-			<input placeholder="filename.txt" type="text" id="filenameEdit" />
-		</p>
-		<p>
-			<label for="txt">Document</label>
-			<textarea id="txt">txt</textarea>
-		</p>
-		<p>
-			<button type="submit">Download Document</button>
-		<!-- file upload -->
-			<button type="submit">Store Document</button>
-		</p>
-	</form>
+
+
+
+	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Create File
+	  </button>
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h3 class="modal-title" id="exampleModalLabel">Create File</h3>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+					<form action="./createfile" onsubmit="createdownload();return false;" method="post">
+						<p>
+							<label for="filenameEdit">Filename</label>
+							<input placeholder="filename.txt" type="text" id="filenameEdit" />
+						</p>
+						<p>
+							<label for="txt">Document</label>
+							<textarea id="txt">txt</textarea>
+						</p>
+						<p>
+							
+						<!-- file upload -->
+							
+						</p>
+					</form>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+			  <button type="submit" class="btn btn-primary">Download</button>
+			  <button type="submit" class="btn btn-primary">Add to File Share</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
 
 	<!-- end profile-page div -->
 	</div>
