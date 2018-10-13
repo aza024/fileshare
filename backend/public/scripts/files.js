@@ -2,7 +2,58 @@
 let 
   loggedIn = localStorage.getItem('logged-in'),
   username = localStorage.getItem('username')
+  
 
+  class FileDisplayManager{
+    constructor(fileList) {
+      this.fileList = fileList.slice()
+      this.toDisplay = fileList.slice()
+    }
+
+    addFile(file){
+      this.fileList.push(file)
+      this.toDisplay.push(file)
+    }
+
+    sortAlpha(){
+      this.toDisplay.sort((a, b) => {
+        if (a.filename < b.filename) return -1;
+        if (a.filename > b.filename) return 1;
+        return 0;
+      })
+    }
+
+    sortRevAlpha(){
+      this.toDisplay.sort((a, b) => {
+        if (a.filename > b.filename) return -1;
+        if (a.filename < b.filename) return 1;
+        return 0;
+      })
+    }
+
+    display(){
+      console.log('DISPLAY '+ this.toDisplay.length)
+      // $('.filesInfo').innerHTML = '';
+       for (let i =0; i<this.toDisplay.length; i++) {
+         const file = this.toDisplay[i]
+         
+         $('.filesInfo').append(
+           `<div class = "fileInfo"> 
+             <div class = "fileExt"> 
+               <h1>.${file.extension}</h1>
+             </div>
+             <div class = "fileDetail">
+               <h3>Filename: ${file.filename}</h3>
+               <div class = "dlBtnAppend"></div>
+               <h3>Last Modified Date: ${file.modified}</h3>
+               <h3>Size: ${file.size} </h3>
+             </div>
+           </div>`)
+       }
+    } 
+  } 
+
+let displayManager = new FileDisplayManager([]) 
 //Global Functions
 // Text conversion: decode bytes to utf-8 string
 function pad(segment) { 
@@ -14,7 +65,29 @@ function decodeUtf8(data) {
   );
 }
 
+
+$('#search').keyup(function(){
+  let to_display = []
+  const searchTerm = ($(this).val())
+
+  // $('#result').html('');
+  // $('#state').val('');
+  // var searchField = $('#search').val();
+  // var expression = new RegExp(searchField, "i");
+ 
+  // $.getJSON('data.json', function(data) {
+  //  $.each(data, function(key, value){
+  //   if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
+  //   {
+  //    $('#result').append('<li class="list-group-item link-class"><img src="'+value.image+'" height="40" width="40" class="img-thumbnail" /> '+value.name+' | <span class="text-muted">'+value.location+'</span></li>');
+  //   }
+  //  });   
+  // });
+ });
+
+
 if (loggedIn = true){
+
   console.log('IN LOGGED IN')
   $.ajax({
     dataType: 'json',
@@ -23,49 +96,36 @@ if (loggedIn = true){
     data:{username},
     success: (res)=>{
       let files = res.Contents
-        for(var i =0; i < res.Contents.length; i++){
-          let
-            modified = (files[i].LastModified),
-            key = (files[i].Key),
-            size = (files[i].Size),
-            filename = key.replace(/^.*[\\\/]/, '')
-            extension = filename.split('.').pop();
 
-            $('.filesInfo').append(
-              `<div class = "fileInfo"> 
-                <div class = "fileExt"> 
-                  <h1>.${extension}</h1>
-                </div>
-                <div class = "fileDetail">
-                  <h3>Filename: ${filename}</h3>
-                  <div class = "dlBtnAppend"></div>
-                  <h3>Last Modified Date: ${modified}</h3>
-                  <h3>Size: ${size} </h3>
-                </div>
-              </div>`)
-        
+      for(let i =0; i < files.length; i++){
+        console.log('file: ' + i + files[i].Key)
 
-        // $('#search').keyup(function(){
-        //   $('#result').html('');
-        //   $('#state').val('');
-        //   var searchField = $('#search').val();
-        //   var expression = new RegExp(searchField, "i");
-         
-        //   $.getJSON('data.json', function(data) {
-        //    $.each(data, function(key, value){
-        //     if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
-        //     {
-        //      $('#result').append('<li class="list-group-item link-class"><img src="'+value.image+'" height="40" width="40" class="img-thumbnail" /> '+value.name+' | <span class="text-muted">'+value.location+'</span></li>');
-        //     }
-        //    });   
-        //   });
-        //  });
-            }
-         $('#result').on('click', 'li', function() {
-          var click_text = $(this).text().split('|');
-          $('#search').val($.trim(click_text[0]));
-          $("#result").html('');
-         });
+        let
+          modified = (files[i].LastModified),
+          key = (files[i].Key),
+          size = (files[i].Size),
+          filename = key.replace(/^.*[\\\/]/, '')
+          extension = filename.split('.').pop();
+      
+          console.log(filename)
+          displayManager.addFile({
+            modified,
+            key,
+            size,
+            filename,
+            extension
+          })
+      }
+      
+      displayManager.sortAlpha()
+      displayManager.display()
+      
+      
+      // $('#result').on('click', 'li', function() {
+      //   var click_text = $(this).text().split('|');
+      //   $('#search').val($.trim(click_text[0]));
+      //   $("#result").html('');
+      // });
         
 
         $('.dlBtnAppend').append(
@@ -156,5 +216,8 @@ if (loggedIn = true){
     loggedIn = false
   })
 // end logged in condition
-)}
+)
+} else {
+    let children = $('.filesInfo').remove()
+}
 
