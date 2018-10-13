@@ -60,30 +60,21 @@ let
 
     search(str){
       this.toDisplay = []
-      // loop 
-      console.log(str)
-
-      // console.log(searchStr)
       for(let i = 0; i < this.fileList.length; i++){
         let 
         file = this.fileList[i], 
         filename = file.filename
 
         if(filename.indexOf(str)!=-1){
-          console.log('found string')
           this.toDisplay.push(file)
-          console.log(this.toDisplay)
         }
       }
     }
 
     display(){
-      // console.log('DISPLAY '+ this.toDisplay.length)
       $('.filesInfo').empty()
-      // $('.filesInfo')
       for (let i =0; i<this.toDisplay.length; i++) {
         const file = this.toDisplay[i]
-        // console.log(file)
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
             <div class = "fileExt"> 
@@ -176,14 +167,7 @@ if (loggedIn = true){
       }
       displayManager.sortMostRec()
       displayManager.display()
-      
-      // $('#result').on('click', 'li', function() {
-      //   var click_text = $(this).text().split('|');
-      //   $('#search').val($.trim(click_text[0]));
-      //   $("#result").html('');
-      // });
         
-
         $('.dlBtnAppend').append(
           `<button class="downBtn">Download</button>`
         )
@@ -194,10 +178,6 @@ if (loggedIn = true){
             dataType: 'json',
             method: 'GET',
             url:`/files/admin/_atestfile.txt`,
-            // data:{
-            //       username, 
-            //       filename
-            //     },
             success: (res)=>{
               //get data field
               console.log('Success '+ JSON.stringify(res.Body))
@@ -229,9 +209,6 @@ if (loggedIn = true){
 // File Upload
   $('#uploadBtn').on('click',(e)=>{
       e.preventDefault();
-      // console.log(localStorage.getItem('username'))
-      // let username = localStorage.getItem('username')
-    
       $.ajax({
           url: `/files/${username}`, 
           type: 'POST',
