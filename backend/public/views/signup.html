@@ -132,13 +132,29 @@
 			</p>
 		</form>
 	</div>
-		
-
 
 	<!-- list of files -->
 		<div class = "file">
 			<div class = "filesInfo"></div>
 		</div>
+	<!-- create file -->
+	<h1>Create File</h1>
+	<form action="./createfile" onsubmit="createdownload();return false;" method="post">
+		<p>
+			<label for="filenameEdit">Filename</label>
+			<input placeholder="filename.txt" type="text" id="filenameEdit" />
+		</p>
+		<p>
+			<label for="txt">Document</label>
+			<textarea id="txt">txt</textarea>
+		</p>
+		<p>
+			<button type="submit">Download Document</button>
+		<!-- file upload -->
+			<button type="submit">Store Document</button>
+		</p>
+	</form>
+
 	<!-- end profile-page div -->
 	</div>
 	<!-- end -->

@@ -108,7 +108,12 @@ let
     console.log('in dl')
     const username = localStorage.getItem('username')
     let filenameBtn = $(`#${fileid}Btn`)
-    filenameBtn.append(`<button class="downBtn" id=${fileid}DwBtn >Download</button>`)
+    filenameBtn.append(`
+    <form action="./createfile" onsubmit="createdownload();return false;" method="post">
+    
+    <button class="downBtn" id=${fileid}DwBtn >Download</button>
+    
+    </form>`)
 
     $(`#${fileid}DwBtn`).on('click',(e)=>{
       $.ajax({
@@ -117,6 +122,7 @@ let
         url:`/files/${username}/${filename}`,
         success: (res)=>{
           //get data field
+          createdownload(decodeUtf8(res.Body.data),filename)
           console.log('INFO: Downloaded File: ' + decodeUtf8(res.Body.data))
           // if (res.Body.data.length >= 65535){
           //   console.log('File is too large to display')
@@ -249,7 +255,7 @@ if (loggedIn = true){
         success: (res)=>{
           console.log('Success '+ res)
         },
-        error:   (res) =>{
+        error: (res) =>{
           console.log('Error')
         }
     })
@@ -265,3 +271,14 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
+//
+function createdownload(data,filename) {
+  const filenameEdit = document.getElementById('filenameEdit').value
+  const url = window.URL.createObjectURL(new Blob([data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', filenameEdit || filename)
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
