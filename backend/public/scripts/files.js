@@ -295,10 +295,13 @@ function createFile() {
   document.body.removeChild(link)
 }
 
-
-
   $('.trigger').click(function() {
-     $('.modal-wrapper').toggleClass('open');
+    $('.modal-wrapper').toggleClass('open');
     $('.page-wrapper').toggleClass('blur');
-     return false;
+    return false;
   });
+
+  $('#downloadNewFile').click(function(){
+    createFile();
+    return false;
+  })
