@@ -19,16 +19,16 @@ let
 
     sortMostRec(){
       this.toDisplay.sort((a, b) => {
-        if (a.modified < b.modified) return -1;
-        if (a.modified > b.modified) return 1;
+        if (a.modified > b.modified) return -1;
+        if (a.modified < b.modified) return 1;
         return 0;
       })
     }
 
     sortLeastRec(){
       this.toDisplay.sort((a, b) => {
-        if (a.modified > b.modified) return -1;
-        if (a.modified < b.modified) return 1;
+        if (a.modified < b.modified) return -1;
+        if (a.modified > b.modified) return 1;
         return 0;
       })
     }
@@ -59,8 +59,7 @@ let
     }
 
     display(){
-      // console.log('DISPLAY '+ this.toDisplay.length)
-
+      console.log('DISPLAY '+ this.toDisplay.length)
       $('.filesInfo').empty()
       // $('.filesInfo')
       for (let i =0; i<this.toDisplay.length; i++) {
@@ -89,16 +88,25 @@ let
 
     // this.toDisplay.length
 
-    if(opt === '1'){
-      displayManager.sortAlpha()
+    if (opt === '1'){
+      displayManager.sortMostRec()
       console.log('in opt 1')
     } else if(opt === '2'){
       displayManager.sortLeastRec()
       console.log('in opt 2')
+    } else if(opt === '3'){
+      console.log('in opt 3')
+      displayManager.sortAlpha()
+    } else if(opt === '4'){
+      console.log('in opt 4')
+      displayManager.sortRevAlpha()
+    } else if(opt === '5'){
+      displayManager.sortSize()
+    } else {
+      console.log('Invalid Option')
     }
 
     displayManager.display()
-
   })
 
 let displayManager = new FileDisplayManager([]) 
@@ -112,7 +120,6 @@ function decodeUtf8(data) {
     data.map(byte => ('%' + pad(byte.toString(16)))).join('')
   );
 }
-
 
 $('#search').keyup(function(){
   let to_display = []
@@ -149,30 +156,8 @@ if (loggedIn = true){
             extension
           })
       }
-      
-
-      if(sorted === 1){
-        displayManager.display()
-      }
-      else if(sorted === 2){
-        displayManager.sortAlpha() 
-        displayManager.display() 
-      }
-      else if(sorted === 3){
-        displayManager.sortAlpha()  
-        displayManager.display()
-      }
-      else if(sorted === 4){
-        displayManager.sortAlpha() 
-        displayManager.display() 
-      }
-      else{
-        displayManager.sortAlpha() 
-        displayManager.display() 
-      }
-     
-    
-      
+      displayManager.sortMostRec()
+      displayManager.display()
       
       // $('#result').on('click', 'li', function() {
       //   var click_text = $(this).text().split('|');
