@@ -82,6 +82,9 @@ let
       $('.filesInfo').empty()
       for (let i =0; i<this.toDisplay.length; i++) {
         const file = this.toDisplay[i]
+        const fileid = file.filename.replace(
+          '.','p'
+        )
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
             <div class = "fileExt"> 
@@ -89,15 +92,48 @@ let
             </div>
             <div class = "fileDetail">
               <h3>Filename: ${file.filename}</h3>
-              <div class = "dlBtnAppend"></div>
+              <div class = "dlBtnAppend" id = ${fileid}Btn></div>
               <h3>Last Modified Date: ${file.modified}</h3>
               <h3>Size: ${file.size} </h3>
             </div>
           </div>`)
+          downloadBtn(file.filename, fileid)
+
           //ftn to add buttn
       }
     } 
   } 
+
+  downloadBtn = (filename, fileid) => {
+    console.log('in dl')
+    const username = localStorage.getItem('username')
+    let filenameBtn = $(`#${fileid}Btn`)
+    filenameBtn.append(`<button class="downBtn" id=${fileid}DwBtn >Download</button>`)
+
+    $(`#${fileid}DwBtn`).on('click',(e)=>{
+      $.ajax({
+        dataType: 'json',
+        method: 'GET',
+        url:`/files/${username}/${filename}`,
+        success: (res)=>{
+          //get data field
+          console.log('INFO: Downloaded File: ' + decodeUtf8(res.Body.data))
+          // if (res.Body.data.length >= 65535){
+          //   console.log('File is too large to display')
+          //   return
+          // } else {
+          //   let fileContent = String.fromCharCode.apply(null, res.Body.data)
+          //   //display file content 
+          //   console.log(fileContent )
+          // }
+        },
+        error: (res) =>{
+          console.log('Error')
+        }
+      })
+    })
+  }
+
 
   $('#search').keyup(function(){
     let str = $(this).val()
@@ -177,44 +213,11 @@ if (loggedIn = true){
       }
       displayManager.sortMostRec()
       displayManager.display()
-        
-        $('.dlBtnAppend').append(
-          `<button class="downBtn">Download</button>`
-        )
-        //TODO refactor into seprate AJAX call or figure out how to get both
-        $('.downBtn').on('click',(e)=>{
-          console.log('DOWNLOAD CLICKED')
-          $.ajax({
-            dataType: 'json',
-            method: 'GET',
-            url:`/files/admin/_atestfile.txt`,
-            success: (res)=>{
-              //get data field
-              console.log('Success '+ JSON.stringify(res.Body))
-
-              console.log(decodeUtf8(res.Body.data))
-              fileContent = decodeUtf8(res.Body.data)
-
-              // if (res.Body.data.length >= 65535){
-              //   console.log('File is too large to display')
-              //   return
-              // } else {
-              //   let fileContent = String.fromCharCode.apply(null, res.Body.data)
-              //   //display file content 
-              //   console.log(fileContent )
-              // }
-            },
-            error:   (res) =>{
-              console.log('Error')
-            }
-          })
-        })
     },
     error: (res)=>{
       console.log('Error: Unable to retrieve files ' + JSON.stringify(res))
     }
 }, //end ajax
-
 
 // File Upload
   $('#uploadBtn').on('click',(e)=>{
