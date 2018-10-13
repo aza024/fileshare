@@ -3,6 +3,8 @@ let
   loggedIn = localStorage.getItem('logged-in'),
   username = localStorage.getItem('username')
   
+  var sorted = $('#sortListOpts').val();
+  var selected = $('#sortListOpts :selected').text();
 
   class FileDisplayManager{
     constructor(fileList) {
@@ -13,6 +15,31 @@ let
     addFile(file){
       this.fileList.push(file)
       this.toDisplay.push(file)
+    }
+
+    sortMostRec(){
+      this.toDisplay.sort((a, b) => {
+        if (a.modified < b.modified) return -1;
+        if (a.modified > b.modified) return 1;
+        return 0;
+      })
+    }
+
+    sortLeastRec(){
+      this.toDisplay.sort((a, b) => {
+        if (a.modified > b.modified) return -1;
+        if (a.modified < b.modified) return 1;
+        return 0;
+      })
+    }
+    
+    sortSize(){
+      this.toDisplay.sort((a, b) => {
+        if (a.size < b.size) return -1;
+        if (a.size > b.size) return 1;
+        return 0;
+      })
+
     }
 
     sortAlpha(){
@@ -32,26 +59,47 @@ let
     }
 
     display(){
-      console.log('DISPLAY '+ this.toDisplay.length)
-      // $('.filesInfo').innerHTML = '';
-       for (let i =0; i<this.toDisplay.length; i++) {
-         const file = this.toDisplay[i]
-         
-         $('.filesInfo').append(
-           `<div class = "fileInfo"> 
-             <div class = "fileExt"> 
-               <h1>.${file.extension}</h1>
-             </div>
-             <div class = "fileDetail">
-               <h3>Filename: ${file.filename}</h3>
-               <div class = "dlBtnAppend"></div>
-               <h3>Last Modified Date: ${file.modified}</h3>
-               <h3>Size: ${file.size} </h3>
-             </div>
-           </div>`)
-       }
+      // console.log('DISPLAY '+ this.toDisplay.length)
+
+      $('.filesInfo').empty()
+      // $('.filesInfo')
+      for (let i =0; i<this.toDisplay.length; i++) {
+        const file = this.toDisplay[i]
+        console.log(file)
+        $('.filesInfo').append(
+          `<div class = "fileInfo"> 
+            <div class = "fileExt"> 
+              <h1>.${file.extension}</h1>
+            </div>
+            <div class = "fileDetail">
+              <h3>Filename: ${file.filename}</h3>
+              <div class = "dlBtnAppend"></div>
+              <h3>Last Modified Date: ${file.modified}</h3>
+              <h3>Size: ${file.size} </h3>
+            </div>
+          </div>`)
+          //ftn to add buttn
+      }
     } 
   } 
+
+  $('#sortListOpts').on('change', function() {
+    let opt = $(this).val()
+    console.log('OPT ' + opt)
+
+    // this.toDisplay.length
+
+    if(opt === '1'){
+      displayManager.sortAlpha()
+      console.log('in opt 1')
+    } else if(opt === '2'){
+      displayManager.sortLeastRec()
+      console.log('in opt 2')
+    }
+
+    displayManager.display()
+
+  })
 
 let displayManager = new FileDisplayManager([]) 
 //Global Functions
@@ -69,25 +117,10 @@ function decodeUtf8(data) {
 $('#search').keyup(function(){
   let to_display = []
   const searchTerm = ($(this).val())
-
-  // $('#result').html('');
-  // $('#state').val('');
-  // var searchField = $('#search').val();
-  // var expression = new RegExp(searchField, "i");
- 
-  // $.getJSON('data.json', function(data) {
-  //  $.each(data, function(key, value){
-  //   if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
-  //   {
-  //    $('#result').append('<li class="list-group-item link-class"><img src="'+value.image+'" height="40" width="40" class="img-thumbnail" /> '+value.name+' | <span class="text-muted">'+value.location+'</span></li>');
-  //   }
-  //  });   
-  // });
  });
 
 
 if (loggedIn = true){
-
   console.log('IN LOGGED IN')
   $.ajax({
     dataType: 'json',
@@ -117,8 +150,28 @@ if (loggedIn = true){
           })
       }
       
-      displayManager.sortAlpha()
-      displayManager.display()
+
+      if(sorted === 1){
+        displayManager.display()
+      }
+      else if(sorted === 2){
+        displayManager.sortAlpha() 
+        displayManager.display() 
+      }
+      else if(sorted === 3){
+        displayManager.sortAlpha()  
+        displayManager.display()
+      }
+      else if(sorted === 4){
+        displayManager.sortAlpha() 
+        displayManager.display() 
+      }
+      else{
+        displayManager.sortAlpha() 
+        displayManager.display() 
+      }
+     
+    
       
       
       // $('#result').on('click', 'li', function() {
@@ -144,10 +197,7 @@ if (loggedIn = true){
             //     },
             success: (res)=>{
               //get data field
-
               console.log('Success '+ JSON.stringify(res.Body))
-
-            
 
               console.log(decodeUtf8(res.Body.data))
               fileContent = decodeUtf8(res.Body.data)
@@ -160,7 +210,6 @@ if (loggedIn = true){
               //   //display file content 
               //   console.log(fileContent )
               // }
-              
             },
             error:   (res) =>{
               console.log('Error')
@@ -186,9 +235,11 @@ if (loggedIn = true){
           data: new FormData($('#uploadbanner')[0]), 
           processData: false,
           contentType: false                   
-        }).done(function(){
+        })
+        .done(function(){
           console.log("Success: Files sent!");
-        }).fail(function(){
+        })
+        .fail(function(){
           console.log("An error occurred, the files couldn't be sent!");
         });
   }),
