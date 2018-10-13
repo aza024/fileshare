@@ -33,13 +33,20 @@ let
       })
     }
     
-    sortSize(){
+    sortSizeLow(){
       this.toDisplay.sort((a, b) => {
         if (a.size < b.size) return -1;
         if (a.size > b.size) return 1;
         return 0;
       })
+    }
 
+    sortSizeHigh(){
+      this.toDisplay.sort((a, b) => {
+        if (a.size > b.size) return -1;
+        if (a.size < b.size) return 1;
+        return 0;
+      })
     }
 
     sortAlpha(){
@@ -112,8 +119,11 @@ let
     } else if(opt === '4'){
       displayManager.sortRevAlpha()
     } else if(opt === '5'){
-      displayManager.sortSize()
-    } else {
+      displayManager.sortSizeLow()
+    } else if(opt === '6'){
+      displayManager.sortSizeHigh()
+    } 
+     else {
       console.log('Invalid Option')
     }
 
