@@ -2,7 +2,7 @@ const
     express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    { Client } = require('pg'),
+    { Client }= require('pg'),
     multer = require('multer'),
     jwt = require('jsonwebtoken'),
     env = require('node-env-file'),
@@ -10,8 +10,6 @@ const
     upload = multer(),
     bcrypt = require('bcrypt'),
     uuidv4 = require('uuid/v4')
-
-
 
 env(__dirname + '/.env');
 
@@ -33,42 +31,35 @@ app.use(function(req, res, next) {
 
 // ------------------APP.GET----------------------
 app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
-// app.get('/files/:username', (req, res) => {res.sendFile(__dirname + '/public/views/files.html');});
-// app.get('/signup', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
 
 app.get('/files/:username/:filename', (req, res)=>{
+    //URI Encoding to prevent invalid chars for user & filename in S3 path
     const 
         username = encodeURIComponent(req.params.username),
         filename = encodeURIComponent(req.params.filename),
-        
+
+    //Bucket = root dir, Key = rest of S3 path
         params = {
             Bucket: "fileshare-uploads",
             Key: `userfiles/${username}/${filename}`,
         }
-        // console.log(`userfiles/${username}/${filename}`)
-        // console.log(username)
-        // console.log(filename)
 
     s3.getObject(params, (err, data)=>{
         if (err){
-            console.log("S3.getObject Error " + err)
+            console.log("ERR: S3.getObject " + err)
             res.sendStatus(500)
             return
         }
-        
-        console.log("Data " + JSON.stringify(data))
         //Body - file content
         const fileData = data.Body
-        console.log("DATA"+fileData)
-        
+        console.log(`INFO: Successfully retrieved object from ${params.Bucket}/${params.Key}.`)
         res.json(data)
     })
 })
 
 app.get('/listfiles/:username', (req, res)=> {
-    const 
-    username = encodeURIComponent(req.params.username)
-    console.log(username)
+    const username = encodeURIComponent(req.params.username)
+    console.log('INFO: Handling list files req for: ' + username)
 
     s3.listObjects({ 
         Bucket:'fileshare-uploads', 
@@ -76,11 +67,11 @@ app.get('/listfiles/:username', (req, res)=> {
     },
     (err,data)=>{
         if(err){
-            console.log("S3.listFile Error " + err)
+            console.log("ERR: S3.listFile " + err)
             res.sendStatus(500)
             return 
         }
-        console.log('LIST OF FILES' + JSON.stringify(data))
+        console.log('INFO: Retrieved list of files ' + JSON.stringify(data))
         res.send(data)
     })
 })
@@ -89,14 +80,12 @@ function login(email, password, hashed_password, res) {
     const str_hashed_password = ''+hashed_password
     bcrypt.compare(password, str_hashed_password, (err, hash_result) => {
         if(err){
-            console.log('Bcrypt Error ' + err)
+            console.log('ERR: Bcrypt Error ' + err)
             res.status(500)
             return
         }
-        console.log(hash_result)
-        console.log(str_hashed_password)
         if(!hash_result) {
-            console.log('Email or password did not match')
+            console.log('ERR: Email or password did not match')
             res.status(400)
             return
         }             
@@ -106,11 +95,10 @@ function login(email, password, hashed_password, res) {
                 [email, hashed_password],
             (err,psql_res) => {
                 if (psql_res.rows.length === 0) {
-                    console.log('Email or password is incorrect.')
+                    console.log('ERR: Email or password is incorrect.')
                     res.status(400)
                 } else {
                     //redirect to page with results from query
-                    // console.log(psql_res.rows[0])
                     const user = {
                         id: psql_res.rows[0].user_id, 
                         username: psql_res.rows[0].username,
@@ -121,12 +109,12 @@ function login(email, password, hashed_password, res) {
                         {user},
                         'secretkey',
                         { expiresIn: '12h'},
+                        // TODO: Handle Err
                         (err,token) => {
                             res.json({token})
                             res.status(200)
                         }
                     );
-                    console.log('redirect to profile page')
                 }
             }
         )
@@ -134,42 +122,38 @@ function login(email, password, hashed_password, res) {
 }
 
 app.get('/user', (req,res) => {
-    console.log('In app.get(/user) ')
-    // console.log(req)
     const 
-    email = req.query.email, 
-    password = req.query.password 
-    console.log(email)
-    console.log(password)
-    
+        email = req.query.email, 
+        password = req.query.password 
+    console.log('INFO: User logging in ')
 
     client.query('SELECT password FROM users WHERE email = $1',
     [email], (err, psql_res)=>{
         if(err){
-            console.log('Login query error ' + err)
+            console.log('ERR: Login query error ' + err)
             res.status(500)
             return
         }
 
         if (psql_res.rows.length === 0 ){
-            console.log('Email does not exist')
+            console.log('INFO: Email does not exist')
             res.status(400)
             return
         }
 
         const hashed_password = psql_res.rows[0].password
+
         login(email, password, hashed_password, res)
     })
 })
 
 // ------------------APP.POST----------------------
-
+// #TODO: REMOVE USERNAME = ALREADY PARM
 app.post('/user/:username', (req,res) => {
     const 
         username = req.body.username,
         password = req.body.password,
-        email = req.body.email 
-        console.log('username ' + username)   
+        email = req.body.email  
 
     bcrypt.hash(password, 10, (err, hash)=>{ 
         if (err){
@@ -181,7 +165,7 @@ app.post('/user/:username', (req,res) => {
                 [username],
             (err,psql_res) => {
                 if(err){
-                    console.log('select err '+ err)
+                    console.log('ERR: Select err '+ err)
                     res.status(500)
                         return
                 }

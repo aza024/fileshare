@@ -2,7 +2,7 @@
 let 
   loggedIn = localStorage.getItem('logged-in'),
   username = localStorage.getItem('username')
-  
+    
   var sorted = $('#sortListOpts').val();
   var selected = $('#sortListOpts :selected').text();
 
@@ -58,13 +58,32 @@ let
       })
     }
 
+    search(str){
+      this.toDisplay = []
+      // loop 
+      console.log(str)
+
+      // console.log(searchStr)
+      for(let i = 0; i < this.fileList.length; i++){
+        let 
+        file = this.fileList[i], 
+        filename = file.filename
+
+        if(filename.indexOf(str)!=-1){
+          console.log('found string')
+          this.toDisplay.push(file)
+          console.log(this.toDisplay)
+        }
+      }
+    }
+
     display(){
-      console.log('DISPLAY '+ this.toDisplay.length)
+      // console.log('DISPLAY '+ this.toDisplay.length)
       $('.filesInfo').empty()
       // $('.filesInfo')
       for (let i =0; i<this.toDisplay.length; i++) {
         const file = this.toDisplay[i]
-        console.log(file)
+        // console.log(file)
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
             <div class = "fileExt"> 
@@ -82,23 +101,24 @@ let
     } 
   } 
 
+  $('#search').keyup(function(){
+    let str = $(this).val()
+    displayManager.search(str)
+    displayManager.display()
+  })
+
   $('#sortListOpts').on('change', function() {
     let opt = $(this).val()
-    console.log('OPT ' + opt)
 
     // this.toDisplay.length
 
     if (opt === '1'){
       displayManager.sortMostRec()
-      console.log('in opt 1')
     } else if(opt === '2'){
       displayManager.sortLeastRec()
-      console.log('in opt 2')
     } else if(opt === '3'){
-      console.log('in opt 3')
       displayManager.sortAlpha()
     } else if(opt === '4'){
-      console.log('in opt 4')
       displayManager.sortRevAlpha()
     } else if(opt === '5'){
       displayManager.sortSize()
@@ -128,7 +148,6 @@ $('#search').keyup(function(){
 
 
 if (loggedIn = true){
-  console.log('IN LOGGED IN')
   $.ajax({
     dataType: 'json',
     method: 'GET',
@@ -138,7 +157,7 @@ if (loggedIn = true){
       let files = res.Contents
 
       for(let i =0; i < files.length; i++){
-        console.log('file: ' + i + files[i].Key)
+        // console.log('file: ' + i + files[i].Key)
 
         let
           modified = (files[i].LastModified),
@@ -147,7 +166,6 @@ if (loggedIn = true){
           filename = key.replace(/^.*[\\\/]/, '')
           extension = filename.split('.').pop();
       
-          console.log(filename)
           displayManager.addFile({
             modified,
             key,
