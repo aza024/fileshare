@@ -103,9 +103,11 @@ function escapeHtml(unsafe) {
       for (let i =0; i<this.toDisplay.length; i++) {
         const 
           file = this.toDisplay[i],
-          fileid = file.filename.hexEncode()
-        //hexencoded value for fileID:
-        // console.log(fileid)
+          fileid = file.filename.hexEncode(),
+          modified = file.modified
+        let 
+          formatted = new Date(modified),
+          formattedDate = formatted.toISOString().substring(0, 10);
 
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
@@ -115,7 +117,7 @@ function escapeHtml(unsafe) {
             <div class = "fileDetail">
               <h3>Filename: ${escapeHtml(file.filename)}</h3>
               <div class = "dlBtnAppend" id = ${fileid}Btn></div>
-              <h3>Last Modified Date: ${file.modified}</h3>
+              <h3>Last Modified Date: ${formattedDate}</h3>
               <h3>Size: ${file.size} </h3>
             </div>
           </div>`)
