@@ -214,8 +214,6 @@ app.post('/user/:username', (req,res) => {
 
 //Get filename & file data from appropriate upload depending on where file is uploaded from
 app.post('/files/:username', upload.single('myfile'), (req, res) => {
-    console.log(JSON.stringify(req.body))
-
     let name = null,
         data = null
 

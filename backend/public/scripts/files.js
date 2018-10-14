@@ -6,6 +6,17 @@ let
   var sorted = $('#sortListOpts').val();
   var selected = $('#sortListOpts :selected').text();
 
+  String.prototype.hexEncode = function(){
+    var hex, i;
+
+    var result = "";
+    for (i=0; i<this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += ("000"+hex).slice(-4);
+    }
+
+    return result
+}
 //Replace inappropriate file characters with URI readable characters
 function escapeHtml(unsafe) {
   return unsafe
@@ -92,7 +103,9 @@ function escapeHtml(unsafe) {
       for (let i =0; i<this.toDisplay.length; i++) {
         const 
           file = this.toDisplay[i],
-          fileid = file.filename.replace('.','p')
+          fileid = file.filename.hexEncode()
+        //hexencoded value for fileID:
+        // console.log(fileid)
 
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
@@ -236,9 +249,11 @@ if (loggedIn = true){
         })
         .done(function(){
           console.log("INFO: Files successfully sent!");
+          res.status(200)
         })
         .fail(function(){
           console.log("ERR: Files couldn't be sent.");
+          res.status(500)
         });
   }),
 //get file content
@@ -253,9 +268,11 @@ if (loggedIn = true){
             },
         success: (res)=>{
           console.log('INFO: Success '+ res)
+          res.status(200)
         },
         error: (res) =>{
           console.log('ERR: Unable to download files for user ' + username +' file ' + filename)
+          res.status(400)
         }
     })
   }),
