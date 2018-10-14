@@ -78,8 +78,8 @@ downloadBtn = (filename, fileid) => {
       filename,
       (res) => {
           //get data field
-          createdownload(decodeUtf8(data),filename)
-          console.log('INFO: Downloaded File: ' + decodeUtf8(data))
+          createdownload(decodeUtf8(res.Body.data),filename)
+          console.log('INFO: Downloaded File: ' + decodeUtf8(res.Body.data))
           // TODO: HANDLE - (res.Body.data.length >= 65535){
         },
       (res) => {console.log('Error')}
@@ -90,6 +90,13 @@ downloadBtn = (filename, fileid) => {
     constructor(fileList) {
       this.fileList = fileList.slice()
       this.toDisplay = fileList.slice()
+      this.currentSearch = null
+      this.currentSort = null
+    }
+
+    clear(){
+      this.fileList.length = 0
+      this.toDisplay.length = 0
     }
 
     addFile(file){
@@ -98,6 +105,7 @@ downloadBtn = (filename, fileid) => {
     }
     
     sortMostRec(){
+      this.currentSort = 'MostRec'
       this.toDisplay.sort((a, b) => {
         if (a.modified > b.modified) return -1;
         if (a.modified < b.modified) return 1;
@@ -106,6 +114,7 @@ downloadBtn = (filename, fileid) => {
     }
 
     sortLeastRec(){
+      this.currentSort = 'LeastRec'
       this.toDisplay.sort((a, b) => {
         if (a.modified < b.modified) return -1;
         if (a.modified > b.modified) return 1;
@@ -114,6 +123,7 @@ downloadBtn = (filename, fileid) => {
     }
     
     sortSizeLow(){
+      this.currentSort = 'SizeLow'
       this.toDisplay.sort((a, b) => {
         if (a.size < b.size) return -1;
         if (a.size > b.size) return 1;
@@ -122,6 +132,7 @@ downloadBtn = (filename, fileid) => {
     }
 
     sortSizeHigh(){
+      this.currentSort = 'SizeHigh'
       this.toDisplay.sort((a, b) => {
         if (a.size > b.size) return -1;
         if (a.size < b.size) return 1;
@@ -130,6 +141,7 @@ downloadBtn = (filename, fileid) => {
     }
 
     sortAlpha(){
+      this.currentSort = 'Alpha'
       this.toDisplay.sort((a, b) => {
         if (a.filename < b.filename) return -1;
         if (a.filename > b.filename) return 1;
@@ -138,6 +150,7 @@ downloadBtn = (filename, fileid) => {
     }
 
     sortRevAlpha(){
+      this.currentSort = 'RevAlpha'
       this.toDisplay.sort((a, b) => {
         if (a.filename > b.filename) return -1;
         if (a.filename < b.filename) return 1;
@@ -145,7 +158,31 @@ downloadBtn = (filename, fileid) => {
       })
     }
 
-    search(str){
+    reSort() {
+      if (this.currentSort == 'MostRec') {
+        this.sortMostRec()
+      }
+      else if (this.currentSort == 'LeastRec') {
+        this.sortLeastRec()
+      }
+      else if (this.currentSort == 'SizeLow') {
+        this.sortSizeLow()
+      }
+      else if (this.currentSort == 'SizeHigh') {
+        this.sortSizeHigh()
+      }
+      else if (this.currentSort == 'Alpha') {
+        this.sortAlpha()
+      }
+      else if (this.currentSort == 'RevAlpha') {
+        this.sortRevAlpha()
+      }
+    }
+
+    search(searchStr){
+      let str = searchStr || this.currentSearch
+
+      this.currentSearch = str
       this.toDisplay = []
       for(let i = 0; i < this.fileList.length; i++){
         let 
@@ -232,8 +269,60 @@ decodeUtf8 = (data) => {
 }
 
 
+uploadButtonOnClick = (element) => {
+
+    // File Upload
+    // '#uploadBtn'
+    $(element).on('click',(e)=>{
+      e.preventDefault();
+      let 
+      username = localStorage.getItem('username'),
+
+      filename = $('#createFileForm').serialize()
+      const data = new FormData($('#uploadbanner')[0])
+
+      uploadFile(
+          filename,
+          data, 
+          function(){
+              console.log("INFO:Files successfully sent!");
+              // res.status(200)
+              displayManager.clear()
+              const lastSearch = displayManager.currentSearch
+              const lastSort = displayManager.currentSort
+
+              loadLoginPage()
+
+              displayManager.currentSearch = lastSearch
+              displayManager.currentSort = lastSort
+              displayManager.reSort()
+              displayManager.search(null)
+          },
+          function(){
+              console.log("ERR: Files couldn't be sent.");
+              // res.status(200)
+          }
+        )
+  })
+
+
+}
 
 loadLoginPage = () => {
+ //end ajax
+    uploadButtonOnClick('#uploadBtn')
+
+    $('.logout').on('click',()=>{
+      localStorage.removeItem('username')
+      localStorage.removeItem('useremail')
+      localStorage.removeItem('logged-in')
+      localStorage.removeItem('usertoken')
+      loggedIn = false
+
+      location.reload()
+    })
+
+
     $.ajax({
         dataType: 'json',
         method: 'GET',
@@ -264,62 +353,7 @@ loadLoginPage = () => {
         error: (res)=>{
           console.log('ERR: Unable to retrieve files ' + JSON.stringify(res))
         }
-    }, //end ajax
-
-    // File Upload
-      $('#uploadBtn').on('click',(e)=>{
-          e.preventDefault();
-          let 
-          username = localStorage.getItem('username'),
-
-          filename = $('#createFileForm').serialize()
-          const data = new FormData($('#uploadbanner')[0])
-
-          uploadFile(
-              filename,
-              data, 
-              function(){
-                  console.log("INFO:Files successfully sent!");
-                  // res.status(200)
-                  // displayManager = new FileDisplayManager([])
-                  // loadLoginPage()
-              },
-              function(){
-                  console.log("ERR: Files couldn't be sent.");
-                  // res.status(200)
-              }
-            )
-      }),
-    //get file content
-      $('.downBtn').on('click',(e)=>{
-        $.ajax({
-            dataType: 'json',
-            method: 'GET',
-            url:`/files/${username}/${filename}`,
-            data:{
-                  username, 
-                  filename
-                },
-            success: (res)=>{
-              console.log('INFO: Success '+ res)
-              res.status(200)
-            },
-            error: (res) =>{
-              console.log('ERR: Unable to download files for user ' + username +' file ' + filename)
-              res.status(400)
-            }
-        })
-      }),
-      
-      $('.logout').on('click',()=>{
-        localStorage.removeItem('username')
-        localStorage.removeItem('useremail')
-        localStorage.removeItem('logged-in')
-        localStorage.removeItem('usertoken')
-        loggedIn = false
-
-        location.reload()
-      })
+    }
     // end logged in condition
     )
 }
@@ -385,3 +419,4 @@ createFile = () => {
       () => {console.log("ERR: Files couldn't be sent.")}
     )
   })
+

@@ -85,7 +85,7 @@ app.get('/listfiles/:username', (req, res)=> {
     })
 })
 
-function login(email, password, hashed_password, res) {
+function login(username, password, hashed_password, res) {
     const str_hashed_password = ''+hashed_password
     bcrypt.compare(password, str_hashed_password, (err, hash_result) => {
         if(err){
@@ -94,17 +94,17 @@ function login(email, password, hashed_password, res) {
             return
         }
         if(!hash_result) {
-            console.log('ERR: Email or password did not match')
+            console.log('ERR: Username or password did not match')
             res.status(400)
             return
         }             
         // Passwords match
         client.query(
-            'SELECT * FROM users WHERE email = $1 and password = $2',
-                [email, hashed_password],
+            'SELECT * FROM users WHERE username = $1 and password = $2',
+                [username, hashed_password],
             (err,psql_res) => {
                 if (psql_res.rows.length === 0) {
-                    console.log('ERR: Email or password is incorrect.')
+                    console.log('ERR: Username or password is incorrect.')
                     res.status(400)
                 } else {
                     //redirect to page with results from query
@@ -132,12 +132,12 @@ function login(email, password, hashed_password, res) {
 
 app.get('/user', (req,res) => {
     const 
-        email = req.query.email, 
+        username = req.query.username, 
         password = req.query.password 
     console.log('INFO: User logging in ')
 
-    client.query('SELECT password FROM users WHERE email = $1',
-    [email], (err, psql_res)=>{
+    client.query('SELECT password FROM users WHERE username = $1',
+    [username], (err, psql_res)=>{
         if(err){
             console.log('ERR: Login query error ' + err)
             res.status(500)
@@ -145,14 +145,14 @@ app.get('/user', (req,res) => {
         }
 
         if (psql_res.rows.length === 0 ){
-            console.log('INFO: Email does not exist')
+            console.log('INFO: Username does not exist')
             res.status(400)
             return
         }
 
         const hashed_password = psql_res.rows[0].password
 
-        login(email, password, hashed_password, res)
+        login(username, password, hashed_password, res)
     })
 })
 

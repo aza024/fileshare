@@ -1,6 +1,5 @@
 jQuery(document).ready(function($){
     if (localStorage.getItem('logged-in')){
-     
         $form_modal.removeClass('is-visible');
         $('.profile-page').addClass('is-visible')
         $('.landing-page').css('display','none')
@@ -83,24 +82,26 @@ var $form_modal = $('.user-modal'),
 
 // Validate user in DB
 $('#signin-form').on('submit',function(e){
+    console.log('I AM IN SIGNIN')
     e.preventDefault();
-    let email = ($('#signin-email').val()),
+    let username = ($('#signin-username').val()),
         password = ($('#signin-password').val())
     $.ajax({
         dataType: 'json',
         method: 'GET',
         url:'/user',
         data:{
-            email,
+            username,
             password
         },
         success: function(res){
             let token = res.token
             console.log(res.token)
             localStorage.setItem('usertoken', token);
-            localStorage.setItem('useremail', email);
+            localStorage.setItem('username', username);
+            localStorage.setItem('logged-in', true)
+            loadLoginPage()
 
-            localStorage.getItem(email)
         },
         error: function(res){
             console.log('Error:' + JSON.stringify(res))
