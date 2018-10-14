@@ -74,16 +74,11 @@ downloadBtn = (filename, fileid) => {
   )
 
   $(`#${fileid}DwBtn`).on('click',(e)=>{
+    e.preventDefault()
     downloadfile(username, 
       filename,
       (res) => {
-          const extension = filename.split('.').pop();
-          // TODO: Revisit to implement image uploads
-          if (extension == 'txt') {
-              createdownload(decodeUtf8(res.Body.data), filename)
-          } else {
-            console.log('We are only able to upload .txt files. Uploading other file types has not yet been implemented')
-          }
+          createdownload(res.Body.data, filename)
         },
       (res) => {console.log('Error')}
     )
@@ -393,18 +388,26 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-createdownload = (data,filename) => {
+createdownload = (arr, filename) => {
+  var byteArray = new Uint8Array(arr);
   const 
     filenameEdit = filename,
-    url = window.URL.createObjectURL(new Blob([data])),
+    url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
     link = document.createElement('a')
+
+    // create element for our img
+  let img = document.createElement('img')
+  // set src to object url created above
+  img.setAttribute('src', url)
+  // add image to the page
+  document.body.appendChild(img)
+
 
   link.href = url
   link.setAttribute('download', filenameEdit || filename)
 
   document.body.appendChild(link)
   link.click()
-  
   document.body.removeChild(link)
 }
 

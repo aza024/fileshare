@@ -127,7 +127,7 @@ function login(username, password, hashed_password, res) {
                 }
             }
         )
-      }); 
+    }); 
 }
 
 app.get('/user', (req,res) => {
