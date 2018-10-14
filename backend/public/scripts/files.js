@@ -77,11 +77,9 @@ downloadBtn = (filename, fileid) => {
     downloadfile(username, 
       filename,
       (res) => {
-          //get data field
-          console.log('in down onlcick')
           const extension = filename.split('.').pop();
+          // TODO: Revisit to implement image uploads
           if (extension == 'txt') {
-            //fix
               createdownload(decodeUtf8(res.Body.data), filename)
           } else {
             console.log('We are only able to upload .txt files. Uploading other file types has not yet been implemented')
@@ -90,6 +88,32 @@ downloadBtn = (filename, fileid) => {
       (res) => {console.log('Error')}
     )
   })
+}
+
+deleteBtn = (filename, fileid) => {
+  const username = localStorage.getItem('username')
+  let deleteBtn = $(`#${fileid}Btn`)
+
+  deleteBtn.append(
+    `<form>
+      <button class="deleteBtn" id=${fileid}deleteBtn >Delete</button>
+    </form>`
+  )
+
+  $(`#${fileid}deleteBtn`).on('click',() => {
+    $.ajax({
+      dataType: 'json',
+      type: 'GET',
+      url:`/files/delete/${username}/${filename}`,
+      data: {username, filename},
+      headers: {
+        "Authorization": 'Bearer ' + localStorage.getItem('usertoken')
+      },
+      done: console.log('INFO: File deleted'),
+      fail: console.log('ERROR: Unable to delete file')
+    })
+    }
+  )
 }
   class FileDisplayManager{
     constructor(fileList) {
@@ -222,10 +246,12 @@ downloadBtn = (filename, fileid) => {
               <div class = "dlBtnAppend" id = ${fileid}Btn></div>
               <h3>Last Modified Date: ${formattedDate}</h3>
               <h3>Size: ${file.size} </h3>
+              <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
             </div>
           </div>`)
 
         downloadBtn(file.filename, fileid)
+        deleteBtn(file.filename, fileid)
       }
     } 
   } //end fileDisplayManager
@@ -323,12 +349,15 @@ loadLoginPage = () => {
       location.reload()
     })
 
-
+    console.log(localStorage.getItem('usertoken'))
     $.ajax({
         dataType: 'json',
         method: 'GET',
         url:`/listfiles/${username}`,
         data:{username},
+        headers: {
+          "Authorization": 'Bearer ' + localStorage.getItem('usertoken')
+        },
         success: (res)=>{
           let files = res.Contents
 
@@ -395,18 +424,18 @@ createFile = () => {
   document.body.removeChild(link)
 }
 
-  $('.trigger').click(function() {
+  $('.trigger').click(() => {
     $('.modal-wrapper').toggleClass('open')
     $('.page-wrapper').toggleClass('blur')
     return false;
   })
 
-  $('#downloadNewFile').click(function(){
+  $('#downloadNewFile').click(() => {
     createFile();
     return false;
   })
 
-  $('#uploadNewFile').click((e)=>{
+  $('#uploadNewFile').click((e) => {
     e.preventDefault();
     let filename = $('#createFileForm').serialize();
       // username = localStorage.getItem('username'),  
@@ -419,4 +448,5 @@ createFile = () => {
       () => {console.log("ERR: Files couldn't be sent.")}
     )
   })
+
 

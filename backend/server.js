@@ -56,8 +56,8 @@ app.get('/files/:username/:filename', (req, res)=>{
         res.json(data)
     })
 })
-
-app.get('/listfiles/:username', (req, res)=> {
+//call jwt token
+app.get('/listfiles/:username', verifyToken, (req, res)=> {
     const username = encodeURIComponent(req.params.username)
     console.log('INFO: Handling list files req for: ' + username)
 
@@ -274,6 +274,42 @@ app.post('/account', verifyToken, (req,res) => {
     })
 })
 
+app.get('/files/delete/:username/:filename', verifyToken,(req,res)=>{      
+    const username = req.params.username,
+        filename = req.params.filename
+    
+    jwt.verify(req.token, 'secretkey', (err, authData)=>{
+            if(err) {
+                console.log('Delete Err')
+                res.sendStatus(403)
+            } else {
+                res.json({
+                    message:'File Deleted',
+                    authData
+                })
+                var deleteParam = {
+                    Bucket: 'fileshare-uploads',
+                 
+                    Delete: {
+                        Objects: [
+                            {Key: `userfiles/${username}/${filename}`},
+                        ]
+                    }
+                };    
+                s3.deleteObjects(deleteParam, function(err, data) {
+                    if(err){ 
+                        console.log(err, err.stack) 
+                        return (err)
+                    }
+                    else{
+                        console.log('delete', data)
+                        res.end('done')
+                    }
+                });
+            }
+        })
+})
+
 
 //verify token ** take with app.post ** 
 function verifyToken (req, res, next) {
@@ -290,6 +326,8 @@ function verifyToken (req, res, next) {
         res.sendStatus(403)
     }
 }
+
+
 
 app.listen(3001, () => {
     console.log('Listening on port 3001')
