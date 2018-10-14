@@ -231,6 +231,8 @@ decodeUtf8 = (data) => {
   );
 }
 
+
+
 loadLoginPage = () => {
     $.ajax({
         dataType: 'json',
@@ -279,6 +281,8 @@ loadLoginPage = () => {
               function(){
                   console.log("INFO:Files successfully sent!");
                   // res.status(200)
+                  // displayManager = new FileDisplayManager([])
+                  // loadLoginPage()
               },
               function(){
                   console.log("ERR: Files couldn't be sent.");
@@ -308,9 +312,13 @@ loadLoginPage = () => {
       }),
       
       $('.logout').on('click',()=>{
+        localStorage.removeItem('username')
+        localStorage.removeItem('useremail')
         localStorage.removeItem('logged-in')
         localStorage.removeItem('usertoken')
         loggedIn = false
+
+        location.reload()
       })
     // end logged in condition
     )
@@ -322,7 +330,7 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-function createdownload(data,filename) {
+createdownload = (data,filename) => {
   const 
     filenameEdit = filename,
     url = window.URL.createObjectURL(new Blob([data])),
@@ -354,10 +362,10 @@ createFile = () => {
 }
 
   $('.trigger').click(function() {
-    $('.modal-wrapper').toggleClass('open');
-    $('.page-wrapper').toggleClass('blur');
+    $('.modal-wrapper').toggleClass('open')
+    $('.page-wrapper').toggleClass('blur')
     return false;
-  });
+  })
 
   $('#downloadNewFile').click(function(){
     createFile();

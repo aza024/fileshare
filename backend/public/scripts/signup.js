@@ -106,11 +106,11 @@ $('#signin-form').on('submit',function(e){
             console.log('Error:' + JSON.stringify(res))
         }
     })
-}
-)
+})
 
 $('#sign-up-submit').on('click', function(e){
         e.preventDefault();
+
         let username = ($('#signup-username').val()),
             email = ($('#signup-email').val()),
             password = ($('#signup-password').val())
