@@ -1,20 +1,20 @@
 // Global Variables
 let 
   loggedIn = localStorage.getItem('logged-in'),
-  username = localStorage.getItem('username')
-    
-  var sorted = $('#sortListOpts').val();
-  var selected = $('#sortListOpts :selected').text();
+  username = localStorage.getItem('username') 
+var 
+  sorted = $('#sortListOpts').val(),
+  selected = $('#sortListOpts :selected').text();
 
   String.prototype.hexEncode = function(){
-    var hex, i;
-
-    var result = "";
-    for (i=0; i<this.length; i++) {
+    var 
+      hex, 
+      i,
+      result = "";
+    for (i = 0; i < this.length; i++) {
         hex = this.charCodeAt(i).toString(16);
         result += ("000"+hex).slice(-4);
     }
-
     return result
 }
 //Replace inappropriate file characters with URI readable characters
@@ -206,85 +206,98 @@ $('#search').keyup(function(){
  });
 
 
-if (loggedIn = true){
-  $.ajax({
-    dataType: 'json',
-    method: 'GET',
-    url:`/listfiles/${username}`,
-    data:{username},
-    success: (res)=>{
-      let files = res.Contents
+ downloadFile = () => {
 
-      for(let i =0; i < files.length; i++){
-        let
-          modified = (files[i].LastModified),
-          key = (files[i].Key),
-          size = (files[i].Size),
-          filename = key.replace(/^.*[\\\/]/, '')
-          extension = filename.split('.').pop();
-      
-          displayManager.addFile({
-            modified,
-            key,
-            size,
-            filename,
-            extension
-          })
-      }
-      displayManager.sortMostRec()
-      displayManager.display()
-    },
-    error: (res)=>{
-      console.log('ERR: Unable to retrieve files ' + JSON.stringify(res))
-    }
-}, //end ajax
+ }
 
-// File Upload
-  $('#uploadBtn').on('click',(e)=>{
-      e.preventDefault();
-      $.ajax({
-          url: `/files/${username}`, 
-          type: 'POST',
-          data: new FormData($('#uploadbanner')[0]), 
-          processData: false,
-          contentType: false                   
-        })
-        .done(function(){
-          console.log("INFO: Files successfully sent!");
-          res.status(200)
-        })
-        .fail(function(){
-          console.log("ERR: Files couldn't be sent.");
-          res.status(500)
-        });
-  }),
-//get file content
-  $('.downBtn').on('click',(e)=>{
+
+loadLoginPage = () => {
     $.ajax({
         dataType: 'json',
         method: 'GET',
-        url:`/files/${username}/${filename}`,
-        data:{
-              username, 
-              filename
-            },
+        url:`/listfiles/${username}`,
+        data:{username},
         success: (res)=>{
-          console.log('INFO: Success '+ res)
-          res.status(200)
+          let files = res.Contents
+
+          for(let i =0; i < files.length; i++){
+            let
+              modified = (files[i].LastModified),
+              key = (files[i].Key),
+              size = (files[i].Size),
+              filename = key.replace(/^.*[\\\/]/, '')
+              extension = filename.split('.').pop();
+          
+              displayManager.addFile({
+                modified,
+                key,
+                size,
+                filename,
+                extension
+              })
+          }
+          displayManager.sortMostRec()
+          displayManager.display()
         },
-        error: (res) =>{
-          console.log('ERR: Unable to download files for user ' + username +' file ' + filename)
-          res.status(400)
+        error: (res)=>{
+          console.log('ERR: Unable to retrieve files ' + JSON.stringify(res))
         }
-    })
-  }),
-  $('.logout').on('click',()=>{
-    localStorage.removeItem('logged-in')
-    localStorage.removeItem('usertoken')
-    loggedIn = false
-  })
-// end logged in condition
-)
+    }, //end ajax
+
+    // File Upload
+      $('#uploadBtn').on('click',(e)=>{
+          e.preventDefault();
+          let 
+          username = localStorage.getItem('username'),
+
+          filename = $('#createFileForm').serialize()
+          const data = new FormData($('#uploadbanner')[0])
+
+          uploadFile(
+              filename,
+              data, 
+              function(){
+                  console.log("INFO:Files successfully sent!");
+                  // res.status(200)
+              },
+              function(){
+                  console.log("ERR: Files couldn't be sent.");
+                  // res.status(200)
+              }
+            )
+      }),
+    //get file content
+      $('.downBtn').on('click',(e)=>{
+        $.ajax({
+            dataType: 'json',
+            method: 'GET',
+            url:`/files/${username}/${filename}`,
+            data:{
+                  username, 
+                  filename
+                },
+            success: (res)=>{
+              console.log('INFO: Success '+ res)
+              res.status(200)
+            },
+            error: (res) =>{
+              console.log('ERR: Unable to download files for user ' + username +' file ' + filename)
+              res.status(400)
+            }
+        })
+      }),
+      
+      $('.logout').on('click',()=>{
+        localStorage.removeItem('logged-in')
+        localStorage.removeItem('usertoken')
+        loggedIn = false
+      })
+    // end logged in condition
+    )
+}
+
+if (loggedIn = true){
+  loadLoginPage()
 } else {
     let children = $('.filesInfo').remove()
 }
@@ -332,19 +345,27 @@ function createFile() {
     let 
       username = localStorage.getItem('username'),
       filename = $('#createFileForm').serialize()
-   
-    $.ajax({
-        url: `/files/${username}`, 
-        type: 'POST',
-        data: new FormData($('#createFileForm')[0]), 
-        processData: false,
-        contentType: false                   
-      })
-      .done(function(){
-        console.log("INFO:Files successfully sent!");
-      })
-      .fail(function(){
-        console.log("ERR: Files couldn't be sent.");
-      });
-      return
+      const data = new FormData($('#createFileForm')[0])
+      uploadFile(filename, data, 
+        function(){
+          console.log("INFO:Files successfully sent!");
+        },
+        function(){
+          console.log("ERR: Files couldn't be sent.");
+        }
+    )
   })
+
+uploadFile = (filename, data, done, fail) => {
+  const username = localStorage.getItem('username')
+   
+  $.ajax({
+    url: `/files/${username}`, 
+    type: 'POST',
+    data, 
+    processData: false,
+    contentType: false                   
+  })
+  .done(done)
+  .fail(fail);
+}
