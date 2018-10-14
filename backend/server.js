@@ -77,10 +77,10 @@ app.get('/listfiles/:username', (req, res)=> {
         for (let i=0 ; i<data.Contents.length ; i++) {
             let decodedFilename = decodeURIComponent(data.Contents[i].Key)
             data.Contents[i].Key = decodedFilename
-            console.log('decoded ' + decodedFilename)
+            console.log('INFO: Decoded File: ' + decodedFilename)
         }
 
-        console.log('INFO: Retrieved list of files ' + JSON.stringify(data))
+        console.log('INFO: Retrieved list of files: ' + JSON.stringify(data))
         res.send(data)
     })
 })
@@ -180,7 +180,7 @@ app.post('/user/:username', (req,res) => {
                 }
                 console.log(psql_res)
                 if (psql_res.rows.length!=0) {
-                    console.log('Account already exists: ' + username)
+                    console.log('ERR: Account already exists: ' + username)
                     res.status(400)
                 } else {
                     //use uuid for jwt token
@@ -190,7 +190,7 @@ app.post('/user/:username', (req,res) => {
                                 [username, hash, email, user_id],
                             (err,psql_res) => {
                                 if (err) {
-                                    console.log('insert err' + JSON.stringify(err))
+                                    console.log('ERR:Insert err' + JSON.stringify(err))
                                     res.status(500)
                                     return
                                 }
@@ -200,14 +200,7 @@ app.post('/user/:username', (req,res) => {
                                     email
                                 }
                                 jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
-
-                                    console.log('IN SECRET KEY')
                                     res.json({token})
-                                    console.log('after token')
-                                    //GET REQUEST
-                                    console.log('before redir')
-                                    // res.redirect('/views/files.html')
-                                    console.log('after redir b4 windo.rep')
                                     window.location.replace('views/files.html')
                                     res.status(200)
                                 });
@@ -219,6 +212,7 @@ app.post('/user/:username', (req,res) => {
     )
 })
 
+//Get filename & file data from appropriate upload depending on where file is uploaded from
 app.post('/files/:username', upload.single('myfile'), (req, res) => {
     console.log(JSON.stringify(req.body))
 
@@ -239,18 +233,15 @@ app.post('/files/:username', upload.single('myfile'), (req, res) => {
         return
     }
 
-    // TODO: add username instead of hardcode: const username = req.body.username
     const username = req.params.username
-    // console.log(req.body)
 
     if (!username){
-        console.log("Username required")
+        console.log("ERR: Username required")
         res.sendStatus(400)
         return
     }
 
     const urlName = encodeURIComponent(name)
-    console.log("uploading data")
     const params = {
         Bucket: "fileshare-uploads",
         Key: `userfiles/${username}/${urlName}`,
