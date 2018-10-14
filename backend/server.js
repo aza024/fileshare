@@ -71,6 +71,15 @@ app.get('/listfiles/:username', (req, res)=> {
             res.sendStatus(500)
             return 
         }
+
+        // Filenames were URI encoded before upload, decode so they are
+        // readable by humans
+        for (let i=0 ; i<data.Contents.length ; i++) {
+            let decodedFilename = decodeURIComponent(data.Contents[i].Key)
+            data.Contents[i].Key = decodedFilename
+            console.log('decoded ' + decodedFilename)
+        }
+
         console.log('INFO: Retrieved list of files ' + JSON.stringify(data))
         res.send(data)
     })
@@ -211,8 +220,25 @@ app.post('/user/:username', (req,res) => {
 })
 
 app.post('/files/:username', upload.single('myfile'), (req, res) => {
-    const name = req.file.originalname
-    const data = req.file.buffer
+    console.log(JSON.stringify(req.body))
+
+    let name = null,
+        data = null
+
+    if(!req.file){
+        name = req.body.filename
+        data = req.body.content
+    } else{
+        name = req.file.originalname
+        data = req.file.buffer
+    }
+
+    if(!name || !data){
+        console.log('ERR: Name or Data not valid')
+        res.sendStatus(400)
+        return
+    }
+
     // TODO: add username instead of hardcode: const username = req.body.username
     const username = req.params.username
     // console.log(req.body)

@@ -157,15 +157,16 @@
 				<form id ="createFileForm">
 					<p>
 						<label for="filename">Filename</label>
-						<input placeholder="filename.txt" type="text" id="filename" />
+						<input name="filename" placeholder="filename.txt" type="text" id="filename" />
 					</p>
 					<p>
 						<label for="txt">Document</label>
-						<textarea id="txt"></textarea>
+						<textarea name="content" id="txt"></textarea>
 					</p>
-					<p>
+				
+						<button id="uploadNewFile" type="submit">Upload </button>
 						<button id="downloadNewFile" type="submit">Download </button>
-					</p>
+					
 				</form>
 				
 		</div>

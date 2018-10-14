@@ -6,6 +6,14 @@ let
   var sorted = $('#sortListOpts').val();
   var selected = $('#sortListOpts :selected').text();
 
+function escapeHtml(unsafe) {
+  return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
   class FileDisplayManager{
     constructor(fileList) {
       this.fileList = fileList.slice()
@@ -84,14 +92,18 @@ let
         const file = this.toDisplay[i]
         const fileid = file.filename.replace(
           '.','p'
+        ).replace(
+          '%20',' '
         )
+
+
         $('.filesInfo').append(
           `<div class = "fileInfo"> 
             <div class = "fileExt"> 
-              <h1>.${file.extension}</h1>
+              <h1>.${escapeHtml(file.extension)}</h1>
             </div>
             <div class = "fileDetail">
-              <h3>Filename: ${file.filename}</h3>
+              <h3>Filename: ${escapeHtml(file.filename)}</h3>
               <div class = "dlBtnAppend" id = ${fileid}Btn></div>
               <h3>Last Modified Date: ${file.modified}</h3>
               <h3>Size: ${file.size} </h3>
@@ -304,4 +316,27 @@ function createFile() {
   $('#downloadNewFile').click(function(){
     createFile();
     return false;
+  })
+
+  $('#uploadNewFile').click(function(e){
+    e.preventDefault();
+    let username = localStorage.getItem('username')
+    let filename = $('#createFileForm').serialize()
+    console.log(filename)
+    
+    // console.log(username)
+    $.ajax({
+        url: `/files/${username}`, 
+        type: 'POST',
+        data: new FormData($('#createFileForm')[0]), 
+        processData: false,
+        contentType: false                   
+      })
+      .done(function(){
+        console.log("Success: Files sent!");
+      })
+      .fail(function(){
+        console.log("An error occurred, the files couldn't be sent!");
+      });
+      return
   })
