@@ -68,7 +68,7 @@ downloadBtn = (filename, fileid) => {
   let filenameBtn = $(`#${fileid}Btn`)
   
   filenameBtn.append(
-    `<form onsubmit="createdownload();return false;">
+    `<form>
       <button class="downBtn" id=${fileid}DwBtn >Download</button>
     </form>`
   )
@@ -78,9 +78,14 @@ downloadBtn = (filename, fileid) => {
       filename,
       (res) => {
           //get data field
-          createdownload(decodeUtf8(res.Body.data),filename)
-          console.log('INFO: Downloaded File: ' + decodeUtf8(res.Body.data))
-          // TODO: HANDLE - (res.Body.data.length >= 65535){
+          console.log('in down onlcick')
+          const extension = filename.split('.').pop();
+          if (extension == 'txt') {
+            //fix
+              createdownload(decodeUtf8(res.Body.data), filename)
+          } else {
+            console.log('We are only able to upload .txt files. Uploading other file types has not yet been implemented')
+          }
         },
       (res) => {console.log('Error')}
     )
