@@ -273,9 +273,7 @@ decodeUtf8 = (data) => {
   );
 }
 
-
 uploadButtonOnClick = (element) => {
-
     // File Upload
     // '#uploadBtn'
     $(element).on('click',(e)=>{
@@ -309,8 +307,6 @@ uploadButtonOnClick = (element) => {
           }
         )
   })
-
-
 }
 
 loadLoginPage = () => {
@@ -359,8 +355,7 @@ loadLoginPage = () => {
           console.log('ERR: Unable to retrieve files ' + JSON.stringify(res))
         }
     }
-    // end logged in condition
-    )
+  )
 }
 
 if (loggedIn = true){
