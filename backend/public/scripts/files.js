@@ -1,30 +1,90 @@
-// Global Variables
+// -----------------------------------------
+// ---------- Global Variables -------------
+// -----------------------------------------
+
 let 
   loggedIn = localStorage.getItem('logged-in'),
   username = localStorage.getItem('username') 
+
 var 
   sorted = $('#sortListOpts').val(),
   selected = $('#sortListOpts :selected').text();
 
+// -----------------------------------------
+// ---------- Global Functions -------------
+// -----------------------------------------
+  // Does not work with ES6
   String.prototype.hexEncode = function(){
     var 
       hex, 
       i,
       result = "";
+
     for (i = 0; i < this.length; i++) {
         hex = this.charCodeAt(i).toString(16);
         result += ("000"+hex).slice(-4);
     }
+
     return result
 }
-//Replace inappropriate file characters with URI readable characters
-function escapeHtml(unsafe) {
+
+//Replace difficult characters with URI readable characters
+escapeHtml = (unsafe) => {
   return unsafe
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+uploadFile = (filename, data, done, fail) => {
+  const username = localStorage.getItem('username')
+  
+  $.ajax({
+    url: `/files/${username}`, 
+    type: 'POST',
+    data, 
+    processData: false,
+    contentType: false                   
+  })
+  .done(done)
+  .fail(fail);
+}
+
+downloadfile = (username, filename, success, error) => {
+  $.ajax({
+    dataType: 'json',
+    method: 'GET',
+    url:`/files/${username}/${filename}`,
+    success,
+    error
+  })
+}
+
+
+downloadBtn = (filename, fileid) => {
+  const username = localStorage.getItem('username')
+  let filenameBtn = $(`#${fileid}Btn`)
+  
+  filenameBtn.append(
+    `<form onsubmit="createdownload();return false;">
+      <button class="downBtn" id=${fileid}DwBtn >Download</button>
+    </form>`
+  )
+
+  $(`#${fileid}DwBtn`).on('click',(e)=>{
+    downloadfile(username, 
+      filename,
+      (res) => {
+          //get data field
+          createdownload(decodeUtf8(data),filename)
+          console.log('INFO: Downloaded File: ' + decodeUtf8(data))
+          // TODO: HANDLE - (res.Body.data.length >= 65535){
+        },
+      (res) => {console.log('Error')}
+    )
+  })
 }
   class FileDisplayManager{
     constructor(fileList) {
@@ -36,7 +96,7 @@ function escapeHtml(unsafe) {
       this.fileList.push(file)
       this.toDisplay.push(file)
     }
-
+    
     sortMostRec(){
       this.toDisplay.sort((a, b) => {
         if (a.modified > b.modified) return -1;
@@ -100,6 +160,7 @@ function escapeHtml(unsafe) {
 
     display(){
       $('.filesInfo').empty()
+
       for (let i =0; i<this.toDisplay.length; i++) {
         const 
           file = this.toDisplay[i],
@@ -121,44 +182,13 @@ function escapeHtml(unsafe) {
               <h3>Size: ${file.size} </h3>
             </div>
           </div>`)
-          downloadBtn(file.filename, fileid)
+
+        downloadBtn(file.filename, fileid)
       }
     } 
-  } 
+  } //end fileDisplayManager
 
-  downloadBtn = (filename, fileid) => {
-    const username = localStorage.getItem('username')
-    let filenameBtn = $(`#${fileid}Btn`)
-      filenameBtn.append(`
-      <form onsubmit="createdownload();return false;">
-      <button class="downBtn" id=${fileid}DwBtn >Download</button>
-      </form>`)
-
-    $(`#${fileid}DwBtn`).on('click',(e)=>{
-      $.ajax({
-        dataType: 'json',
-        method: 'GET',
-        url:`/files/${username}/${filename}`,
-        success: (res)=>{
-          //get data field
-          createdownload(decodeUtf8(res.Body.data),filename)
-          console.log('INFO: Downloaded File: ' + decodeUtf8(res.Body.data))
-          // if (res.Body.data.length >= 65535){
-          //   console.log('File is too large to display')
-          //   return
-          // } else {
-          //   let fileContent = String.fromCharCode.apply(null, res.Body.data)
-          //   //display file content 
-          //   console.log(fileContent )
-          // }
-        },
-        error: (res) =>{
-          console.log('Error')
-        }
-      })
-    })
-  }
-
+  
   $('#search').keyup(function(){
     let str = $(this).val()
       displayManager.search(str)
@@ -168,48 +198,38 @@ function escapeHtml(unsafe) {
   $('#sortListOpts').on('change', function() {
     let opt = $(this).val()
 
-    if (opt === '1'){
-      displayManager.sortMostRec()
-    } else if(opt === '2'){
-      displayManager.sortLeastRec()
-    } else if(opt === '3'){
-      displayManager.sortAlpha()
-    } else if(opt === '4'){
-      displayManager.sortRevAlpha()
-    } else if(opt === '5'){
-      displayManager.sortSizeLow()
-    } else if(opt === '6'){
-      displayManager.sortSizeHigh()
-    } 
-     else {
-      console.log('Invalid Option')
-    }
+      if (opt === '1'){
+        displayManager.sortMostRec()
+      } else if(opt === '2'){
+        displayManager.sortLeastRec()
+      } else if(opt === '3'){
+        displayManager.sortAlpha()
+      } else if(opt === '4'){
+        displayManager.sortRevAlpha()
+      } else if(opt === '5'){
+        displayManager.sortSizeLow()
+      } else if(opt === '6'){
+        displayManager.sortSizeHigh()
+      } 
+      else {
+        console.log('Invalid Option')
+      }
 
     displayManager.display()
   })
 
 let displayManager = new FileDisplayManager([]) 
-//Global Functions
+
 // Text conversion: decode bytes to utf-8 string
-function pad(segment) { 
-    return (segment.length < 2 ? '0' + segment : segment); 
-  }
-function decodeUtf8(data) {
+pad = (segment) => { 
+  return (segment.length < 2 ? '0' + segment : segment); 
+}
+
+decodeUtf8 = (data) => {
   return decodeURIComponent(
     data.map(byte => ('%' + pad(byte.toString(16)))).join('')
   );
 }
-
-$('#search').keyup(function(){
-  let to_display = []
-  const searchTerm = ($(this).val())
- });
-
-
- downloadFile = () => {
-
- }
-
 
 loadLoginPage = () => {
     $.ajax({
@@ -302,7 +322,6 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-//
 function createdownload(data,filename) {
   const 
     filenameEdit = filename,
@@ -311,21 +330,26 @@ function createdownload(data,filename) {
 
   link.href = url
   link.setAttribute('download', filenameEdit || filename)
+
   document.body.appendChild(link)
   link.click()
+  
   document.body.removeChild(link)
 }
 
-function createFile() {
+createFile = () => {
   const 
     data = document.getElementById('txt').value,
     filename = document.getElementById('filename').value,
     url = window.URL.createObjectURL(new Blob([data])),
     link = document.createElement('a')
+
   link.href = url
   link.setAttribute('download', filename || `filename.txt`)
+
   document.body.appendChild(link)
   link.click()
+
   document.body.removeChild(link)
 }
 
@@ -340,32 +364,16 @@ function createFile() {
     return false;
   })
 
-  $('#uploadNewFile').click(function(e){
+  $('#uploadNewFile').click((e)=>{
     e.preventDefault();
-    let 
-      username = localStorage.getItem('username'),
-      filename = $('#createFileForm').serialize()
-      const data = new FormData($('#createFileForm')[0])
-      uploadFile(filename, data, 
-        function(){
-          console.log("INFO:Files successfully sent!");
-        },
-        function(){
-          console.log("ERR: Files couldn't be sent.");
-        }
+    let filename = $('#createFileForm').serialize();
+      // username = localStorage.getItem('username'),  
+    const data = new FormData($('#createFileForm')[0]);
+
+    uploadFile(
+      filename, 
+      data, 
+      () => {console.log("INFO:Files successfully sent!")},
+      () => {console.log("ERR: Files couldn't be sent.")}
     )
   })
-
-uploadFile = (filename, data, done, fail) => {
-  const username = localStorage.getItem('username')
-   
-  $.ajax({
-    url: `/files/${username}`, 
-    type: 'POST',
-    data, 
-    processData: false,
-    contentType: false                   
-  })
-  .done(done)
-  .fail(fail);
-}
