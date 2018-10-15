@@ -386,3 +386,8 @@
 .fileInfo{
   border: 1px solid black;
 }
+
+img{
+  width: 250px;
+  height: 250px;
+}

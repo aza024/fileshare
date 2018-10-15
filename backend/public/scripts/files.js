@@ -273,10 +273,15 @@ class FileDisplayManager{
             },
             (res) => {console.log('Error')}
           )
+
           $(`.${fileid}Wrapper`).hide()
+          $('#picPreview').append(`<button class ="closePicPrev">Close</button>`)
           
-          // $(`.${fileid}fileInfo`).hide()
+          $('.closePicPrev').on('click',()=>{
+            $('#picPreview').hide()
+          })
           
+          $(`.${fileid}Wrapper`).show()
         })
 
         downloadBtn(file.filename, fileid)
@@ -284,6 +289,7 @@ class FileDisplayManager{
     }
   } 
 } //end fileDisplayManager
+
 
 isImage = (extension) => {
   return extension === 'png' ||
