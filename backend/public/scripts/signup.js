@@ -175,6 +175,11 @@ signInVal = () => {
     }
 }
 
+validateEmail= (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 signUpVal = () => {
     let 
         username = document.getElementById('signup-username').value,
@@ -187,27 +192,32 @@ signUpVal = () => {
     console.log(email)
 
     if (username == '' || password == '' || email == '' ){
-        document.getElementById("signup-errMsg").innerHTML = "Please complete the form."
+        document.getElementById("signup-errMsg").innerHTML = "Please complete the form.";
         return false;
     }
     // } else if (name.length <= 4 || name.length >= 30){
     //     document.getElementById("signup-errMsg").innerHTML = "Username must be between 4 - 30 characters "
     //     return false
     // } 
-    else if (email.length > 60) {
-        document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters"
-        return false
-    }
+   else if (email.length > 60) {
+        document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters";
+        return false;
+    } 
     else if (strongRegex.test(password) == false){
-        document.getElementById("signup-errMsg").innerHTML = "Password must be eight characters or logner and contain a lowercase letter, an uppercase letter, one numeric character and one special character."
-        return false
+        document.getElementById("signup-errMsg").innerHTML = "Password must be between eight and thirty characters, contain a lowercase letter, an uppercase letter, one numeric character and one special character.";
+        return false;
     }
+
+    if(email.indexOf('@')<=0){
+        document.getElementById("signup-errMsg").innerHTML =
+        "Email requires an @ sign";
+        return false;
+    }
+    
     // TODO: CHECK TO SEE IF WE HAVE AN EXISTING USER W. SAME CREDENTIALS
     // else if (console.log){
     //     document.getElementById("signup-errMsg").innerHTML = "An existing user has with those credentials."
     //     return false;
     // } 
-    else {
-        return true; 
-    }
+    
 }

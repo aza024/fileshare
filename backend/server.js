@@ -105,7 +105,7 @@ function login(username, password, hashed_password, res) {
             (err,psql_res) => {
                 if (psql_res.rows.length === 0) {
                     console.log('ERR: Username or password is incorrect.')
-                    res.status(400)
+                    res.status(400).json({error : "Username or password is incorrect."})
                 } else {
                     //redirect to page with results from query
                     const user = {
@@ -146,7 +146,7 @@ app.get('/user', (req,res) => {
 
         if (psql_res.rows.length === 0 ){
             console.log('INFO: Username does not exist')
-            res.status(400)
+            res.status(400).json({error : 'Username does not exist'})
             return
         }
 
