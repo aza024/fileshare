@@ -109,38 +109,40 @@ $('#signin-form').on('submit',function(e){
 })
 
 $('#sign-up-submit').on('click', function(e){
-    e.preventDefault();
+        // e.preventDefault();
     
-    let username = ($('#signup-username').val()),
-        email = ($('#signup-email').val()),
-        password = ($('#signup-password').val())
+        let username = ($('#signup-username').val()),
+            email = ($('#signup-email').val()),
+            password = ($('#signup-password').val())
 
-    if(username != '' && email != '' && password !=''){
+    if(username == '' || email == '' || password == ''){
+        console.log('Please complete all fields')
+    } else {
 
-            $.ajax({
-                dataType: 'json',
-                method: 'POST',
-                // changed from /user
-                url:`/user/${username}`,
-                data:{
-                    username,
-                    email,
-                    password
-                },
-                success: function(res){
-                    let token = res.token
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('usertoken', token);
-                    localStorage.setItem('useremail', email);
-            
-                    $form_modal.removeClass('is-visible');
-                    $('.profile-page').addClass('is-visible')
-                    $('.landing-page').css('display','none')
+        $.ajax({
+            dataType: 'json',
+            method: 'POST',
+            // changed from /user
+            url:`/user/${username}`,
+            data:{
+                username,
+                email,
+                password
+            },
+            success: function(res){
+                let token = res.token
+                localStorage.setItem('username', username);
+                localStorage.setItem('usertoken', token);
+                localStorage.setItem('useremail', email);
+        
+                $form_modal.removeClass('is-visible');
+                $('.profile-page').addClass('is-visible')
+                $('.landing-page').css('display','none')
 
-                    localStorage.setItem('logged-in', true);
-                },
-                error: function(res){console.log('Error:' + JSON.stringify(res))}
-            })
+                localStorage.setItem('logged-in', true);
+            },
+            error: function(res){console.log('Error:' + JSON.stringify(res))}
+        })
     }
 })
 

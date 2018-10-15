@@ -65,7 +65,7 @@
 <!-- ========================================================== -->
 				<div id="signup">
 					<form class="form" id='signup-form' onsubmit = "return signUpVal();">
-					<div id = "signup-errMsg">This is where errs are</div>
+					<div id = "signup-errMsg"> Errs</div>
 						<p class="fieldset">
 							<label class="image-replace username" for="signup-username">Username</label>
 
@@ -84,7 +84,7 @@
 						<p class="fieldset">
 							<label class="image-replace password" for="signup-password">Password</label>
 							
-							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password" required = "required">
+							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password" required="required">
 							
 							<a href="#0" class="hide-password"  required>Show</a>
 							
@@ -113,7 +113,7 @@
 		<!-- FILE UPLOAD FORM -->
 			<div class="fileUploadForm">
 				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
-					<input id="fileupload" name="myfile" type="file"  required/>
+					<input id="fileupload" name="myfile" type="file"  required="required"/>
 					<input type="submit" value="Upload" id="uploadBtn" />
 				</form>
 			</div>
@@ -149,49 +149,34 @@
 	
 
 	<!-- LIST FILES -->
-		<div class = "file">
-			<!-- <div id = "picPreview"> -->
-				
+		<div class = "file"></div>
+		<div class = "filesInfo"></div>
+			<div class="page-wrapper">
+				<a class="btn trigger">New Document</a>
 			</div>
-			<div class = "filesInfo"></div>
+			
+			<div class="modal-wrapper">
+				<div class="modal">
+					<div class="head">
+						<a class="btn-close trigger"></a>
+					</div>
+					<div class="createFileModal">
+						<form id ="createFileForm">
+							<p>
+								<label for="filename">Filename</label>
+								<input name="filename"placeholder="filename.txt" type="text"id="filename" />
+							</p>
+							<p>
+								<label for="txt">Document</label>
+								<textarea name="content"id="txt"></textarea>
+							</p>
+							<button id="uploadNewFile" type="submit">Upload </button>	
+							<button id="downloadNewFile" type="submit">Download </button>	
+						</form>	
+					</div>
+				</div>
+			</div>
 		</div>
-
-
-	<!-- CREATE FILE -->
-
-	<!-- MODAL -->
-	<div class="page-wrapper">
-		<a class="btn trigger">New Document</a>
-	</div>
-
-	<div class="modal-wrapper">
-		<div class="modal">
-		<div class="head">
-			<a class="btn-close trigger"></a>
-		</div>
-
-		<div class="createFileModal">
-				<form id ="createFileForm">
-					<p>
-						<label for="filename">Filename</label>
-						<input name="filename" placeholder="filename.txt" type="text" id="filename" />
-					</p>
-					<p>
-						<label for="txt">Document</label>
-						<textarea name="content" id="txt"></textarea>
-					</p>
-				
-						<button id="uploadNewFile" type="submit">Upload </button>
-						<button id="downloadNewFile" type="submit">Download </button>
-					
-				</form>
-				
-		</div>
-		</div>
-	</div>
-	<!-- END MODAL -->
-
-
 
 	<!-- END PROFILE PAGE DIV -->
 	</div>
