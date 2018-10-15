@@ -232,51 +232,53 @@ class FileDisplayManager{
         formattedDate = formatted.toISOString().substring(0, 10);
 
       $('.filesInfo').append(
-        `<div class = "fileInfo"> 
-          <div class = "fileExt"> 
-            <h1>.${escapeHtml(file.extension)}</h1>
+        `<div class = ${fileid}Wrapper>
+          <div class = "${fileid}fileInfo"> 
+            <div class = "fileExt"> 
+              <h1>.${escapeHtml(file.extension)}</h1>
+            </div>
+            <div class = "fileDetail">
+              <h3>Filename: ${escapeHtml(file.filename)}</h3>
+              <div class = "dlBtnAppend" id = ${fileid}Btn></div>
+              <h3>Last Modified Date: ${formattedDate}</h3>
+              <h3>Size: ${file.size} </h3>
+              <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
+              <div class = "${fileid}prevbtn"></div>
+            </div>
           </div>
-          <div class = "fileDetail">
-            <h3>Filename: ${escapeHtml(file.filename)}</h3>
-            <div class = "dlBtnAppend" id = ${fileid}Btn></div>
-            <h3>Last Modified Date: ${formattedDate}</h3>
-            <h3>Size: ${file.size} </h3>
-            <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
-            <div class = "${fileid}prevbtn"></div>
-          </div>
-        </div>`)
+        `
+      )
         
         
         if (isImage(file.extension)) {
-
+          // $(`.${fileid}fileInfo`).css('background-color','red')
           $(`.${fileid}prevbtn`).append(
-          `
-          <div id = "preview">
-            <button id = "${fileid}prevBtn"> Preview </button>
-          </div>
-          `)
-
-          // previewFile(res.Body.data, filename)
+            `<div id = "preview">
+              <button id = "${fileid}prevBtn"> Preview </button>
+            </div>`
+          )
         }
 
         $(`#${fileid}prevBtn`).on('click',()=>{
-          console.log('prev')
           const username = localStorage.getItem('username')
-          downloadfile(username, 
+          
+          downloadfile(
+            username, 
             file.filename,
             (res) => {
               const extension = file.extension;
-
               if (isImage(extension)) {
                 previewFile(res.Body.data, filename)
               }
             },
             (res) => {console.log('Error')}
           )
-
-          // addDiv()
+          $(`.${fileid}Wrapper`).hide()
+          
+          // $(`.${fileid}fileInfo`).hide()
+          
         })
-      
+
         downloadBtn(file.filename, fileid)
         deleteBtn(file.filename, fileid)
     }
@@ -428,20 +430,15 @@ if (loggedIn = true){
 }
 
 function previewFile(arr, filename) {
-  var byteArray = new Uint8Array(arr);
+  let byteArray = new Uint8Array(arr),
+      objTo = document.getElementById('picPreview'),
+      divtest = document.createElement("img"),
+      img = document.createElement('img')
   const 
-    filenameEdit = filename,
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
     link = document.createElement('a')
 
-  let img = document.createElement('img')
-  // set src to object url created above
   img.setAttribute('src', url)
-  // add image to the page
-  // document.body.appendChild(img)
-
-  var objTo = document.getElementById('preview')
-  var divtest = document.createElement("img");
   divtest.setAttribute ('src', url)
   objTo.appendChild(divtest)
 }
@@ -453,17 +450,6 @@ createdownload = (arr, filename) => {
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
     link = document.createElement('a')
 
-    //   // create element of type image for img
-    // let img = document.createElement('img')
-    // // set src to object url created above
-    // img.setAttribute('src', url)
-    // // add image to the page
-    // document.body.appendChild(img)
-// -------------
-
-
-
-// ----------------
   link.href = url
   link.setAttribute('download', filenameEdit || filename)
 
