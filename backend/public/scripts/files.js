@@ -110,177 +110,215 @@ deleteBtn = (filename, fileid) => {
     }
   )
 }
-  class FileDisplayManager{
-    constructor(fileList) {
-      this.fileList = fileList.slice()
-      this.toDisplay = fileList.slice()
-      this.currentSearch = null
-      this.currentSort = null
-    }
+class FileDisplayManager{
+  constructor(fileList) {
+    this.fileList = fileList.slice()
+    this.toDisplay = fileList.slice()
+    this.currentSearch = null
+    this.currentSort = null
+  }
 
-    clear(){
-      this.fileList.length = 0
-      this.toDisplay.length = 0
-    }
+  clear(){
+    this.fileList.length = 0
+    this.toDisplay.length = 0
+  }
 
-    addFile(file){
-      this.fileList.push(file)
-      this.toDisplay.push(file)
-    }
-    
-    sortMostRec(){
-      this.currentSort = 'MostRec'
-      this.toDisplay.sort((a, b) => {
-        if (a.modified > b.modified) return -1;
-        if (a.modified < b.modified) return 1;
-        return 0;
-      })
-    }
+  addFile(file){
+    this.fileList.push(file)
+    this.toDisplay.push(file)
+  }
+  
+  sortMostRec(){
+    this.currentSort = 'MostRec'
+    this.toDisplay.sort((a, b) => {
+      if (a.modified > b.modified) return -1;
+      if (a.modified < b.modified) return 1;
+      return 0;
+    })
+  }
 
-    sortLeastRec(){
-      this.currentSort = 'LeastRec'
-      this.toDisplay.sort((a, b) => {
-        if (a.modified < b.modified) return -1;
-        if (a.modified > b.modified) return 1;
-        return 0;
-      })
-    }
-    
-    sortSizeLow(){
-      this.currentSort = 'SizeLow'
-      this.toDisplay.sort((a, b) => {
-        if (a.size < b.size) return -1;
-        if (a.size > b.size) return 1;
-        return 0;
-      })
-    }
+  sortLeastRec(){
+    this.currentSort = 'LeastRec'
+    this.toDisplay.sort((a, b) => {
+      if (a.modified < b.modified) return -1;
+      if (a.modified > b.modified) return 1;
+      return 0;
+    })
+  }
+  
+  sortSizeLow(){
+    this.currentSort = 'SizeLow'
+    this.toDisplay.sort((a, b) => {
+      if (a.size < b.size) return -1;
+      if (a.size > b.size) return 1;
+      return 0;
+    })
+  }
 
-    sortSizeHigh(){
-      this.currentSort = 'SizeHigh'
-      this.toDisplay.sort((a, b) => {
-        if (a.size > b.size) return -1;
-        if (a.size < b.size) return 1;
-        return 0;
-      })
-    }
+  sortSizeHigh(){
+    this.currentSort = 'SizeHigh'
+    this.toDisplay.sort((a, b) => {
+      if (a.size > b.size) return -1;
+      if (a.size < b.size) return 1;
+      return 0;
+    })
+  }
 
-    sortAlpha(){
-      this.currentSort = 'Alpha'
-      this.toDisplay.sort((a, b) => {
-        if (a.filename < b.filename) return -1;
-        if (a.filename > b.filename) return 1;
-        return 0;
-      })
-    }
+  sortAlpha(){
+    this.currentSort = 'Alpha'
+    this.toDisplay.sort((a, b) => {
+      if (a.filename < b.filename) return -1;
+      if (a.filename > b.filename) return 1;
+      return 0;
+    })
+  }
 
-    sortRevAlpha(){
-      this.currentSort = 'RevAlpha'
-      this.toDisplay.sort((a, b) => {
-        if (a.filename > b.filename) return -1;
-        if (a.filename < b.filename) return 1;
-        return 0;
-      })
-    }
+  sortRevAlpha(){
+    this.currentSort = 'RevAlpha'
+    this.toDisplay.sort((a, b) => {
+      if (a.filename > b.filename) return -1;
+      if (a.filename < b.filename) return 1;
+      return 0;
+    })
+  }
 
-    reSort() {
-      if (this.currentSort == 'MostRec') {
-        this.sortMostRec()
+  reSort() {
+    if (this.currentSort == 'MostRec') {
+      this.sortMostRec()
+    }
+    else if (this.currentSort == 'LeastRec') {
+      this.sortLeastRec()
+    }
+    else if (this.currentSort == 'SizeLow') {
+      this.sortSizeLow()
+    }
+    else if (this.currentSort == 'SizeHigh') {
+      this.sortSizeHigh()
+    }
+    else if (this.currentSort == 'Alpha') {
+      this.sortAlpha()
+    }
+    else if (this.currentSort == 'RevAlpha') {
+      this.sortRevAlpha()
+    }
+  }
+
+  search(searchStr){
+    let str = searchStr || this.currentSearch
+
+    this.currentSearch = str
+    this.toDisplay = []
+    for(let i = 0; i < this.fileList.length; i++){
+      let 
+      file = this.fileList[i], 
+      filename = file.filename
+
+      if(filename.indexOf(str)!=-1){
+        this.toDisplay.push(file)
       }
-      else if (this.currentSort == 'LeastRec') {
-        this.sortLeastRec()
-      }
-      else if (this.currentSort == 'SizeLow') {
-        this.sortSizeLow()
-      }
-      else if (this.currentSort == 'SizeHigh') {
-        this.sortSizeHigh()
-      }
-      else if (this.currentSort == 'Alpha') {
-        this.sortAlpha()
-      }
-      else if (this.currentSort == 'RevAlpha') {
-        this.sortRevAlpha()
-      }
     }
+  }
 
-    search(searchStr){
-      let str = searchStr || this.currentSearch
+  display(){
+    $('.filesInfo').empty()
 
-      this.currentSearch = str
-      this.toDisplay = []
-      for(let i = 0; i < this.fileList.length; i++){
-        let 
-        file = this.fileList[i], 
-        filename = file.filename
+    for (let i =0; i<this.toDisplay.length; i++) {
+      const 
+        file = this.toDisplay[i],
+        fileid = file.filename.hexEncode(),
+        modified = file.modified
+      let 
+        formatted = new Date(modified),
+        formattedDate = formatted.toISOString().substring(0, 10);
 
-        if(filename.indexOf(str)!=-1){
-          this.toDisplay.push(file)
+      $('.filesInfo').append(
+        `<div class = "fileInfo"> 
+          <div class = "fileExt"> 
+            <h1>.${escapeHtml(file.extension)}</h1>
+          </div>
+          <div class = "fileDetail">
+            <h3>Filename: ${escapeHtml(file.filename)}</h3>
+            <div class = "dlBtnAppend" id = ${fileid}Btn></div>
+            <h3>Last Modified Date: ${formattedDate}</h3>
+            <h3>Size: ${file.size} </h3>
+            <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
+            <div class = "${fileid}prevbtn"></div>
+          </div>
+        </div>`)
+        
+        
+        if (isImage(file.extension)) {
+
+          $(`.${fileid}prevbtn`).append(
+          `
+          <div id = "preview">
+            <button id = "${fileid}prevBtn"> Preview </button>
+          </div>
+          `)
+
+          // previewFile(res.Body.data, filename)
         }
-      }
-    }
 
-    display(){
-      $('.filesInfo').empty()
+        $(`#${fileid}prevBtn`).on('click',()=>{
+          console.log('prev')
+          const username = localStorage.getItem('username')
+          downloadfile(username, 
+            file.filename,
+            (res) => {
+              const extension = file.extension;
 
-      for (let i =0; i<this.toDisplay.length; i++) {
-        const 
-          file = this.toDisplay[i],
-          fileid = file.filename.hexEncode(),
-          modified = file.modified
-        let 
-          formatted = new Date(modified),
-          formattedDate = formatted.toISOString().substring(0, 10);
+              if (isImage(extension)) {
+                previewFile(res.Body.data, filename)
+              }
+            },
+            (res) => {console.log('Error')}
+          )
 
-        $('.filesInfo').append(
-          `<div class = "fileInfo"> 
-            <div class = "fileExt"> 
-              <h1>.${escapeHtml(file.extension)}</h1>
-            </div>
-            <div class = "fileDetail">
-              <h3>Filename: ${escapeHtml(file.filename)}</h3>
-              <div class = "dlBtnAppend" id = ${fileid}Btn></div>
-              <h3>Last Modified Date: ${formattedDate}</h3>
-              <h3>Size: ${file.size} </h3>
-              <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
-            </div>
-            <div id = "preview">PREVIEW</div>
-          </div>`)
-
+          // addDiv()
+        })
+      
         downloadBtn(file.filename, fileid)
         deleteBtn(file.filename, fileid)
-      }
-    } 
-  } //end fileDisplayManager
+    }
+  } 
+} //end fileDisplayManager
 
-  
-  $('#search').keyup(function(){
-    let str = $(this).val()
-      displayManager.search(str)
-      displayManager.display()
-  })
+isImage = (extension) => {
+  return extension === 'png' ||
+  extension === 'jpg' ||
+  extension === 'gif'
 
-  $('#sortListOpts').on('change', function() {
-    let opt = $(this).val()
+}
 
-      if (opt === '1'){
-        displayManager.sortMostRec()
-      } else if(opt === '2'){
-        displayManager.sortLeastRec()
-      } else if(opt === '3'){
-        displayManager.sortAlpha()
-      } else if(opt === '4'){
-        displayManager.sortRevAlpha()
-      } else if(opt === '5'){
-        displayManager.sortSizeLow()
-      } else if(opt === '6'){
-        displayManager.sortSizeHigh()
-      } 
-      else {
-        console.log('Invalid Option')
-      }
 
+$('#search').keyup(function(){
+  let str = $(this).val()
+    displayManager.search(str)
     displayManager.display()
-  })
+})
+
+$('#sortListOpts').on('change', function() {
+  let opt = $(this).val()
+
+    if (opt === '1'){
+      displayManager.sortMostRec()
+    } else if(opt === '2'){
+      displayManager.sortLeastRec()
+    } else if(opt === '3'){
+      displayManager.sortAlpha()
+    } else if(opt === '4'){
+      displayManager.sortRevAlpha()
+    } else if(opt === '5'){
+      displayManager.sortSizeLow()
+    } else if(opt === '6'){
+      displayManager.sortSizeHigh()
+    } 
+    else {
+      console.log('Invalid Option')
+    }
+
+  displayManager.display()
+})
 
 let displayManager = new FileDisplayManager([]) 
 
@@ -389,6 +427,25 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
+function previewFile(arr, filename) {
+  var byteArray = new Uint8Array(arr);
+  const 
+    filenameEdit = filename,
+    url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
+    link = document.createElement('a')
+
+  let img = document.createElement('img')
+  // set src to object url created above
+  img.setAttribute('src', url)
+  // add image to the page
+  // document.body.appendChild(img)
+
+  var objTo = document.getElementById('preview')
+  var divtest = document.createElement("img");
+  divtest.setAttribute ('src', url)
+  objTo.appendChild(divtest)
+}
+
 createdownload = (arr, filename) => {
   var byteArray = new Uint8Array(arr);
   const 
@@ -403,20 +460,8 @@ createdownload = (arr, filename) => {
     // // add image to the page
     // document.body.appendChild(img)
 // -------------
-function addDiv() {
-  let img = document.createElement('img')
-  // set src to object url created above
-  img.setAttribute('src', url)
-  // add image to the page
-  // document.body.appendChild(img)
 
-  var objTo = document.getElementById('preview')
-  var divtest = document.createElement("img");
-  divtest.setAttribute ('src', url)
-  objTo.appendChild(divtest)
-}
 
-addDiv()
 
 // ----------------
   link.href = url
@@ -426,6 +471,7 @@ addDiv()
   link.click()
   document.body.removeChild(link)
 }
+
 
 createFile = () => {
   const 
