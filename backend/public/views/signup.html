@@ -32,50 +32,62 @@
 				</ul>
 
 				<div id="login">
-					<form class="form" id="signin-form">
+					<form class="form" id="signin-form" onsubmit = "return signInVal();">
+					<div id= "signin-errMsg"></div>	
 						<p class="fieldset">
-							<label class="image-replace email" for="signin-username">E-mail</label>
-							<input class="full-width has-padding has-border"  id="signin-username" name="signin-username" placeholder="Username">
+							<label class="image-replace username" for="signin-username">Username</label>
+
+							<input class="full-width has-padding has-border"  id="signin-username" name="signin-username" placeholder="Username"  required="required">
+
 							<span class="error-message">An account with this username address does not exist!</span>
 
 						</p>
 
 						<p class="fieldset">
 							<label class="image-replace password" for="signin-password">Password</label>
-							<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password">
+
+							<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password"  required="required">
+
 							<a href="#0" class="hide-password">Show</a>
 							<span class="error-message">Incorrect password! Please try again.</span>
 						</p>
 
-						<p class="fieldset">
+						<!-- <p class="fieldset">
 							<input type="checkbox" id="remember-me" checked>
 							<label for="remember-me">Remember me</label>
-						</p>
+						</p> -->
 
 						<p class="fieldset">
 							<input class="full-width" type="submit" value="Login">
 						</p>
 					</form>
 				</div>
-
+<!-- ========================================================== -->
 				<div id="signup">
-					<form class="form" id='signup-form'>
+					<form class="form" id='signup-form' onsubmit = "return signUpVal();">
+					<div id = "signup-errMsg">This is where errs are</div>
 						<p class="fieldset">
 							<label class="image-replace username" for="signup-username">Username</label>
-							<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username">
+
+							<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username" required="required">
 							<span class="error-message">Please enter a valid username!</span>
 						</p>
 
 						<p class="fieldset">
 							<label class="image-replace email" for="signup-email">E-mail</label>
-							<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="Official E-mail">
-							<span class="error-message">Enter a valid official email address!</span>
+							
+							<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="E-mail"  required="required">
+							
+							<span class="error-message">Enter a valid email address!</span>
 						</p>
 
 						<p class="fieldset">
 							<label class="image-replace password" for="signup-password">Password</label>
-							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password">
-							<a href="#0" class="hide-password">Show</a>
+							
+							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password" required = "required">
+							
+							<a href="#0" class="hide-password"  required>Show</a>
+							
 							<span class="error-message">Your password has to be at least 6 characters long!</span>
 						</p>
 
@@ -93,15 +105,15 @@
 	<!-- FILE UPLOAD -->
 	<div class = "profile-page"> 
 		<nav>
-				<h1>Fileshare</h1>
-				<button class = "logout">Logout</button>
-				<hr>
+			<h1>Fileshare</h1>
+			<button class = "logout">Logout</button>
+			<hr>
 		</nav>
 
 		<!-- FILE UPLOAD FORM -->
 			<div class="fileUploadForm">
 				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
-					<input id="fileupload" name="myfile" type="file" />
+					<input id="fileupload" name="myfile" type="file"  required/>
 					<input type="submit" value="Upload" id="uploadBtn" />
 				</form>
 			</div>

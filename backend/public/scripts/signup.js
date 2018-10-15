@@ -82,7 +82,6 @@ var $form_modal = $('.user-modal'),
 
 // Validate user in DB
 $('#signin-form').on('submit',function(e){
-    console.log('I AM IN SIGNIN')
     e.preventDefault();
     let username = ($('#signin-username').val()),
         password = ($('#signin-password').val())
@@ -110,35 +109,76 @@ $('#signin-form').on('submit',function(e){
 })
 
 $('#sign-up-submit').on('click', function(e){
-        e.preventDefault();
+    e.preventDefault();
+    
+    let username = ($('#signup-username').val()),
+        email = ($('#signup-email').val()),
+        password = ($('#signup-password').val())
 
-        let username = ($('#signup-username').val()),
-            email = ($('#signup-email').val()),
-            password = ($('#signup-password').val())
+    if(username != '' && email != '' && password !=''){
 
-        $.ajax({
-            dataType: 'json',
-            method: 'POST',
-            // changed from /user
-            url:`/user/${username}`,
-            data:{
-                username,
-                email,
-                password
-            },
-            success: function(res){
-                let token = res.token
-                localStorage.setItem('username', username);
-                localStorage.setItem('usertoken', token);
-                localStorage.setItem('useremail', email);
-        
-                $form_modal.removeClass('is-visible');
-                $('.profile-page').addClass('is-visible')
-                $('.landing-page').css('display','none')
+            $.ajax({
+                dataType: 'json',
+                method: 'POST',
+                // changed from /user
+                url:`/user/${username}`,
+                data:{
+                    username,
+                    email,
+                    password
+                },
+                success: function(res){
+                    let token = res.token
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('usertoken', token);
+                    localStorage.setItem('useremail', email);
+            
+                    $form_modal.removeClass('is-visible');
+                    $('.profile-page').addClass('is-visible')
+                    $('.landing-page').css('display','none')
 
-                localStorage.setItem('logged-in', true);
-            },
-            error: function(res){console.log('Error:' + JSON.stringify(res))}
-        })
+                    localStorage.setItem('logged-in', true);
+                },
+                error: function(res){console.log('Error:' + JSON.stringify(res))}
+            })
     }
-)
+})
+
+// sign in form validation
+signInVal = () => {
+    var username = document.getElementById('signin-username').value
+    var password = document.getElementById('signin-password').value
+
+    console.log(username)
+    console.log(password)
+
+    if (username == '' || password == '' ){
+        document.getElementById("signin-errMsg").innerHTML = "Please enter a username or password."
+        return false;
+    } else if (console.log){
+        document.getElementById("signin-errMsg").innerHTML = "Username or password is incorrect."
+        return false;
+    } else {
+        return true; 
+    }
+}
+
+signUpVal = () => {
+    var username = document.getElementById('signup-username').value
+    var password = document.getElementById('signup-password').value
+    var email = document.getElementById('signup-email').value
+
+    console.log(username)
+    console.log(password)
+    console.log(email)
+
+    if (username == '' || password == '' || email == '' ){
+        document.getElementById("signup-errMsg").innerHTML = "Please complete the form."
+        return false;
+    } else if (console.log){
+        document.getElementById("signup-errMsg").innerHTML = "Username or password is incorrect."
+        return false;``
+    } else {
+        return true; 
+    }
+}
