@@ -109,7 +109,7 @@ $('#signin-form').on('submit',function(e){
 })
 
 $('#sign-up-submit').on('click', function(e){
-        // e.preventDefault();
+        e.preventDefault();
     
     let username = ($('#signup-username').val()),
         email = ($('#signup-email').val()),
@@ -147,7 +147,8 @@ $('#sign-up-submit').on('click', function(e){
             error: function(res){
                 console.log('RES', res)
                 console.log('Error:' + JSON.stringify(res))
-                document.getElementById("signin-errMsg").innerHTML = "Account already exists with provided username or email."
+                document.getElementById("signup-errMsg").innerHTML = "Account already exists with provided username or email."
+                console.log('acct exist')
             }
         })
     }
@@ -199,11 +200,11 @@ signUpVal = () => {
     //     document.getElementById("signup-errMsg").innerHTML = "Username must be between 4 - 30 characters "
     //     return false
     // } 
-   else if (email.length > 60) {
+    if (email.length > 60) {
         document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters";
         return false;
     } 
-    else if (strongRegex.test(password) == false){
+    if (strongRegex.test(password) == false){
         document.getElementById("signup-errMsg").innerHTML = "Password must be between eight and thirty characters, contain a lowercase letter, an uppercase letter, one numeric character and one special character.";
         return false;
     }
