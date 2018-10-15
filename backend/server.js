@@ -68,7 +68,7 @@ app.get('/listfiles/:username', verifyToken, (req, res)=> {
     (err,data)=>{
         if(err){
             console.log("ERR: S3.listFile " + err)
-            res.sendStatus(500)
+            res.status(500)
             return 
         }
 
@@ -181,7 +181,7 @@ app.post('/user/:username', (req,res) => {
                 console.log(psql_res)
                 if (psql_res.rows.length!=0) {
                     console.log('ERR: Account already exists: ' + username)
-                    res.status(400)
+                    res.status(400).json({ error : 'ERR: Account already exists: ' + username })
                 } else {
                     //use uuid for jwt token
                     const user_id = uuidv4() 
@@ -190,8 +190,8 @@ app.post('/user/:username', (req,res) => {
                                 [username, hash, email, user_id],
                             (err,psql_res) => {
                                 if (err) {
-                                    console.log('ERR:Insert err' + JSON.stringify(err))
-                                    res.status(500)
+                                    console.log('ERR: Insert err' + JSON.stringify(err))
+                                    res.status(500).json({error : 'ERR: User already exists.'})
                                     return
                                 }
                                 const user = {
@@ -227,7 +227,7 @@ app.post('/files/:username', upload.single('myfile'), (req, res) => {
 
     if(!name || !data){
         console.log('ERR: Name or Data not valid')
-        res.sendStatus(400)
+        res.sendStatus(400).json({error: 'Invalid Name or Data'})
         return
     }
 
@@ -235,7 +235,7 @@ app.post('/files/:username', upload.single('myfile'), (req, res) => {
 
     if (!username){
         console.log("ERR: Username required")
-        res.sendStatus(400)
+        res.sendStatus(400).json({error : 'Username Required'})
         return
     }
 
@@ -323,11 +323,9 @@ function verifyToken (req, res, next) {
 
     } else {
         console.log('FORBIDDEN')
-        res.sendStatus(403)
+        res.sendStatus(403).json({error : 'ERR: Unauthorized to view this page'})
     }
 }
-
-
 
 app.listen(3001, () => {
     console.log('Listening on port 3001')

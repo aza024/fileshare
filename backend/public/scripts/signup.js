@@ -111,12 +111,14 @@ $('#signin-form').on('submit',function(e){
 $('#sign-up-submit').on('click', function(e){
         // e.preventDefault();
     
-        let username = ($('#signup-username').val()),
-            email = ($('#signup-email').val()),
-            password = ($('#signup-password').val())
+    let username = ($('#signup-username').val()),
+        email = ($('#signup-email').val()),
+        password = ($('#signup-password').val())
 
     if(username == '' || email == '' || password == ''){
         console.log('Please complete all fields')
+        document.getElementById('signup-errMsg').innerHTML = 'Please complete all form fields'
+        return false
     } else {
 
         $.ajax({
@@ -130,6 +132,7 @@ $('#sign-up-submit').on('click', function(e){
                 password
             },
             success: function(res){
+                console.log(res)
                 let token = res.token
                 localStorage.setItem('username', username);
                 localStorage.setItem('usertoken', token);
@@ -141,7 +144,11 @@ $('#sign-up-submit').on('click', function(e){
 
                 localStorage.setItem('logged-in', true);
             },
-            error: function(res){console.log('Error:' + JSON.stringify(res))}
+            error: function(res){
+                console.log('RES', res)
+                console.log('Error:' + JSON.stringify(res))
+                document.getElementById("signin-errMsg").innerHTML = "Account already exists with provided username or email."
+            }
         })
     }
 })
@@ -157,18 +164,23 @@ signInVal = () => {
     if (username == '' || password == '' ){
         document.getElementById("signin-errMsg").innerHTML = "Please enter a username or password."
         return false;
-    } else if (console.log){
-        document.getElementById("signin-errMsg").innerHTML = "Username or password is incorrect."
-        return false;
-    } else {
+    }
+        // TODO: Check to see if username exists
+    // } else if (){
+    //     document.getElementById("signin-errMsg").innerHTML = "Username or password is incorrect."
+    //     return false;
+    // }
+     else {
         return true; 
     }
 }
 
 signUpVal = () => {
-    var username = document.getElementById('signup-username').value
-    var password = document.getElementById('signup-password').value
-    var email = document.getElementById('signup-email').value
+    let 
+        username = document.getElementById('signup-username').value,
+        password = document.getElementById('signup-password').value
+        email = document.getElementById('signup-email').value,
+        strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
     console.log(username)
     console.log(password)
@@ -177,10 +189,25 @@ signUpVal = () => {
     if (username == '' || password == '' || email == '' ){
         document.getElementById("signup-errMsg").innerHTML = "Please complete the form."
         return false;
-    } else if (console.log){
-        document.getElementById("signup-errMsg").innerHTML = "Username or password is incorrect."
-        return false;``
-    } else {
+    }
+    // } else if (name.length <= 4 || name.length >= 30){
+    //     document.getElementById("signup-errMsg").innerHTML = "Username must be between 4 - 30 characters "
+    //     return false
+    // } 
+    else if (email.length > 60) {
+        document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters"
+        return false
+    }
+    else if (strongRegex.test(password) == false){
+        document.getElementById("signup-errMsg").innerHTML = "Password must be eight characters or logner and contain a lowercase letter, an uppercase letter, one numeric character and one special character."
+        return false
+    }
+    // TODO: CHECK TO SEE IF WE HAVE AN EXISTING USER W. SAME CREDENTIALS
+    // else if (console.log){
+    //     document.getElementById("signup-errMsg").innerHTML = "An existing user has with those credentials."
+    //     return false;
+    // } 
+    else {
         return true; 
     }
 }

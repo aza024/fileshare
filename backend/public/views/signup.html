@@ -14,8 +14,9 @@
 	</head>
 
   <body>
-
-	<!-- Main Page w. option to sign in or sign up -->
+<!-- ====================================== -->
+<!-- ==========LANDING PAGE===============  -->
+<!-- ====================================== -->
 	<div class = "landing-page">
 		<nav class="main-nav">
 			<ul>
@@ -62,14 +63,15 @@
 						</p>
 					</form>
 				</div>
-<!-- ========================================================== -->
+
 				<div id="signup">
 					<form class="form" id='signup-form' onsubmit = "return signUpVal();">
-					<div id = "signup-errMsg"> Errs</div>
+					<div id = "signup-errMsg"></div>
 						<p class="fieldset">
 							<label class="image-replace username" for="signup-username">Username</label>
 
 							<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username" required="required">
+
 							<span class="error-message">Please enter a valid username!</span>
 						</p>
 
@@ -101,7 +103,9 @@
 	<!-- END LANDING PAGE DIV -->
 	</div>
 
-	<!-- PROFILE PAGE START -->
+<!-- ====================================== -->
+<!-- ==========PROFILE PAGE================  -->
+<!-- ====================================== -->
 	<!-- FILE UPLOAD -->
 	<div class = "profile-page"> 
 		<nav>
@@ -111,12 +115,12 @@
 		</nav>
 
 		<!-- FILE UPLOAD FORM -->
-			<div class="fileUploadForm">
-				<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
-					<input id="fileupload" name="myfile" type="file"  required="required"/>
-					<input type="submit" value="Upload" id="uploadBtn" />
-				</form>
-			</div>
+		<div class="fileUploadForm">
+			<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
+				<input id="fileupload" name="myfile" type="file"  required="required"/>
+				<input type="submit" value="Upload" id="uploadBtn" />
+			</form>
+		</div>
 
 			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 
@@ -127,8 +131,7 @@
 				<input type="text" name="search" id="search" placeholder="Search"class="form-control" />
 			</div>
 			<ul class="list-group" id="result"></ul>
-			<ul class = "file-list" id = "result"></ul>
-			
+			<ul class = "file-list" id = "result"></ul>	
 		</div>
 
 	<div class = "sortList">
@@ -147,9 +150,8 @@
 		</form>
 	</div>
 	
-
 	<!-- LIST FILES -->
-		<div class = "file"></div>
+	<div class = "file"></div>
 		<div class = "filesInfo"></div>
 			<div class="page-wrapper">
 				<a class="btn trigger">New Document</a>
