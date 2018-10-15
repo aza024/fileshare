@@ -232,7 +232,8 @@ class FileDisplayManager{
         formattedDate = formatted.toISOString().substring(0, 10);
 
       $('.filesInfo').append(
-        `<div class = ${fileid}Wrapper>
+        `<div id = "${fileid}picPreview"></div>
+        <div class = ${fileid}Wrapper>
           <div class = "${fileid}fileInfo"> 
             <div class = "fileExt"> 
               <h1>.${escapeHtml(file.extension)}</h1>
@@ -261,6 +262,7 @@ class FileDisplayManager{
 
         $(`#${fileid}prevBtn`).on('click',()=>{
           const username = localStorage.getItem('username')
+
           
           downloadfile(
             username, 
@@ -268,20 +270,24 @@ class FileDisplayManager{
             (res) => {
               const extension = file.extension;
               if (isImage(extension)) {
-                previewFile(res.Body.data, filename)
+                previewFile(res.Body.data, filename, fileid)
               }
             },
             (res) => {console.log('Error')}
           )
 
           $(`.${fileid}Wrapper`).hide()
-          $('#picPreview').append(`<button class ="closePicPrev">Close</button>`)
-          
-          $('.closePicPrev').on('click',()=>{
-            $('#picPreview').hide()
+
+          $(`#${fileid}picPreview`).append(
+            `<button class ="${fileid}closePicPrev">Close</button>`
+          )
+
+          $(`.${fileid}closePicPrev`).on('click', () => {
+            $(`#${fileid}picPreview`).hide()
+            $(`.${fileid}Wrapper`).show()
           })
+
           
-          $(`.${fileid}Wrapper`).show()
         })
 
         downloadBtn(file.filename, fileid)
@@ -435,9 +441,9 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-function previewFile(arr, filename) {
+function previewFile(arr, filename,fileid) {
   let byteArray = new Uint8Array(arr),
-      objTo = document.getElementById('picPreview'),
+      objTo = document.getElementById(`${fileid}picPreview`),
       divtest = document.createElement("img"),
       img = document.createElement('img')
   const 
