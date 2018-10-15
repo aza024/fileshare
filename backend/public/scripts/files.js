@@ -271,18 +271,20 @@ class FileDisplayManager{
               const extension = file.extension;
               if (isImage(extension)) {
                 previewFile(res.Body.data, filename, fileid)
+                $(`.${fileid}Wrapper`).hide()
+
               }
             },
             (res) => {console.log('Error')}
           )
 
-          $(`.${fileid}Wrapper`).hide()
 
           $(`#${fileid}picPreview`).append(
             `<button class ="${fileid}closePicPrev">Close</button>`
           )
 
           $(`.${fileid}closePicPrev`).on('click', () => {
+            console.log('close click prev')
             $(`#${fileid}picPreview`).hide()
             $(`.${fileid}Wrapper`).show()
           })
