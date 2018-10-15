@@ -243,6 +243,7 @@ deleteBtn = (filename, fileid) => {
               <h3>Size: ${file.size} </h3>
               <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
             </div>
+            <div id = "preview">PREVIEW</div>
           </div>`)
 
         downloadBtn(file.filename, fileid)
@@ -395,14 +396,29 @@ createdownload = (arr, filename) => {
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
     link = document.createElement('a')
 
-    // create element for our img
+    //   // create element of type image for img
+    // let img = document.createElement('img')
+    // // set src to object url created above
+    // img.setAttribute('src', url)
+    // // add image to the page
+    // document.body.appendChild(img)
+// -------------
+function addDiv() {
   let img = document.createElement('img')
   // set src to object url created above
   img.setAttribute('src', url)
   // add image to the page
-  document.body.appendChild(img)
+  // document.body.appendChild(img)
 
+  var objTo = document.getElementById('preview')
+  var divtest = document.createElement("img");
+  divtest.setAttribute ('src', url)
+  objTo.appendChild(divtest)
+}
 
+addDiv()
+
+// ----------------
   link.href = url
   link.setAttribute('download', filenameEdit || filename)
 
