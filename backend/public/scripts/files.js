@@ -95,7 +95,7 @@ deleteBtn = (filename, fileid) => {
     </form>`
   )
 
-  $(`#${fileid}deleteBtn`).on('click',() => {
+  $(`#${fileid}deleteBtn`).on('click',(e) => {
     $.ajax({
       dataType: 'json',
       type: 'GET',
@@ -104,7 +104,12 @@ deleteBtn = (filename, fileid) => {
       headers: {
         "Authorization": 'Bearer ' + localStorage.getItem('usertoken')
       },
-      done: console.log('INFO: File deleted'),
+      done: () => {
+        // e.preventDefault()
+        removeFile(filename)
+        display()
+        console.log('INFO: File deleted')
+      },
       fail: console.log('ERROR: Unable to delete file')
     })
     }
@@ -121,6 +126,34 @@ class FileDisplayManager{
   clear(){
     this.fileList.length = 0
     this.toDisplay.length = 0
+  }
+
+  removeFile(filename){
+    let removeIdx = null
+    for(let i = 0; i < this.fileList.length; i++ ){
+      var file = this.fileList[i]
+      if (filename === file.filename){
+        removeIdx = i;
+        break;
+      }
+    }
+
+    if (removeIdx != null){
+      this.fileList.splice(removeIdx, 1)
+    }
+
+    removeIdx = null
+    for(let i = 0; i < this.toDisplay.length; i++ ){
+      var file = this.toDisplay[i]
+      if (filename === file.filename){
+        removeIdx = i;
+        break;
+      }
+    }
+
+    if (removeIdx != null){
+      this.toDisplay.splice(removeIdx, 1)
+    }
   }
 
   addFile(file){
@@ -222,7 +255,7 @@ class FileDisplayManager{
   display(){
     $('.filesInfo').empty()
 
-    for (let i =0; i<this.toDisplay.length; i++) {
+    for (let i =0; i < this.toDisplay.length; i++) {
       const 
         file = this.toDisplay[i],
         fileid = file.filename.hexEncode(),
@@ -349,10 +382,10 @@ decodeUtf8 = (data) => {
   );
 }
 
-uploadButtonOnClick = (element) => {
+uploadButtonOnClick = (e) => {
     // File Upload
     // '#uploadBtn'
-    $(element).on('click',(e)=>{
+    $(e).on('click',(e)=>{
       e.preventDefault();
       let 
       username = localStorage.getItem('username'),
@@ -443,7 +476,7 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-function previewFile(arr, filename,fileid) {
+previewFile = (arr, filename,fileid) => {
   let byteArray = new Uint8Array(arr),
       objTo = document.getElementById(`${fileid}picPreview`),
       divtest = document.createElement("img"),
