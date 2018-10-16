@@ -9,12 +9,12 @@
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
- .landingBody{height:100%;
-    /* width:100%; */
+ /* .landingBody{height:100%;
     background-image:url('/images/mainimage.jpg');
     background-repeat:no-repeat; 
     background-size:cover;
-  }
+    background-size:contain;
+  } */
 
   ul, li {
     margin: 0;
@@ -31,19 +31,21 @@
   flex-direction: flex-start;
   width: 25%;
 }
-  .cloudImg{
-    text-align: center;
-    width:150%;
-    height: 18%;
-    margin-top: 1.75em;
-  }
 
+.homeHeader, .homeName{
+  text-align: center;
+}
 
-  .authBtns{
+.paragraphs{
+  column-count: 3;
+}
+
+  .authbtns{
     display: flex;
     flex-direction: row-reverse;
     padding: none;
     margin: none;
+    align-content: center;
   }
 
   a.signup{
@@ -51,21 +53,28 @@
   }
   .main-nav {
     width: 90%;
-    max-width: 240px;
-    margin: 0 auto;
-    height: 100%;
+    /* max-width: 240px; */
+    /* margin: 0 auto; */
+    /* height: 100%; */
     cursor: pointer;
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
+  }
+ 
+
+  .clouds{
+    width:45%;
+    height: 40%;
   }
   .main-nav ul {
     /* position: absolute; */
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    /* flex-direction: row; */
+    align-content: center;
+    width: 300px;
     top: 40%;
     margin: 0;
-    padding: 0;
+    
   }
   .main-nav li {
       list-style: none;
@@ -79,6 +88,9 @@
     border-radius: 30px;
     line-height: 45px;
     color: #FFF;
+    width: 50%;
+    display: flex;
+    text-align: center;
       -webkit-transition: all 0.30s ease-in-out;
         /* -moz-transition: all 0.30s ease-in-out;
         -ms-transition: all 0.30s ease-in-out;
@@ -87,7 +99,7 @@
   
   .main-nav li:nth-child(1) a {
       background: #008080;
-      border: 2px solid #fff;
+      border: 2px solid #008080;
   }
   .main-nav li:nth-child(1) a:hover {
       background: #fff;
@@ -96,7 +108,7 @@
   
   .main-nav li:nth-child(2) a {
     background: #008080;
-      border: 2px solid #fff;
+    border: 2px solid #fff;
   }
   .main-nav li:nth-child(2) a:hover {
       background: #fff;
@@ -141,7 +153,7 @@
     width: 90%;
     max-width: 600px;
     background: #FFF;
-    /* margin: 3em auto 4em; */
+    margin: 3em auto 4em;
     cursor: auto;
     border-radius: 0.25em;
     -webkit-transform: translateY(-30px);
