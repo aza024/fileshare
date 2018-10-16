@@ -149,7 +149,7 @@ function login(username, password, hashed_password, res) {
                     
                     jwt.sign(
                         {user},
-                        'secretkey',
+                        process.env.SECRET_KEY,
                         { expiresIn: '12h'},
                         // TODO: Handle Err
                         (err,token) => {
@@ -234,7 +234,10 @@ app.post('/user/:username', (req,res) => {
                                     username,
                                     email
                                 }
-                                jwt.sign({user}, 'secretkey', { expiresIn: '12h'}, (err,token)=>{
+                                jwt.sign({user}, 
+                                    process.env.SECRET_KEY, 
+                                    { expiresIn: '12h'}, 
+                                    (err,token)=>{
                                     res.json({token})
                                     window.location.replace('views/files.html')
                                     res.status(200)
@@ -252,7 +255,9 @@ app.post('/user/:username', (req,res) => {
 app.post('/files/:username', 
     [verifyToken, upload.single('myfile')], 
     (req, res) => {
-        jwt.verify(req.token, 'secretkey', (err, authData)=>{
+        jwt.verify(req.token, 
+            process.env.SECRET_KEY, 
+            (err, authData)=>{
             if (err){
                 console.log('ERR: FORBIDDEN')
                 res.sendStatus(403).json({error: "FORBIDDEN"})
@@ -312,7 +317,9 @@ app.post('/files/:username',
 
 // #TODO change secret key and add to .env file
 app.post('/account', verifyToken, (req,res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData)=>{
+    jwt.verify(req.token, 
+        process.env.SECRET_KEY, 
+        (err, authData)=>{
         if(err) {
             res.sendStatus(403)
         } else {
@@ -331,7 +338,9 @@ app.get('/files/delete/:username/:filename/:uuid', verifyToken,(req,res)=>{
 
     console.log(`INFO: Handling delete for ${username}, filepath: ${filename}, ${uuid}`)
     
-    jwt.verify(req.token, 'secretkey', (err, authData)=>{
+    jwt.verify(req.token, 
+        process.env.SECRET_KEY, 
+        (err, authData)=>{
             if(err) {
                 console.log('Delete Err')
                 res.sendStatus(403)
