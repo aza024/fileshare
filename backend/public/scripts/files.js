@@ -274,23 +274,24 @@ class FileDisplayManager{
         formattedDate = formatted.toISOString().substring(0, 10);
 
       $('.filesInfo').append(
-        `<div id = "${fileId}picPreview"></div>
-          <div class = ${fileId}Wrapper>
-            <div class = "${fileId}fileInfo"> 
-              <div class = "fileExt"> 
-                <h1>.${escapeHtml(file.extension)}</h1>
-              </div>
-              <div class = "fileDetail">
-                <h3>Filename: ${escapeHtml(file.filename)}</h3>
-                <div class = "dlBtnAppend" id = ${fileId}Btn></div>
-                <h3>Last Modified Date: ${formattedDate}</h3>
-                <h3>Size: ${file.size} </h3>
-                <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
-                <div class = "${fileId}prevbtn"></div>
+        `
+          <div id = "${fileId}picPreview"></div>
+            <div class = ${fileId}Wrapper>
+              <div class = "${fileId}fileInfo"> 
+                <div class = "fileExt"> 
+                  <h1>.${escapeHtml(file.extension)}</h1>
+                </div>
+                <div class = "fileDetail">
+                  <h3 class="bold">Filename: ${escapeHtml(file.filename)}</h3>
+                  <div class = "dlBtnAppend" id = ${fileId}Btn></div>
+                  <h3>Last Modified Date: ${formattedDate}</h3>
+                  <h3>Size: ${file.size} </h3>
+                  <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
+                  <div class = "${fileId}prevbtn"></div>
 
                 <div class = "shareBtn">
-                  <button id ="${fileId}shareBtn">Share</button>
-                  <div class = "shareLink" id = "${fileId}shareLink">SHARE:</div>
+                  <button class = "filePgBtn" id ="${fileId}shareBtn">Share</button>
+                  <div class = "shareLink" id = "${fileId}shareLink"></div>
                 </div>
             </div>
           </div>
@@ -304,7 +305,7 @@ class FileDisplayManager{
           // $(`.${fileId}fileInfo`).css('background-color','red')
           $(`.${fileId}prevbtn`).append(
             `<div id = "preview">
-              <button id = "${fileId}prevBtn"> Preview </button>
+              <button class = "filePgBtn" id = "${fileId}prevBtn"> Preview </button>
             </div>`
           )
         }

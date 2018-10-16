@@ -139,31 +139,28 @@
 <!-- ====================================== -->
 	<!-- FILE UPLOAD -->
 	<div class = "profile-page"> 
-		<nav>
-			<h1>Fileshare</h1>
-			<button class = "logout">Logout</button>
-			<hr>
+		<nav class="profNav">
+			<h1 class="homeName">FileShare</h1>
+			<button id ="logoutBtn" class = "logout" >Logout</button>
 		</nav>
 
 		<!-- FILE UPLOAD FORM -->
+	<div class = "upSearch">
 		<div class="fileUploadForm">
 			<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
 				<input id="fileupload" name="myfile" type="file"  required="required"/>
 				<input type="submit" value="Upload" id="uploadBtn" />
 			</form>
 		</div>
-
-			<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
-
 		<!-- SEARCH -->
 		<div class = "searchBar">
 			<div>
-				<i class="fas fa-search"></i> 
 				<input type="text" name="search" id="search" placeholder="Search"class="form-control" />
 			</div>
 			<ul class="list-group" id="result"></ul>
 			<ul class = "file-list" id = "result"></ul>	
 		</div>
+	</div>
 
 	<div class = "sortList">
 		<form id = "sort">
@@ -203,8 +200,8 @@
 								<label for="txt">Document</label>
 								<textarea name="content"id="txt"></textarea>
 							</p>
-							<button id="uploadNewFile" type="submit">Upload </button>	
-							<button id="downloadNewFile" type="submit">Download </button>	
+							<button class = "filePgBtn" id="uploadNewFile" type="submit">Upload </button>	
+							<button class = "filePgBtn" id="downloadNewFile" type="submit">Download </button>	
 						</form>	
 					</div>
 				</div>

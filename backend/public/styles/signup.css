@@ -459,3 +459,60 @@ img{
   width: 250px;
   height: 250px;
 }
+
+.filePgBtn{
+  color: #008080;
+  border: 1px solid #008080;
+  font-size: 1.25em;
+  padding: .5em;
+  border-radius: 5px;
+}
+
+#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search{
+  font-size: 1.25em
+}
+.logout{
+  /* background-color: #008080; */
+  color: #008080;
+  border: 1px solid #008080;
+  /* padding: .5em; */
+  border-radius: 5px;
+  height: 1.5em;
+}
+
+
+.deleteBtn{
+  color: #800000;
+  /* padding: .5em; */
+  border: 1px solid #800000;
+  border-radius: 5px;
+}
+
+.downBtn, #uploadBtn{
+  font-family: 'Lato', sans-serif !important;
+  letter-spacing: 1.618px;
+  /* background-color: #54fca8; */
+  color: #008040;
+  border: 1px solid #008040;
+  padding: .5em;
+  border-radius: 5px;
+}
+
+.profNav{
+  display: flex;
+  flex-direction: row;
+}
+#logoutBtn.logout{
+  float: right;
+}
+
+.upSearch{
+  display: flex;
+}
+#search{
+  float: right !important;
+}
+
+.sortList{
+  float: right;
+}
