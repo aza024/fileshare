@@ -3,25 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>File SHaring!!!!</title>
+    <title>FileShare</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="/styles/publicShare.css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />-->
     <script src="/scripts/share.js" defer></script>
-
 </head>
+
 <body>
-    <div>
-        <button id="fileDownloadButton">
-            Download
-        </button>
+    <nav>
+        <div class = 'fileshare'>    
+            <!-- <i class="far fa-file"></i> -->
+            <i class="fas fa-cloud-download-alt"></i>
+            <h1> FileShare</h1>
+        </div>
+    </nav>
+    
+    <div id ="shareBkd">
+        <div id ="shareText"></div>
+        <button id="fileDownloadButton">Download</button>
+            <div id='previewDiv'></div>
+    
+
+        <div id = "shareMsg">
+            <h4>Not a member? Sign up <a href ="http://localhost:3001">here.</a></h4>
+        </div>
     </div>
-    
-    <div id='previewDiv'>
-    </div>
-    
-    
 </body>
 </html>
