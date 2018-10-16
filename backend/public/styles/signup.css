@@ -9,12 +9,12 @@
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
- .landingBody{height:100%;
-    /* width:100%; */
+ /* .landingBody{height:100%;
     background-image:url('/images/mainimage.jpg');
     background-repeat:no-repeat; 
     background-size:cover;
-  }
+    background-size:contain;
+  } */
 
   ul, li {
     margin: 0;
@@ -25,6 +25,11 @@
     text-align: center;
     font-size: 3em;
   }
+
+.landing-page{
+  display: flex;
+  /* flex-direction: row-reverse; */
+}
 .homeLogo{
   display: flex;
   justify-content: space-between;
@@ -33,15 +38,16 @@
 }
   .cloudImg{
     text-align: center;
-    width:150%;
-    height: 18%;
-    margin-top: 1.75em;
-  }
+    width:175%;
+    height: 15%;
+    /* margin-top: 1.75em; */
+    position: relative;
+  } 
 
 
   .authBtns{
-    display: flex;
-    flex-direction: row-reverse;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
     padding: none;
     margin: none;
   }
@@ -51,21 +57,21 @@
   }
   .main-nav {
     width: 90%;
-    max-width: 240px;
-    margin: 0 auto;
-    height: 100%;
+    /* max-width: 240px; */
+    /* margin: 0 auto; */
+    /* height: 100%; */
     cursor: pointer;
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
   }
   .main-nav ul {
     /* position: absolute; */
     display: flex;
     flex-direction: row;
-    width: 100%;
-    top: 40%;
-    margin: 0;
-    padding: 0;
+    /* width: 100%; */
+    /* top: 40%; */
+    /* margin: 0; */
+    /* padding: 0; */
   }
   .main-nav li {
       list-style: none;
@@ -141,7 +147,7 @@
     width: 90%;
     max-width: 600px;
     background: #FFF;
-    /* margin: 3em auto 4em; */
+    margin: 3em auto 4em;
     cursor: auto;
     border-radius: 0.25em;
     -webkit-transform: translateY(-30px);
