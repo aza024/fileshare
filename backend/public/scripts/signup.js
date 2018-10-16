@@ -115,9 +115,9 @@ $('#sign-up-submit').on('click', function(e){
         email = ($('#signup-email').val()),
         password = ($('#signup-password').val())
 
-    if(username == '' || email == '' || password == ''){
-        console.log('Please complete all fields')
-        document.getElementById('signup-errMsg').innerHTML = 'Please complete all form fields'
+    
+    if(!signUpVal()){
+        console.log('WARN: Invalid signup')
         return false
     } else {
 
@@ -147,7 +147,7 @@ $('#sign-up-submit').on('click', function(e){
             error: function(res){
                 console.log('RES', res)
                 console.log('Error:' + JSON.stringify(res))
-                document.getElementById("signup-errMsg").innerHTML = "Account already exists with provided username or email."
+                document.getElementById("si gnup-errMsg").innerHTML = "Account already exists with provided username or email."
                 console.log('acct exist')
             }
         })
@@ -162,16 +162,10 @@ signInVal = () => {
     console.log(username)
     console.log(password)
 
-    if (username == '' || password == '' ){
+    if (username == '' || password == ''){
         document.getElementById("signin-errMsg").innerHTML = "Please enter a username or password."
         return false;
-    }
-        // TODO: Check to see if username exists
-    // } else if (){
-    //     document.getElementById("signin-errMsg").innerHTML = "Username or password is incorrect."
-    //     return false;
-    // }
-     else {
+    } else {
         return true; 
     }
 }
@@ -181,12 +175,34 @@ validateEmail= (email) => {
     return re.test(String(email).toLowerCase());
 }
 
+validatePassword = (password) => {
+    if (password.length < 8 || password.length >= 64) {
+        return false
+    }
+
+    const specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*"]
+    let hasSpecialChar = false
+    for (let i = 0; i < specialCharacters.length; i++) {
+        const specialChar = specialCharacters[i];
+        if (password.indexOf(specialChar) != 0) {
+            hasSpecialChar == true
+            break
+        }
+        
+    }
+
+    if(!hasSpecialChar) {
+        return false
+    }
+
+    return true
+}
+
 signUpVal = () => {
     let 
         username = document.getElementById('signup-username').value,
         password = document.getElementById('signup-password').value
-        email = document.getElementById('signup-email').value,
-        strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+        email = document.getElementById('signup-email').value;
 
     console.log(username)
     console.log(password)
@@ -204,7 +220,7 @@ signUpVal = () => {
         document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters";
         return false;
     } 
-    if (strongRegex.test(password) == false){
+    if (validatePassword(password) == false){
         document.getElementById("signup-errMsg").innerHTML = "Password must be between eight and thirty characters, contain a lowercase letter, an uppercase letter, one numeric character and one special character.";
         return false;
     }
@@ -215,6 +231,8 @@ signUpVal = () => {
         return false;
     }
     
+    console.log('valid')
+    return true;
     // TODO: CHECK TO SEE IF WE HAVE AN EXISTING USER W. SAME CREDENTIALS
     // else if (console.log){
     //     document.getElementById("signup-errMsg").innerHTML = "An existing user has with those credentials."

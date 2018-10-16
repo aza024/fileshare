@@ -2,15 +2,19 @@
    <head>
     <meta charset="UTF-8">
 	<title>Fileshare</title>
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
       <!-- Custom Styles -->
 	  <link rel="stylesheet" media="screen" href="styles/signup.css" />
 	  <link rel="stylesheet" media="screen" href="styles/createfile.css" />
+
       <!-- Custom Script -->
 	  <script src="scripts/signup.js" defer></script> 
-	  <script src="/scripts/files.js" defer></script> 
-      <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+	  <script src="scripts/files.js" defer></script> 
+	  <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 	</head>
 
   <body>
@@ -18,9 +22,14 @@
 <!-- ==========LANDING PAGE===============  -->
 <!-- ====================================== -->
 	<div class = "landing-page">
-		<nav class="main-nav">
+		<div class = "homeHeader">
 			<h1>Fileshare</h1>
-			<ul>
+			<i class="fas fa-home"></i>
+			<i class="fa fa-laptop"></i>
+			<h3>Safely store and share text and image files</h3>
+		</div>
+		<nav class="main-nav">
+			<ul class = "authBtns">
 				<li><a class="signin" >Sign in</a></li>
 				<li><a class="signup">Sign up</a></li>
 			</ul>

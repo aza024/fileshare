@@ -4,21 +4,48 @@
     -x-box-sizing: border-box;
     box-sizing: border-box;
   }
-  
+*{
+  font-family: 'Source Sans Pro', sans-serif !important;
+}
+
+  body{height:100%;
+    width:100%;
+    background-image:url('/images/mainimage.jpg');/*your background image*/  
+    background-repeat:no-repeat;/*we want to have one single image not a repeated one*/  
+    background-size:cover;/*this sets the image to fullscreen covering the whole screen*/  
+    /*css hack for ie*/     
+  }
+
   ul, li {
     margin: 0;
     padding: 0;
   }
-  
+
+  .homeHeader{
+    text-align: center;
+    /* margin-top: 8em; */
+  }
+  .authBtns{
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  a.signup{
+    padding: 200px;
+  }
   .main-nav {
     width: 90%;
     max-width: 240px;
     margin: 0 auto;
     height: 100%;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
   }
   .main-nav ul {
     position: absolute;
+    display: flex;
+    flex-direction: row;
     width: 100%;
     top: 40%;
     margin: 0;
@@ -26,15 +53,14 @@
   }
   .main-nav li {
       list-style: none;
-      float: left;
   }
   .main-nav a {
     display: block;
     height: 50px;
-      margin: 10px;
-      padding: 2px 25px;
-      text-decoration: none;
-      border-radius: 30px;
+    margin: 10px;
+    padding: 2px 25px;
+    text-decoration: none;
+    border-radius: 30px;
     line-height: 45px;
     color: #FFF;
       -webkit-transition: all 0.30s ease-in-out;
