@@ -20,49 +20,59 @@
     margin: 0;
     padding: 0;
   }
-  .homeName{
+  .homeNavTxt{
     font-family: 'Roboto', sans-serif !important;
     text-align: center;
-    font-size: 3em;
+    font-size: 2em;
   }
 
 .landing-page{
   display: flex;
   /* flex-direction: row-reverse; */
 }
+
 .homeLogo{
   display: flex;
   justify-content: space-between;
   flex-direction: flex-start;
   width: 25%;
 }
-  .cloudImg{
-    text-align: center;
-    width:175%;
-    height: 15%;
-    /* margin-top: 1.75em; */
-    position: relative;
-  } 
+
+.safeStore, .cloudImg, .landingMain{
+  text-align: center;
+}
+
+.cloudImg{
+  width:175%;
+  height: 15%;
+  /* margin-top: 1.75em; */
+  position: relative;
+} 
 
 
   .authBtns{
-    /* display: flex; */
-    /* flex-direction: row-reverse; */
-    padding: none;
-    margin: none;
+    /* margin-left: 9em; */
+    display: flex;
+    align-content: center;
+    position: absolute;
+    top: 50%;
   }
-
+.safeStore{
+  align-content: center;
+  position: absolute;
+  top:65%;
+}
   a.signup{
     padding: 200px;
   }
   .main-nav {
     width: 90%;
-    /* max-width: 240px; */
-    /* margin: 0 auto; */
+    max-width: 280px;
+    margin: 0 auto;
     /* height: 100%; */
     cursor: pointer;
-    /* display: flex; */
-    /* flex-direction: row; */
+    display: flex;
+    flex-direction: column;
   }
   .main-nav ul {
     /* position: absolute; */
