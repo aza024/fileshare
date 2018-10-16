@@ -324,14 +324,18 @@ app.post('/account', verifyToken, (req,res) => {
     })
 })
 
-app.get('/files/delete/:username/:filename', verifyToken,(req,res)=>{      
+app.get('/files/delete/:username/:filename/:uuid', verifyToken,(req,res)=>{      
     const username = req.params.username,
-        filename = req.params.filename
+        filename = req.params.filename,
+        uuid = req.params.uuid
+
+    console.log(`INFO: Handling delete for ${username}, filepath: ${filename}, ${uuid}`)
     
     jwt.verify(req.token, 'secretkey', (err, authData)=>{
             if(err) {
                 console.log('Delete Err')
                 res.sendStatus(403)
+                return
             } else {
                 res.json({
                     message:'File Deleted',
@@ -342,13 +346,13 @@ app.get('/files/delete/:username/:filename', verifyToken,(req,res)=>{
                  
                     Delete: {
                         Objects: [
-                            {Key: `userfiles/${username}/${filename}`},
+                            {Key: `userfiles/${username}/${filename}__${uuid}`},
                         ]
                     }
                 };    
-                s3.deleteObjects(deleteParam, function(err, data) {
+                s3.deleteObjects(deleteParam, (err, data) => {
                     if(err){ 
-                        console.log(err, err.stack) 
+                        console.log('ERR: Delete req failed with '+ err)
                         return (err)
                     }
                     else{

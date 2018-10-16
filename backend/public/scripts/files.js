@@ -93,6 +93,7 @@ downloadBtn = (filename, fileId) => {
   })
 }
 
+
 deleteBtn = (filename, fileId) => {
   const username = localStorage.getItem('username')
   let deleteBtn = $(`#${fileId}Btn`)
@@ -107,8 +108,8 @@ deleteBtn = (filename, fileId) => {
     $.ajax({
       dataType: 'json',
       type: 'GET',
-      url:`/files/delete/${username}/${filename}`,
-      data: {username, filename},
+      url:`/files/delete/${username}/${filename}/${fileId}`,
+      // data: {username, filename, fileId},
       headers: {
         "Authorization": 'Bearer ' + localStorage.getItem('usertoken')
       },
@@ -274,25 +275,32 @@ class FileDisplayManager{
 
       $('.filesInfo').append(
         `<div id = "${fileId}picPreview"></div>
-        <div class = ${fileId}Wrapper>
-          <div class = "${fileId}fileInfo"> 
-            <div class = "fileExt"> 
-              <h1>.${escapeHtml(file.extension)}</h1>
-            </div>
-            <div class = "fileDetail">
-              <h3>Filename: ${escapeHtml(file.filename)}</h3>
-              <div class = "dlBtnAppend" id = ${fileId}Btn></div>
-              <h3>Last Modified Date: ${formattedDate}</h3>
-              <h3>Size: ${file.size} </h3>
-              <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
-              <div class = "${fileId}prevbtn"></div>
+          <div class = ${fileId}Wrapper>
+            <div class = "${fileId}fileInfo"> 
+              <div class = "fileExt"> 
+                <h1>.${escapeHtml(file.extension)}</h1>
+              </div>
+              <div class = "fileDetail">
+                <h3>Filename: ${escapeHtml(file.filename)}</h3>
+                <div class = "dlBtnAppend" id = ${fileId}Btn></div>
+                <h3>Last Modified Date: ${formattedDate}</h3>
+                <h3>Size: ${file.size} </h3>
+                <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
+                <div class = "${fileId}prevbtn"></div>
+
+                <div class = "shareBtn">
+                  <button id ="${fileId}shareBtn">Share</button>
+                  <div class = "shareLink" id = "${fileId}shareLink">SHARE:</div>
+                </div>
             </div>
           </div>
         `
       )
         
-        
-        if (isImage(file.extension)) {
+        //CALL FUNCTION HERE TODO 
+        shareBtn(file.filename, fileId)
+
+        if (isImage(file.extension) || isVideo(file.extension)) {
           // $(`.${fileId}fileInfo`).css('background-color','red')
           $(`.${fileId}prevbtn`).append(
             `<div id = "preview">
@@ -312,9 +320,11 @@ class FileDisplayManager{
             (res) => {
               const extension = file.extension;
               if (isImage(extension)) {
-                previewFile(res.Body.data, filename, fileId)
+                previewImage(res.Body.data, filename, fileId)
                 $(`.${fileId}Wrapper`).hide()
-
+              } else if (isVideo(file.extension)) {
+                previewVideo(res.Body.data, filename, fileId)
+                $(`.${fileId}Wrapper`).hide()
               }
             },
             (res) => {console.log('Error')}
@@ -343,8 +353,15 @@ class FileDisplayManager{
 
 isImage = (extension) => {
   return extension === 'png' ||
-  extension === 'jpg' ||
-  extension === 'gif'
+    extension === 'jpg' ||
+    extension === 'gif'
+
+}
+
+
+isVideo = (extension) => {
+  return extension === 'mp4' ||
+    extension === 'ogg'
 
 }
 
@@ -487,14 +504,28 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-previewFile = (arr, filename,fileId) => {
+previewVideo = (arr, filename, fileId) => {
+  let byteArray = new Uint8Array(arr),
+      objTo = document.getElementById(`${fileId}picPreview`),
+      divtest = document.createElement("video")
+  
+  const 
+    url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }))
+    
+  divtest.setAttribute('controls', 'controls')
+  divtest.setAttribute ('src', url)
+  objTo.appendChild(divtest)
+
+}
+
+
+previewImage = (arr, filename,fileId) => {
   let byteArray = new Uint8Array(arr),
       objTo = document.getElementById(`${fileId}picPreview`),
       divtest = document.createElement("img"),
       img = document.createElement('img')
   const 
-    url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
-    link = document.createElement('a')
+    url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }))
 
   img.setAttribute('src', url)
   divtest.setAttribute ('src', url)
@@ -533,29 +564,54 @@ createFile = () => {
   document.body.removeChild(link)
 }
 
-  $('.trigger').click(() => {
-    $('.modal-wrapper').toggleClass('open')
-    $('.page-wrapper').toggleClass('blur')
-    return false;
-  })
 
-  $('#downloadNewFile').click(() => {
-    createFile();
-    return false;
-  })
+$('.trigger').click(() => {
+  $('.modal-wrapper').toggleClass('open')
+  $('.page-wrapper').toggleClass('blur')
+  return false;
+})
 
-  $('#uploadNewFile').click((e) => {
+$('#downloadNewFile').click(() => {
+  createFile();
+  return false;
+})
+
+$('#uploadNewFile').click((e) => {
+  e.preventDefault();
+  let filename = $('#createFileForm').serialize();
+    // username = localStorage.getItem('username'),  
+  const data = new FormData($('#createFileForm')[0]);
+
+  uploadFile(
+    filename, 
+    data, 
+    () => {console.log("INFO:Files successfully sent!")},
+    () => {console.log("ERR: Files couldn't be sent.")}
+  )
+})
+
+
+shareBtn = (filename, fileId) => {
+  let username = localStorage.getItem('username')
+  const url = getShareUrl(username, filename, fileId)
+
+  $(`#${fileId}shareBtn`).on('click', (e) => {
     e.preventDefault();
-    let filename = $('#createFileForm').serialize();
-      // username = localStorage.getItem('username'),  
-    const data = new FormData($('#createFileForm')[0]);
+    console.log('clicked')
 
-    uploadFile(
-      filename, 
-      data, 
-      () => {console.log("INFO:Files successfully sent!")},
-      () => {console.log("ERR: Files couldn't be sent.")}
-    )
+    console.log(filename)
+    // Remove any shared link if it exists
+    document.getElementById(`${fileId}shareLink`).innerHTML = ''
+    // Create href
+    let hrefUrl = document.createElement("a")
+    // Create url text
+    var hrefText = document.createTextNode(url);
+
+    hrefUrl.appendChild(hrefText)
+
+    hrefUrl.setAttribute('href', url)
+    document.getElementById(`${fileId}shareLink`)
+    .append(hrefUrl)
+ 
   })
-
-
+}
