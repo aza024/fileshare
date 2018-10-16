@@ -32,17 +32,42 @@ app.use(function(req, res, next) {
 // ------------------APP.GET----------------------
 app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
 
-app.get('/files/:username/:filename', (req, res)=>{
+
+app.get('', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
+
+
+app.get('/shareFile/:username/:filename/:uuid', (req, res) => {
+    console.log('INFO: Sharing file')
+    res.sendFile(__dirname + '/public/views/share.html');
+    // Return share.html
+    // share.html will just be a Download button
+    // Download button.on('click') will make get rquest like this:
+    // '/files/:username/:filename/:uuid'
+    // Populate the username, filename, uuid from the url itself
+})
+
+app.get('/files/:username/:filename/:uuid', (req, res)=>{
     //URI Encoding to prevent invalid chars for user & filename in S3 path
+    console.log(req.url)
     const 
         username = encodeURIComponent(req.params.username),
-        filename = encodeURIComponent(req.params.filename),
+        filename = req.params.filename,
+        uuid = req.params.uuid 
+    console.log(`INFO: Retriving file: ${filename} with uuid ${uuid}`)
 
+    if(!username || !filename || !uuid) {
+        console.log("WARN: User did not provide username, filename, uuid")
+        res.sendStatus(400).json({error: "Must send username, filename, and uuid"})
+        return
+    }
+
+    const fullName = encodeURIComponent(`${filename}__${uuid}`)
+    console.log(`INFO: fullName ${fullName}`)
     //Bucket = root dir, Key = rest of S3 path
-        params = {
-            Bucket: "fileshare-uploads",
-            Key: `userfiles/${username}/${filename}`,
-        }
+    params = {
+        Bucket: "fileshare-uploads",
+        Key: `userfiles/${username}/${fullName}`,
+    }
 
     s3.getObject(params, (err, data)=>{
         if (err){
@@ -51,8 +76,8 @@ app.get('/files/:username/:filename', (req, res)=>{
             return
         }
         //Body - file content
-        const fileData = data.Body
-        console.log(`INFO: Successfully retrieved object from ${params.Bucket}/${params.Key}.`)
+        console.log(`INFO: Successfully retrieved object from ${params.Bucket}/${params.Key}`)
+        
         res.json(data)
     })
 })
@@ -76,7 +101,15 @@ app.get('/listfiles/:username', verifyToken, (req, res)=> {
         // readable by humans
         for (let i=0 ; i<data.Contents.length ; i++) {
             let decodedFilename = decodeURIComponent(data.Contents[i].Key)
-            data.Contents[i].Key = decodedFilename
+            console.log('decoded file name:  ' + decodedFilename)
+
+            const lastUU = decodedFilename.lastIndexOf('__'),
+                uuid = decodedFilename.slice(lastUU + 2),
+                filename = decodedFilename.substr(0, lastUU)
+            
+            data.Contents[i].Key = filename
+            //send uuid down with filename
+            data.Contents[i].uuid = uuid
             console.log('INFO: Decoded File: ' + decodedFilename)
         }
 
@@ -133,7 +166,8 @@ function login(username, password, hashed_password, res) {
 app.get('/user', (req,res) => {
     const 
         username = req.query.username, 
-        password = req.query.password 
+        password = req.query.password
+        
     console.log('INFO: User logging in ')
 
     client.query('SELECT password FROM users WHERE username = $1',
@@ -182,6 +216,7 @@ app.post('/user/:username', (req,res) => {
                 if (psql_res.rows.length!=0) {
                     console.log('ERR: Account already exists: ' + username)
                     res.status(400).json({ error : 'ERR: Account already exists: ' + username })
+                    return
                 } else {
                     //use uuid for jwt token
                     const user_id = uuidv4() 
@@ -203,6 +238,7 @@ app.post('/user/:username', (req,res) => {
                                     res.json({token})
                                     window.location.replace('views/files.html')
                                     res.status(200)
+                                    return
                                 });
                             }
                         )
@@ -213,47 +249,61 @@ app.post('/user/:username', (req,res) => {
 })
 
 //Get filename & file data from appropriate upload depending on where file is uploaded from
-app.post('/files/:username', upload.single('myfile'), (req, res) => {
-    let name = null,
-        data = null
+app.post('/files/:username', 
+    [verifyToken, upload.single('myfile')], 
+    (req, res) => {
+        jwt.verify(req.token, 'secretkey', (err, authData)=>{
+            if (err){
+                console.log('ERR: FORBIDDEN')
+                res.sendStatus(403).json({error: "FORBIDDEN"})
+                return
+            }
+            let name = null,
+                data = null
+        
+            if(!req.file){
+                name = req.body.filename
+                data = req.body.content
+            } else{
+                name = req.file.originalname
+                data = req.file.buffer
+            }
+        
+            if(!name || !data){
+                console.log('ERR: Name or Data not valid')
+                res.sendStatus(400).json({error: 'Invalid Name or Data'})
+                return
+            }
+        
+            const uuid = uuidv4()
+            const username = req.params.username
+        
+            console.log('uuid: ' + uuid)
+            console.log('username: ' + username)
+            if (!username){
+                console.log("ERR: Username required")
+                res.sendStatus(400).json({error : 'Username Required'})
+                return
+            }
+            
+            const urlName = encodeURIComponent(`${name}__${uuid}`)
+            const params = {
+                Bucket: "fileshare-uploads",
+                Key: `userfiles/${username}/${urlName}`,
+                Body: data
+            }
+            s3.putObject(params, (err, data) => {
+                if (err){
+                    console.log("Error " + err)
+                    res.sendStatus(500)
+                    return
+                }
+                console.log("Data " + data)
+                res.sendStatus(200)
+                return
+            })
+        })
 
-    if(!req.file){
-        name = req.body.filename
-        data = req.body.content
-    } else{
-        name = req.file.originalname
-        data = req.file.buffer
-    }
-
-    if(!name || !data){
-        console.log('ERR: Name or Data not valid')
-        res.sendStatus(400).json({error: 'Invalid Name or Data'})
-        return
-    }
-
-    const username = req.params.username
-
-    if (!username){
-        console.log("ERR: Username required")
-        res.sendStatus(400).json({error : 'Username Required'})
-        return
-    }
-
-    const urlName = encodeURIComponent(name)
-    const params = {
-        Bucket: "fileshare-uploads",
-        Key: `userfiles/${username}/${urlName}`,
-        Body: data
-    }
-    s3.putObject(params, (err, data) => {
-        if (err){
-            console.log("Error " + err)
-            res.sendStatus(500)
-            return
-        }
-        console.log("Data " + data)
-        res.sendStatus(200)
-    })
 })
 
 // app.get('/test', verifyToken, (req, res)=>{

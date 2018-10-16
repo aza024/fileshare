@@ -44,6 +44,9 @@ uploadFile = (filename, data, done, fail) => {
   $.ajax({
     url: `/files/${username}`, 
     type: 'POST',
+    headers: {
+      "Authorization": 'Bearer ' + localStorage.getItem('usertoken')
+    },
     data, 
     processData: false,
     contentType: false                   
@@ -52,50 +55,55 @@ uploadFile = (filename, data, done, fail) => {
   .fail(fail);
 }
 
-downloadfile = (username, filename, success, error) => {
+downloadfile = (username, filename, fileId, success, error) => {
   $.ajax({
     dataType: 'json',
     method: 'GET',
-    url:`/files/${username}/${filename}`,
+    url:`/files/${username}/${filename}/${fileId}`,
     success,
     error
   })
 }
 
+getShareUrl = (username, filename, uuid) => {
+  return `http://localhost:3001/shareFile/${username}/${filename}/${uuid}`
+}
 
-downloadBtn = (filename, fileid) => {
+
+downloadBtn = (filename, fileId) => {
   const username = localStorage.getItem('username')
-  let filenameBtn = $(`#${fileid}Btn`)
+  let filenameBtn = $(`#${fileId}Btn`)
   
   filenameBtn.append(
     `<form>
-      <button class="downBtn" id=${fileid}DwBtn >Download</button>
+      <button class="downBtn" id=${fileId}DwBtn >Download</button>
     </form>`
   )
 
-  $(`#${fileid}DwBtn`).on('click',(e)=>{
+  $(`#${fileId}DwBtn`).on('click',(e)=>{
     e.preventDefault()
     downloadfile(username, 
       filename,
+      fileId,
       (res) => {
           createdownload(res.Body.data, filename)
         },
-      (res) => {console.log('Error')}
+      (res) => {console.log('ERR: Could not retrive file ' + filename)}
     )
   })
 }
 
-deleteBtn = (filename, fileid) => {
+deleteBtn = (filename, fileId) => {
   const username = localStorage.getItem('username')
-  let deleteBtn = $(`#${fileid}Btn`)
+  let deleteBtn = $(`#${fileId}Btn`)
 
   deleteBtn.append(
     `<form>
-      <button class="deleteBtn" id=${fileid}deleteBtn >Delete</button>
+      <button class="deleteBtn" id=${fileId}deleteBtn >Delete</button>
     </form>`
   )
 
-  $(`#${fileid}deleteBtn`).on('click',(e) => {
+  $(`#${fileId}deleteBtn`).on('click',(e) => {
     $.ajax({
       dataType: 'json',
       type: 'GET',
@@ -258,26 +266,26 @@ class FileDisplayManager{
     for (let i =0; i < this.toDisplay.length; i++) {
       const 
         file = this.toDisplay[i],
-        fileid = file.filename.hexEncode(),
+        fileId = file.fileId,
         modified = file.modified
       let 
         formatted = new Date(modified),
         formattedDate = formatted.toISOString().substring(0, 10);
 
       $('.filesInfo').append(
-        `<div id = "${fileid}picPreview"></div>
-        <div class = ${fileid}Wrapper>
-          <div class = "${fileid}fileInfo"> 
+        `<div id = "${fileId}picPreview"></div>
+        <div class = ${fileId}Wrapper>
+          <div class = "${fileId}fileInfo"> 
             <div class = "fileExt"> 
               <h1>.${escapeHtml(file.extension)}</h1>
             </div>
             <div class = "fileDetail">
               <h3>Filename: ${escapeHtml(file.filename)}</h3>
-              <div class = "dlBtnAppend" id = ${fileid}Btn></div>
+              <div class = "dlBtnAppend" id = ${fileId}Btn></div>
               <h3>Last Modified Date: ${formattedDate}</h3>
               <h3>Size: ${file.size} </h3>
-              <div class = "deleteBtn" id = ${fileid}deleteBtn> </div>
-              <div class = "${fileid}prevbtn"></div>
+              <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
+              <div class = "${fileId}prevbtn"></div>
             </div>
           </div>
         `
@@ -285,26 +293,27 @@ class FileDisplayManager{
         
         
         if (isImage(file.extension)) {
-          // $(`.${fileid}fileInfo`).css('background-color','red')
-          $(`.${fileid}prevbtn`).append(
+          // $(`.${fileId}fileInfo`).css('background-color','red')
+          $(`.${fileId}prevbtn`).append(
             `<div id = "preview">
-              <button id = "${fileid}prevBtn"> Preview </button>
+              <button id = "${fileId}prevBtn"> Preview </button>
             </div>`
           )
         }
 
-        $(`#${fileid}prevBtn`).on('click',()=>{
+        $(`#${fileId}prevBtn`).on('click',()=>{
           const username = localStorage.getItem('username')
 
           
           downloadfile(
             username, 
             file.filename,
+            fileId,
             (res) => {
               const extension = file.extension;
               if (isImage(extension)) {
-                previewFile(res.Body.data, filename, fileid)
-                $(`.${fileid}Wrapper`).hide()
+                previewFile(res.Body.data, filename, fileId)
+                $(`.${fileId}Wrapper`).hide()
 
               }
             },
@@ -312,21 +321,21 @@ class FileDisplayManager{
           )
 
 
-          $(`#${fileid}picPreview`).append(
-            `<button class ="${fileid}closePicPrev">Close</button>`
+          $(`#${fileId}picPreview`).append(
+            `<button class ="${fileId}closePicPrev">Close</button>`
           )
 
-          $(`.${fileid}closePicPrev`).on('click', () => {
+          $(`.${fileId}closePicPrev`).on('click', () => {
             console.log('close click prev')
-            $(`#${fileid}picPreview`).hide()
-            $(`.${fileid}Wrapper`).show()
+            $(`#${fileId}picPreview`).hide()
+            $(`.${fileId}Wrapper`).show()
           })
 
           
         })
 
-        downloadBtn(file.filename, fileid)
-        deleteBtn(file.filename, fileid)
+        downloadBtn(file.filename, fileId)
+        deleteBtn(file.filename, fileId)
     }
   } 
 } //end fileDisplayManager
@@ -449,15 +458,17 @@ loadLoginPage = () => {
               modified = (files[i].LastModified),
               key = (files[i].Key),
               size = (files[i].Size),
-              filename = key.replace(/^.*[\\\/]/, '')
-              extension = filename.split('.').pop();
+              filename = key.replace(/^.*[\\\/]/, ''),
+              extension = filename.split('.').pop(),
+              fileId = files[i].uuid
           
               displayManager.addFile({
                 modified,
                 key,
                 size,
                 filename,
-                extension
+                extension,
+                fileId
               })
           }
           displayManager.sortMostRec()
@@ -476,9 +487,9 @@ if (loggedIn = true){
     let children = $('.filesInfo').remove()
 }
 
-previewFile = (arr, filename,fileid) => {
+previewFile = (arr, filename,fileId) => {
   let byteArray = new Uint8Array(arr),
-      objTo = document.getElementById(`${fileid}picPreview`),
+      objTo = document.getElementById(`${fileId}picPreview`),
       divtest = document.createElement("img"),
       img = document.createElement('img')
   const 

@@ -185,7 +185,7 @@ validatePassword = (password) => {
     for (let i = 0; i < specialCharacters.length; i++) {
         const specialChar = specialCharacters[i];
         if (password.indexOf(specialChar) != 0) {
-            hasSpecialChar == true
+            hasSpecialChar = true
             break
         }
         
