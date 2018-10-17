@@ -40,6 +40,7 @@ escapeHtml = (unsafe) => {
 
 uploadFile = (filename, data, done, fail) => {
   const username = localStorage.getItem('username')
+
   
   $.ajax({
     url: `/files/${username}`, 
@@ -275,6 +276,8 @@ class FileDisplayManager{
         formatted = new Date(modified),
         formattedDate = formatted.toISOString().substring(0, 10);
 
+      
+
       $('.filesInfo').append(
         `
           <div id = "${fileId}picPreview"></div>
@@ -291,7 +294,7 @@ class FileDisplayManager{
                   </div>
 
                   <h3>Last Modified Date: ${formattedDate}</h3>
-                  <h3>Size: ${file.size} </h3>
+                  <h3>Size: ${file.size} bytes </h3>
 
                   <div id="${fileId}sharePrev" class = "sharePrev">
                     <div class = "${fileId}prevbtn"></div>
@@ -309,14 +312,14 @@ class FileDisplayManager{
       $(`#${fileId}Wrapper`).css('justify-content','space-between')
       $(`#${fileId}Wrapper`).css('flex-direction','column')
       $(`#${fileId}Wrapper`).css('flex-wrap','wrap')
-      $(`#${fileId}Wrapper`).css('border','5px solid #008080')
-      $(`#${fileId}Wrapper`).css('background-color','#F7F9FA')
+      $(`#${fileId}Wrapper`).css('border','2px solid #333')
+      // $(`#${fileId}Wrapper`).css('background-color','#F7F9FA')
       $(`#${fileId}Wrapper`).css('margin','auto')
       $(`#${fileId}Wrapper`).css('margin-bottom','100px')
       $(`#${fileId}Wrapper`).css('width','50%')
 
       $(`#${fileId}fileInfo`).css('text-align','center')
-      $(`#${fileId}fileInfo`).css('flex-grow', '1')
+      // $(`#${fileId}fileInfo`).css('flex-grow', '1')
       // $(`#${fileId}fileInfo`).css('width', '30%')
       //  $(`#${fileId}fileInfo`).css('margin', '10px 0 0 2%')
       //  $(`#${fileId}fileInfo`).css('height', '100px')
@@ -330,13 +333,13 @@ class FileDisplayManager{
 
    
       if(file.extension == 'jpg'){
-        $(`#${fileId}extenCirc`).css('background-color', 'red')
+        $(`#${fileId}extenCirc`).css('background-color', '#800000')
       } else if ( file.extension == 'mp4'){
-        $(`#${fileId}extenCirc`).css('background-color', 'blue')
+        $(`#${fileId}extenCirc`).css('background-color', '#004080')
       } else if ( file.extension == 'txt'){
-        $(`#${fileId}extenCirc`).css('background-color', 'green')
+        $(`#${fileId}extenCirc`).css('background-color', '#008080')
       } else {
-        $(`#${fileId}extenCirc`).css('background-color', 'purple')
+        $(`#${fileId}extenCirc`).css('background-color', '#563c5c')
       }
     
   
@@ -354,6 +357,8 @@ class FileDisplayManager{
 
       $(`#${fileId}prevBtn`).on('click',()=>{
         const username = localStorage.getItem('username')
+
+      
 
         
         downloadfile(
@@ -690,3 +695,4 @@ shareBtn = (filename, fileId) => {
  
   })
 }
+

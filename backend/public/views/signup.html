@@ -142,7 +142,7 @@
 		<nav class="profNav">
 			<img id = "profCloud" src = '/images/FSLogo.png'>
 			<!-- <h1 class="homeName">FileShare</h1> -->
-			<button class = "logout" class = "filePgBtn">LOGOUT</button>
+			<button class = "logout" class = "filePgBtn">Logout</button>
 		</nav>
 		<!-- FILE UPLOAD FORM -->
 		
@@ -181,9 +181,11 @@
 
 
 <!-- uploads -->
+<!-- <h2 class = "upNewFileHdr"> Upload New File: </h2> -->
 	<div class = "uploadNewDoc">
 		<div class="fileUploadForm">
 			<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
+				<label for "fileupload" class = "upFileLbl">Upload File:</label>
 				<input id="fileupload" name="myfile" type="file"  required="required"/>
 				<input type="submit" value="Upload" id="uploadBtn" />
 			</form>
@@ -203,7 +205,7 @@
 					<div class="createFileModal">
 						<form id ="createFileForm">
 							<p>
-								<input name="filename" placeholder="filename.txt" type="text"id="filename" />
+								<input name="filename" placeholder="Filename.txt" type="text"id="filename" />
 							</p>
 							<p>
 								<textarea name="content" placeholder = "File Content" id="txt"></textarea>

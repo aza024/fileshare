@@ -6,7 +6,8 @@
     box-sizing: border-box;
   }
 *{
-  font-family: 'Source Sans Pro', sans-serif !important;
+  /* font-family: 'Source Sans Pro', sans-serif !important; */
+  font-family: 'Playfair Display', serif !important;
 }
 
 body{
@@ -33,6 +34,7 @@ body{
 
   .homeSafe{
     color: #008080;
+    font-family: 'Source Sans Pro', sans-serif !important;
   }
 .homeLogo{
   display: flex;
@@ -46,22 +48,14 @@ body{
 }
 
 .paragraphs{
-  column-count: 3;
+  column-count: 2;
 }
-
-  .authbtns{
-    /* display: flex;
-    flex-direction: row-reverse; */
-    padding: none;
-    margin: none;
-    align-content: center;
-  }
 
   a.signup{
     padding: 200px;
   }
   .main-nav {
-    width: 90%;
+    /* width: 90%; */
     /* width: max-content; */
     /* margin: 0 auto; */
     /* height: 100%; */
@@ -72,27 +66,24 @@ body{
  .smIcon{
   width: 6.5vw;
   height: 10vh;
+
  }
 
   .clouds{
     width:45%;
     height: 40%;
   }
-  .fsbuttonsmain{
-    display: flex;
-    align-content: center;
-   
-  }
-  .main-nav ul {
+
+  /* .main-nav ul { */
     /* position: absolute; */
-    display: flex;
+    /* display: flex; */
     /* flex-direction: row; */
-    align-content: center;
-    width: 300px;
-    top: 40%;
-    margin: 0;
+    /* align-content: center; */
+    /* width: 300px; */
+    /* top: 40%; left: 50%; */
+    /* margin: 0; */
     
-  }
+  /* } */
   .main-nav li {
       list-style: none;
   }
@@ -470,43 +461,66 @@ img{
   border: 1px solid #008080;
   font-size: 1.25em;
   /* padding: .5em; */
+  /* font-family: "Roboto", sans-serif;
+  text-transform: uppercase; */
   border-radius: 5px;
 }
 
-#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts  {
-  font-size: 1.25em
+#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts {
+  font-size: 1.25em;
+  font-family: "Roboto", sans-serif !important;
+  text-transform: uppercase !important;
 }
 .logout{
   /* background-color: #008080; */
-  color: #008080;
-  border: 1px solid #008080;
+  background-color: #008080;
+  color: white;
+  border: 3px solid #008080;
   /* padding: .5em; */
-  border-radius: 5px;
+  border-radius: 28px;
   height: 1.5em;
   margin-top: 1.5em;
+
+}
+.logout:hover{
+  color: #008080;
+  background-color: white;
 }
 
 
 .deleteBtn{
   color: #800000;
+  background-color:white;
   /* padding: .5em; */
   border: 1px solid #800000;
   border-radius: 5px;
 }
 
+.deleteBtn:hover{
+  background-color: #800000;
+  color: white;
+}
+
 .fileWrapper:hover{
-  transform: scale(1);
+  transform: scale(1.1);
   margin-top: 1em;
 }
 
 .downBtn, #uploadBtn{
-  font-family: 'Lato', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
+  text-transform: uppercase !important;
   letter-spacing: 1.618px;
+  font-weight: 100 !important;
   /* background-color: #54fca8; */
   color: #008040;
+  background-color:white;
   border: 1px solid #008040;
   padding: .5em;
   border-radius: 5px;
+}
+.downBtn:hover, #uploadBtn:hover{
+  background-color: #008040;
+  color: white;
 }
 
 .profNav{
@@ -532,7 +546,8 @@ img{
 #search{
   margin-top: .85em;
   width: 300px;
-  border: 1px solid #008080;
+  border: 1px solid #004080;
+  border-radius: 15px;
 }
 
 .sharePrev{display:flex}
@@ -545,8 +560,12 @@ img{
 .uploadNewDoc{
   display:flex;
   justify-content: center;
-  align-self: flex-end;
-  margin: 2em;
+  align-self: center;
+  margin-bottom: 1em;
+  /* margin-top: 1em; */
+  border: 1px solid #004080;
+  background-color: #F7F9FA;
+  padding-top: 1.9em;
  
   /* width: 50%; */
 }
@@ -570,4 +589,23 @@ img{
   width: 280px;
   height: 90px;
   position: relative;
+}
+
+.upNewFileHdr{
+  font-family: "Source Sans Pro", sans-serif !important;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.filesInfo{
+  background-color: #F7F9FA;
+}
+
+.upFileLbl{
+  font-weight: bolder;
+  font-family: "Source Sans Pro", sans-serif !important;
+  text-transform: uppercase;
+  font-size: 1.75em;
+  padding: 1em;
+  color:#008080;
 }

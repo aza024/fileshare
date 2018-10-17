@@ -117,7 +117,7 @@ a.btn:hover{
   width: 80%;
   height: 10%;
   font-size: 1.2em;
-  margin-left: 2.2em;
+  margin-left: 2.5em;
 }
 
 
@@ -125,7 +125,8 @@ a.btn:hover{
   width: 80%;
   height: 60%;
   resize: none;
-  margin-left: 4em;
+  margin-left: 2.5em;
+  font-size: 1.2em;
 }
 #downloadNewFile, #uploadNewFile{
   margin-left: 7em;
