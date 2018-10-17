@@ -9,6 +9,11 @@
   font-family: 'Source Sans Pro', sans-serif !important;
 }
 
+body{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
  /* .landingBody{height:100%;
     background-image:url('/images/mainimage.jpg');
     background-repeat:no-repeat; 
@@ -478,6 +483,7 @@ img{
   /* padding: .5em; */
   border-radius: 5px;
   height: 1.5em;
+  margin-top: 1.5em;
 }
 
 
@@ -489,7 +495,7 @@ img{
 }
 
 .fileWrapper:hover{
-  transform: scale(1.1);
+  transform: scale(1);
   margin-top: 1em;
 }
 
@@ -524,7 +530,7 @@ img{
 }
 
 #search{
-  margin-top: .65em;
+  margin-top: .85em;
   width: 300px;
   border: 1px solid #008080;
 }
@@ -538,8 +544,14 @@ img{
 
 .uploadNewDoc{
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-self: flex-end;
+  margin: 2em;
+ 
+  /* width: 50%; */
 }
+
+
 
 @media only screen and (max-width: 680px) {
   .searchSort{
@@ -548,4 +560,14 @@ img{
     /* justify-content: space-between; */
   }
 
+}
+
+.fileUpLoadForm{
+  margin-bottom: 4%;
+}
+
+#profCloud{
+  width: 280px;
+  height: 90px;
+  position: relative;
 }

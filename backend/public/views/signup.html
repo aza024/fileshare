@@ -140,7 +140,8 @@
 	<!-- FILE UPLOAD -->
 	<div class = "profile-page"> 
 		<nav class="profNav">
-			<h1 class="homeName">FileShare</h1>
+			<img id = "profCloud" src = '/images/FSLogo.png'>
+			<!-- <h1 class="homeName">FileShare</h1> -->
 			<button class = "logout" class = "filePgBtn">LOGOUT</button>
 		</nav>
 		<!-- FILE UPLOAD FORM -->
@@ -202,12 +203,10 @@
 					<div class="createFileModal">
 						<form id ="createFileForm">
 							<p>
-								<label for="filename">Filename</label>
-								<input name="filename"placeholder="filename.txt" type="text"id="filename" />
+								<input name="filename" placeholder="filename.txt" type="text"id="filename" />
 							</p>
 							<p>
-								<label for="txt">Document</label>
-								<textarea name="content"id="txt"></textarea>
+								<textarea name="content" placeholder = "File Content" id="txt"></textarea>
 							</p>
 							<button class = "filePgBtn" id="uploadNewFile" type="submit">Upload </button>	
 							<button class = "filePgBtn" id="downloadNewFile" type="submit">Download </button>	

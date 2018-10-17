@@ -313,13 +313,17 @@ class FileDisplayManager{
       $(`#${fileId}Wrapper`).css('background-color','#F7F9FA')
       $(`#${fileId}Wrapper`).css('margin','auto')
       $(`#${fileId}Wrapper`).css('margin-bottom','100px')
-      $(`#${fileId}Wrapper`).css('width','35%')
+      $(`#${fileId}Wrapper`).css('width','50%')
 
       $(`#${fileId}fileInfo`).css('text-align','center')
-
+      $(`#${fileId}fileInfo`).css('flex-grow', '1')
+      // $(`#${fileId}fileInfo`).css('width', '30%')
+      //  $(`#${fileId}fileInfo`).css('margin', '10px 0 0 2%')
+      //  $(`#${fileId}fileInfo`).css('height', '100px')
+      
       $(`#${fileId}extenCirc`).css('background-color', 'grey')
       $(`#${fileId}extenCirc`).css('color', 'white')
-      $(`#${fileId}extenCirc`).css('width', '100px')
+      // $(`#${fileId}extenCirc`).css('width', '100px')
 
       $(`#${fileId}DwlDelBtn`).css('display', 'flex')
       $(`#${fileId}DwlDelBtn`).css('flex-direction', 'column')
@@ -374,10 +378,18 @@ class FileDisplayManager{
           `<button class ="${fileId}closePicPrev">Close</button>`
         )
 
-        $(`#${fileId}picPreview`).css('background-color','red')
-        $(`.${fileId}closePicPrev`).css('color','#008080')
+        $(`#${fileId}picPreview`).css('background-color','light grey')
+        $(`#${fileId}picPreview`).css('text-align','center')
+        $(`#${fileId}picPreview`).css('margin','2.5%')
+        $(`.${fileId}closePicPrev`).css('color','white')
         $(`.${fileId}closePicPrev`).css('border','1px solid #008080')
-        $(`.${fileId}closePicPrev`).css('background-color','blue')
+        // $(`.${fileId}closePicPrev`).css('background-color','yellow')
+        $(`.${fileId}closePicPrev`).css('padding','.1em')
+        $(`.${fileId}closePicPrev`).css('margin-right','1em')
+        $(`.${fileId}closePicPrev`).css('font-size','1.5em')
+        $(`.${fileId}closePicPrev`).css('background-color','#008080')
+        $(`.${fileId}closePicPrev`).css('border-radius','5px')
+        
 
         $(`.${fileId}closePicPrev`).on('click', () => {
           console.log('close click prev')

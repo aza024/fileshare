@@ -7,19 +7,28 @@
 }
 
 a.btn{
-  width:150px;
+  width:100px;
+  height: 100px;
   /* display:block; */
   margin:-25px 0 0 -75px;
   padding:1em 0;
   position:absolute;
-  top:12%; left:90%;
+  top:85%; left:12%;
+  /* line-height: 50px; */
   /* font:1.125em 'Arial', sans-serif; */
   /* font-weight:700; */
   /* text-align:center; */
   text-decoration:none;
   color:#fff;
-  border-radius:5px;
+  border-radius:50%;
   background:rgba(217,67,86,1);
+  text-align: center;
+  position: fixed;
+  
+}
+a.btn:hover{
+  transform: scale(1.1);
+  border: 2px solid green;
 }
 
 .modal-wrapper{
@@ -104,3 +113,21 @@ a.btn{
   padding:5%;
 }
 
+#filename{
+  width: 80%;
+  height: 10%;
+  font-size: 1.2em;
+  margin-left: 2.2em;
+}
+
+
+#txt{
+  width: 80%;
+  height: 60%;
+  resize: none;
+  margin-left: 4em;
+}
+#downloadNewFile, #uploadNewFile{
+  margin-left: 7em;
+  margin-bottom: 2em;
+}
