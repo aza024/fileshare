@@ -458,12 +458,13 @@ img{
 
 .filePgBtn{
   color: #008080;
-  border: 1px solid #008080;
+  border: 2px solid #008080;
   font-size: 1.25em;
   /* padding: .5em; */
   /* font-family: "Roboto", sans-serif;
   text-transform: uppercase; */
   border-radius: 5px;
+  font-family: "Roboto", sans-serif !important;
 }
 
 #fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts {

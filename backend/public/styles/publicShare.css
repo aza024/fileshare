@@ -11,14 +11,23 @@ body{
 #fileDownloadButton, #previewBtn {
     background-color:#008080;
     color: white; 
-    border-radius: 30%;
+    border-radius: 50%;
     padding: 1.5em;
+    font-size: 1.5em;
+    border: 1px solid white;
+}
+
+#fileDownloadButton:hover{
+    background-color: white;
+    color:#008080;
+    border: 2px solid #008080;
 }
 #previewBtn{
    margin: 2em;
    padding-left: 1.75em;
    padding-right: 1.85em;
 }
+
 
 
 h1, h4{
