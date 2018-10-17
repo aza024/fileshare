@@ -276,17 +276,23 @@ class FileDisplayManager{
       $('.filesInfo').append(
         `
           <div id = "${fileId}picPreview"></div>
-            <div class = ${fileId}Wrapper>
-              <div class = "${fileId}fileInfo"> 
+            <div id = ${fileId}Wrapper>
+              <div id = "${fileId}fileInfo"> 
                 <div class = "fileExt"> 
-                  <h1>.${escapeHtml(file.extension)}</h1>
+                  <h1 id="${fileId}extenCirc">.${escapeHtml(file.extension)}</h1>
                 </div>
                 <div class = "fileDetail">
                   <h3 class="bold">Filename: ${escapeHtml(file.filename)}</h3>
-                  <div class = "dlBtnAppend" id = ${fileId}Btn></div>
+
+                  <div id="${fileId}DwlDelBtn">
+                    <div class = "dlBtnAppend" id = ${fileId}Btn></div>
+                    <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
+                  </div>
+
                   <h3>Last Modified Date: ${formattedDate}</h3>
                   <h3>Size: ${file.size} </h3>
-                  <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
+
+                  
                   <div class = "${fileId}prevbtn"></div>
 
                 <div class = "shareBtn">
@@ -297,56 +303,72 @@ class FileDisplayManager{
           </div>
         `
       )
+      // CSS
+      $(`#${fileId}Wrapper`).css('display','flex')
+      $(`#${fileId}Wrapper`).css('justify-content','space-between')
+      $(`#${fileId}Wrapper`).css('flex-direction','column')
+      $(`#${fileId}Wrapper`).css('flex-wrap','wrap')
+      $(`#${fileId}Wrapper`).css('border','5px solid #333')
+      $(`#${fileId}Wrapper`).css('margin','auto')
+      $(`#${fileId}Wrapper`).css('margin-bottom','100px')
+      $(`#${fileId}Wrapper`).css('width','35%')
+
+      $(`#${fileId}fileInfo`).css('text-align','center')
+
+      $(`#${fileId}extenCirc`).css('background-color', 'red')
+      $(`#${fileId}extenCirc`).css('color', 'white')
+      $(`#${fileId}extenCirc`).css('width', '100px')
+    
+  
+      //CALL FUNCTION HERE TODO 
+      shareBtn(file.filename, fileId)
+
+      if (isImage(file.extension) || isVideo(file.extension)) {
+        // $(`.${fileId}fileInfo`).css('background-color','red')
+        $(`.${fileId}prevbtn`).append(
+          `<div id = "preview">
+            <button class = "filePgBtn" id = "${fileId}prevBtn"> Preview </button>
+          </div>`
+        )
+      }
+
+      $(`#${fileId}prevBtn`).on('click',()=>{
+        const username = localStorage.getItem('username')
+
         
-        //CALL FUNCTION HERE TODO 
-        shareBtn(file.filename, fileId)
-
-        if (isImage(file.extension) || isVideo(file.extension)) {
-          // $(`.${fileId}fileInfo`).css('background-color','red')
-          $(`.${fileId}prevbtn`).append(
-            `<div id = "preview">
-              <button class = "filePgBtn" id = "${fileId}prevBtn"> Preview </button>
-            </div>`
-          )
-        }
-
-        $(`#${fileId}prevBtn`).on('click',()=>{
-          const username = localStorage.getItem('username')
-
-          
-          downloadfile(
-            username, 
-            file.filename,
-            fileId,
-            (res) => {
-              const extension = file.extension;
-              if (isImage(extension)) {
-                previewImage(res.Body.data, filename, fileId)
-                $(`.${fileId}Wrapper`).hide()
-              } else if (isVideo(file.extension)) {
-                previewVideo(res.Body.data, filename, fileId)
-                $(`.${fileId}Wrapper`).hide()
-              }
-            },
-            (res) => {console.log('Error')}
-          )
+        downloadfile(
+          username, 
+          file.filename,
+          fileId,
+          (res) => {
+            const extension = file.extension;
+            if (isImage(extension)) {
+              previewImage(res.Body.data, filename, fileId)
+              $(`.${fileId}Wrapper`).hide()
+            } else if (isVideo(file.extension)) {
+              previewVideo(res.Body.data, filename, fileId)
+              $(`.${fileId}Wrapper`).hide()
+            }
+          },
+          (res) => {console.log('Error')}
+        )
 
 
-          $(`#${fileId}picPreview`).append(
-            `<button class ="${fileId}closePicPrev">Close</button>`
-          )
+        $(`#${fileId}picPreview`).append(
+          `<button class ="${fileId}closePicPrev">Close</button>`
+        )
 
-          $(`.${fileId}closePicPrev`).on('click', () => {
-            console.log('close click prev')
-            $(`#${fileId}picPreview`).hide()
-            $(`.${fileId}Wrapper`).show()
-          })
-
-          
+        $(`.${fileId}closePicPrev`).on('click', () => {
+          console.log('close click prev')
+          $(`#${fileId}picPreview`).hide()
+          $(`.${fileId}Wrapper`).show()
         })
 
-        downloadBtn(file.filename, fileId)
-        deleteBtn(file.filename, fileId)
+        
+      })
+
+      downloadBtn(file.filename, fileId)
+      deleteBtn(file.filename, fileId)
     }
   } 
 } //end fileDisplayManager

@@ -468,7 +468,7 @@ img{
   border-radius: 5px;
 }
 
-#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search{
+#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts  {
   font-size: 1.25em
 }
 .logout{
@@ -500,19 +500,34 @@ img{
 
 .profNav{
   display: flex;
-  flex-direction: row;
-}
-#logoutBtn.logout{
-  float: right;
+  justify-content: space-between;
 }
 
-.upSearch{
+.grid-container{
+  display: grid;
+  grid-template-columns: auto auto ;
+  /* grid-gap: 10px; */
+}
+
+.searchGrid{
+  align-self: left;
+}
+
+.searchSort{
   display: flex;
-}
-#search{
-  float: right !important;
+  justify-content: space-between;
 }
 
-.sortList{
-  float: right;
+#search{
+  margin-top: .65em;
+  width: 300px;
+}
+
+@media only screen and (max-width: 680px) {
+  .searchSort{
+    /* display: flex; */
+    flex-direction: column;
+    /* justify-content: space-between; */
+  }
+
 }
