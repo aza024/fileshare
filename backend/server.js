@@ -119,6 +119,7 @@ app.get('/listfiles/:username', verifyToken, (req, res)=> {
 })
 
 function login(username, password, hashed_password, res) {
+    console.log(`INFO: Logging user ${username} in`)
     const str_hashed_password = ''+hashed_password
     bcrypt.compare(password, str_hashed_password, (err, hash_result) => {
         if(err){
@@ -164,6 +165,7 @@ function login(username, password, hashed_password, res) {
 }
 
 app.get('/user', (req,res) => {
+
     const 
         username = req.query.username, 
         password = req.query.password
@@ -193,16 +195,19 @@ app.get('/user', (req,res) => {
 // ------------------APP.POST----------------------
 // #TODO: REMOVE USERNAME = ALREADY PARM
 app.post('/user/:username', (req,res) => {
+
     const 
         username = req.body.username,
         password = req.body.password,
         email = req.body.email  
+    console.log(`INFO: Creating user ${username}`)
 
     bcrypt.hash(password, 10, (err, hash)=>{ 
         if (err){
             res.status(500)
             return
         }
+        console.log('Querying postgres for username')
         client.query(
             'SELECT * FROM users WHERE username = $1', 
                 [username],
@@ -212,7 +217,7 @@ app.post('/user/:username', (req,res) => {
                     res.status(500)
                         return
                 }
-                console.log(psql_res)
+                console.log('INFO: psql_res' + psql_res)
                 if (psql_res.rows.length!=0) {
                     console.log('ERR: Account already exists: ' + username)
                     res.status(400).json({ error : 'ERR: Account already exists: ' + username })

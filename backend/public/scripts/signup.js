@@ -1,9 +1,27 @@
+
+
+let uploadbanner = document.getElementById('uploadbanner').innerHTML
+let newDocBtn = document.getElementById('newDocBtnWrapper').innerHTML
+
+document.getElementById('uploadbanner').innerHTML = ''
+document.getElementById('newDocBtnWrapper').innerHTML = ''
+// console.log('uploadbanner ' + uploadbanner)
+// $('#uploadbanner').remove()
+
+console.log('newDocBtn ' + newDocBtn)
+// $('#newDocBtn').remove()
+
+
 jQuery(document).ready(function($){
+
     if (localStorage.getItem('logged-in')){
         $form_modal.removeClass('is-visible');
         $('.profile-page').addClass('is-visible')
         $('.landing-page').css('display','none')
-
+        document
+            .getElementById('uploadbanner').innerHTML = uploadbanner
+        document
+            .getElementById('newDocBtnWrapper').innerHTML = newDocBtn
     }
 })
 

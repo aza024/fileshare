@@ -1,0 +1,230 @@
+<html >
+   <head>
+    <meta charset="UTF-8">
+	<title>Fileshare</title>
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+
+      <!-- Custom Styles -->
+	  <link rel="stylesheet" media="screen" href="styles/signup.css" />
+	  <link rel="stylesheet" media="screen" href="styles/createfile.css" />
+
+      <!-- Custom Script -->
+	  <script src="scripts/signup.js" defer></script> 
+	  <script src="scripts/files.js" defer></script> 
+	  <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	</head>
+
+  <body>
+<!-- ====================================== -->
+<!-- ==========LANDING PAGE===============  -->
+<!-- ====================================== -->
+	<div class = "landingBody">
+	<div class = "landing-page">
+	
+		<nav class="main-nav">
+				<div class = "homeHeader">
+					<img class = "clouds" src = "images/clouds.png">
+							<h1 class ="homeName"> FileShare</h1>
+							<h2 class="homeSafe">Safely and securely store and share text, video, and  image files!</h2>
+					
+					</div>
+			<div class = "fsbuttonsmain">
+			<ul class = "authBtns">
+				<li><a class="signin" >Sign in</a></li>
+				<li><a class="signup">Sign up</a></li>
+			</ul>
+			</div>
+		</nav>
+
+		<div class="user-modal">
+			<div class="user-modal-container">
+				<ul class="switcher">
+					<li><a href="#0">Sign In</a></li>
+					<li><a href="#0">Sign Up</a></li>
+				</ul>
+				
+				<div id="login">
+					<form class="form" id="signin-form" onsubmit = "return signInVal();">
+					<div id= "signin-errMsg"></div>	
+						<p class="fieldset">
+							<label class="image-replace username" for="signin-username">Username</label>
+
+							<input class="full-width has-padding has-border"  id="signin-username" name="signin-username" placeholder="Username"  required="required">
+
+							<span class="error-message">An account with this username address does not exist!</span>
+
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace password" for="signin-password">Password</label>
+
+							<input class="full-width has-padding has-border" id="signin-password" name="signin-password" type="password"  placeholder="Password"  required="required">
+
+							<a href="#0" class="hide-password">Show</a>
+							<span class="error-message">Incorrect password! Please try again.</span>
+						</p>
+
+						<!-- <p class="fieldset">
+							<input type="checkbox" id="remember-me" checked>
+							<label for="remember-me">Remember me</label>
+						</p> -->
+
+						<p class="fieldset">
+							<input class="full-width" type="submit" value="Login">
+						</p>
+					</form>
+				</div>
+
+				<div id="signup">
+					<form class="form" id='signup-form' onsubmit = "return signUpVal();">
+					<div id = "signup-errMsg"></div>
+						<p class="fieldset">
+							<label class="image-replace username" for="signup-username">Username</label>
+
+							<input class="full-width has-padding has-border" name="username" id="signup-username" type="text" placeholder="Username" required="required">
+
+							<span class="error-message">Please enter a valid username!</span>
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace email" for="signup-email">E-mail</label>
+							
+							<input class="full-width has-padding has-border" name="email" id="signup-email" type="email" placeholder="E-mail"  required="required">
+							
+							<span class="error-message">Enter a valid email address!</span>
+						</p>
+
+						<p class="fieldset">
+							<label class="image-replace password" for="signup-password">Password</label>
+							
+							<input class="full-width has-padding has-border" name="password" id="signup-password" type="password"  placeholder="Password" required="required">
+							
+							<a href="#0" class="hide-password"  required>Show</a>
+							
+							<span class="error-message">Your password has to be at least 6 characters long!</span>
+						</p>
+
+						<p class="fieldset">
+							<button id = "sign-up-submit" class="full-width has-padding" type="submit" value="Create account">Submit</button>
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+			<div class = "paragraphs">
+				<p class ="parag1">
+					Space for sharing and collaboration </p>
+				<p class ="parag2">
+				
+					Share with users and non users 
+						<!-- <img class = "smIcon" src = "images/shield.png"> -->
+				</p>
+				<p class ="parag3">
+					
+					Securely store files 
+				<!-- <img class = "smIcon"src = "images/user.png"></p> -->
+			</div>
+		
+	<!-- END LANDING PAGE DIV NO PAGE 1 PAST THIS LINE-->
+	</div>
+	<!-- END LANDING BODY -->
+	</div>
+
+<!-- ====================================== -->
+<!-- ==========PROFILE PAGE================  -->
+<!-- ====================================== -->
+	<!-- FILE UPLOAD -->
+	<div class = "profile-page"> 
+		<nav class="profNav">
+			<h1 class="homeName">FileShare</h1>
+			<button class = "logout" class = "filePgBtn">LOGOUT</button>
+		</nav>
+		<!-- FILE UPLOAD FORM -->
+		
+
+			<!-- <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe> -->
+		
+			<div class = "searchSort">
+						<!-- SEARCH -->
+				<div class = "searchBar">
+					<div>
+						<!-- <i class="fas fa-search"></i>  -->
+						<input type="text" name="search" id="search" placeholder="Search"class="form-control" />
+					</div>
+					<ul class="list-group" id="result"></ul>
+					<ul class = "file-list" id = "result"></ul>	
+				</div>
+		
+			
+				<div class = "sortList">
+						<form id = "sort">
+							<p>
+								<label>Sort By:</label>
+								<select id = "sortListOpts">
+								<option value = "1">Most Recent</option>
+								<option value = "2">Least Recent</option>
+								<option value = "3">Alphabetic</option>
+								<option value = "4">Reverse Alphabetic</option>
+								<option value = "5">Size - Smallest to Largest</option>
+								<option value = "6">Size - Largest to Smallest</option>
+								</select>
+							</p>
+						</form>
+					</div>
+			</div>
+		</div>
+
+
+<!-- uploads -->
+	<div class = "uploadNewDoc">
+		<div class="fileUploadForm">
+			<form target="dummyframe" id="uploadbanner" enctype="multipart/form-data">
+				<input id="fileupload" name="myfile" type="file"  required="required"/>
+				<input type="submit" value="Upload" id="uploadBtn" />
+			</form>
+		</div>
+	
+	
+		<!-- New Document -->
+			<div class="page-wrapper">
+				<a class="btn trigger">New Document</a>
+			</div>
+			
+			<div class="modal-wrapper">
+				<div class="modal">
+					<div class="head">
+						<a class="btn-close trigger"></a>
+					</div>
+					<div class="createFileModal">
+						<form id ="createFileForm">
+							<p>
+								<label for="filename">Filename</label>
+								<input name="filename"placeholder="filename.txt" type="text"id="filename" />
+							</p>
+							<p>
+								<label for="txt">Document</label>
+								<textarea name="content"id="txt"></textarea>
+							</p>
+							<button class = "filePgBtn" id="uploadNewFile" type="submit">Upload </button>	
+							<button class = "filePgBtn" id="downloadNewFile" type="submit">Download </button>	
+						</form>	
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- </div> -->
+</div>
+
+		<!-- LIST FILES -->
+	<div class = "file"></div>
+	<div class = "filesInfo"></div>
+	<!-- END PROFILE PAGE DIV -->
+<!-- </div> -->
+	</div>
+	<!-- END -->
+ </body>
+</html>
