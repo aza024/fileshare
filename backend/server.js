@@ -260,6 +260,7 @@ app.post('/user/:username', (req,res) => {
 app.post('/files/:username', 
     [verifyToken, upload.single('myfile')], 
     (req, res) => {
+        console.log('in upload file ')
         jwt.verify(req.token, 
             process.env.SECRET_KEY, 
             (err, authData)=>{
@@ -279,6 +280,7 @@ app.post('/files/:username',
                 data = req.file.buffer
             }
         
+            console.log('uploading name' + name)
             if(!name || !data){
                 console.log('ERR: Name or Data not valid')
                 res.sendStatus(400).json({error: 'Invalid Name or Data'})
@@ -398,3 +400,4 @@ function verifyToken (req, res, next) {
 app.listen(3001, () => {
     console.log('Listening on port 3001')
 })
+

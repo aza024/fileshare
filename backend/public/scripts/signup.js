@@ -22,6 +22,36 @@ jQuery(document).ready(function($){
             .getElementById('uploadbanner').innerHTML = uploadbanner
         document
             .getElementById('newDocBtnWrapper').innerHTML = newDocBtn
+            uploadButtonOnClick('#uploadBtn')
+
+        $('#newDocBtn').click((e) => {
+            console.log('in .trigger')
+            $('.modal-wrapper').toggleClass('open')
+            $('.page-wrapper').toggleClass('blur')
+
+            console.log('btn close')
+            console.log($('.btn-close trigger'))
+
+            $('.modal-wrapper').on('click', function(e){
+                console.log($(e.target))
+                if( $(e.target).is($('.modal-wrapper')) || $(e.target).is('.btn-close') ) {
+                    console.log('a')
+                    $('.modal-wrapper').toggleClass('open')
+                    $('.page-wrapper').toggleClass('blur')
+                } 
+            });
+        
+            $(document).keyup(function(e){
+                //Close when esc key is pressed
+                if(e.which=='27'){
+                    console.log('a')
+                    $('.modal-wrapper').toggleClass('open')
+
+                    $('.page-wrapper').toggleClass('blur')
+                }
+            });
+            return false;
+        })
     }
 })
 

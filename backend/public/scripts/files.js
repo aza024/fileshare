@@ -66,7 +66,9 @@ downloadfile = (username, filename, fileId, success, error) => {
 }
 
 getShareUrl = (username, filename, uuid) => {
+  // AWS-TODO
   return `http://localhost:3001/shareFile/${username}/${filename}/${uuid}`
+  // return `http://ec2-54-193-47-39.us-west-1.compute.amazonaws.com:3001/shareFile/${username}/${filename}/${uuid}`
 }
 
 
@@ -372,6 +374,11 @@ class FileDisplayManager{
           `<button class ="${fileId}closePicPrev">Close</button>`
         )
 
+        $(`#${fileId}picPreview`).css('background-color','red')
+        $(`.${fileId}closePicPrev`).css('color','#008080')
+        $(`.${fileId}closePicPrev`).css('border','1px solid #008080')
+        $(`.${fileId}closePicPrev`).css('background-color','blue')
+
         $(`.${fileId}closePicPrev`).on('click', () => {
           console.log('close click prev')
           $(`#${fileId}picPreview`).hide()
@@ -448,14 +455,25 @@ decodeUtf8 = (data) => {
 uploadButtonOnClick = (e) => {
     // File Upload
     // '#uploadBtn'
+    console.log($(e))
+    console.log('in upload on click')
     $(e).on('click',(e)=>{
       e.preventDefault();
+      console.log('click')
       let 
       username = localStorage.getItem('username'),
 
       filename = $('#createFileForm').serialize()
+      if (!filename) {
+        console.log('Empty filename')
+        return
+      }
       const data = new FormData($('#uploadbanner')[0])
 
+      if (!data) {
+        console.log('Empty data/filename')
+        return      
+      }
       uploadFile(
           filename,
           data, 
@@ -482,7 +500,8 @@ uploadButtonOnClick = (e) => {
 }
 
 loadLoginPage = () => {
- //end ajax
+    //end ajax
+    console.log(loadLoginPage)
     uploadButtonOnClick('#uploadBtn')
 
     $('.logout').on('click',()=>{
@@ -539,6 +558,8 @@ if (loggedIn = true){
   loadLoginPage()
 } else {
     let children = $('.filesInfo').remove()
+    uploadButtonOnClick('#uploadBtn')
+
 }
 
 previewVideo = (arr, filename, fileId) => {
@@ -601,10 +622,15 @@ createFile = () => {
   document.body.removeChild(link)
 }
 
-
-$('.trigger').click(() => {
+console.log($('#newDocBtnWrapper'))
+$('#newDocBtn').click((e) => {
   $('.modal-wrapper').toggleClass('open')
   $('.page-wrapper').toggleClass('blur')
+
+  $('.btn-close trigger').on('click', (e) => {
+      console.log('not working')
+      $('.modal-wrapper').toggleClass('close')
+  })
   return false;
 })
 

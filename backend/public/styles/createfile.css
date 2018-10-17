@@ -9,10 +9,10 @@
 a.btn{
   width:150px;
   /* display:block; */
-  /* margin:-25px 0 0 -75px; */
+  margin:-25px 0 0 -75px;
   padding:1em 0;
   position:absolute;
-  /* top:50%; left:50%; */
+  top:12%; left:90%;
   /* font:1.125em 'Arial', sans-serif; */
   /* font-weight:700; */
   /* text-align:center; */
@@ -103,3 +103,4 @@ a.btn{
 .content{
   padding:5%;
 }
+
