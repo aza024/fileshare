@@ -276,7 +276,7 @@ class FileDisplayManager{
       $('.filesInfo').append(
         `
           <div id = "${fileId}picPreview"></div>
-            <div id = ${fileId}Wrapper>
+            <div class = "fileWrapper" id = ${fileId}Wrapper>
               <div id = "${fileId}fileInfo"> 
                 <div class = "fileExt"> 
                   <h1 id="${fileId}extenCirc">.${escapeHtml(file.extension)}</h1>
@@ -286,19 +286,18 @@ class FileDisplayManager{
 
                   <div id="${fileId}DwlDelBtn">
                     <div class = "dlBtnAppend" id = ${fileId}Btn></div>
-                    <div class = "deleteBtn" id = ${fileId}deleteBtn> </div>
                   </div>
 
                   <h3>Last Modified Date: ${formattedDate}</h3>
                   <h3>Size: ${file.size} </h3>
 
-                  
-                  <div class = "${fileId}prevbtn"></div>
-
-                <div class = "shareBtn">
-                  <button class = "filePgBtn" id ="${fileId}shareBtn">Share</button>
-                  <div class = "shareLink" id = "${fileId}shareLink"></div>
+                  <div id="${fileId}sharePrev" class = "sharePrev">
+                    <div class = "${fileId}prevbtn"></div>
+                    <button class = "filePgBtn" id ="${fileId}shareBtn">Share</button>
+                    <div class = "shareLink" id = "${fileId}shareLink"></div>
                 </div>
+
+                
             </div>
           </div>
         `
@@ -308,16 +307,31 @@ class FileDisplayManager{
       $(`#${fileId}Wrapper`).css('justify-content','space-between')
       $(`#${fileId}Wrapper`).css('flex-direction','column')
       $(`#${fileId}Wrapper`).css('flex-wrap','wrap')
-      $(`#${fileId}Wrapper`).css('border','5px solid #333')
+      $(`#${fileId}Wrapper`).css('border','5px solid #008080')
+      $(`#${fileId}Wrapper`).css('background-color','#F7F9FA')
       $(`#${fileId}Wrapper`).css('margin','auto')
       $(`#${fileId}Wrapper`).css('margin-bottom','100px')
       $(`#${fileId}Wrapper`).css('width','35%')
 
       $(`#${fileId}fileInfo`).css('text-align','center')
 
-      $(`#${fileId}extenCirc`).css('background-color', 'red')
+      $(`#${fileId}extenCirc`).css('background-color', 'grey')
       $(`#${fileId}extenCirc`).css('color', 'white')
       $(`#${fileId}extenCirc`).css('width', '100px')
+
+      $(`#${fileId}DwlDelBtn`).css('display', 'flex')
+      $(`#${fileId}DwlDelBtn`).css('flex-direction', 'column')
+
+   
+      if(file.extension == 'jpg'){
+        $(`#${fileId}extenCirc`).css('background-color', 'red')
+      } else if ( file.extension == 'mp4'){
+        $(`#${fileId}extenCirc`).css('background-color', 'blue')
+      } else if ( file.extension == 'txt'){
+        $(`#${fileId}extenCirc`).css('background-color', 'green')
+      } else {
+        $(`#${fileId}extenCirc`).css('background-color', 'purple')
+      }
     
   
       //CALL FUNCTION HERE TODO 

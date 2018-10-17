@@ -464,7 +464,7 @@ img{
   color: #008080;
   border: 1px solid #008080;
   font-size: 1.25em;
-  padding: .5em;
+  /* padding: .5em; */
   border-radius: 5px;
 }
 
@@ -486,6 +486,11 @@ img{
   /* padding: .5em; */
   border: 1px solid #800000;
   border-radius: 5px;
+}
+
+.fileWrapper:hover{
+  transform: scale(1.1);
+  margin-top: 1em;
 }
 
 .downBtn, #uploadBtn{
@@ -521,6 +526,19 @@ img{
 #search{
   margin-top: .65em;
   width: 300px;
+  border: 1px solid #008080;
+}
+
+.sharePrev{display:flex}
+/* .sharePrev{flex-direction:row} */
+
+.filePgBtn, .sharePrev{
+  margin: .25em;
+}
+
+.uploadNewDoc{
+  display:flex;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 680px) {
