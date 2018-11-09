@@ -177,14 +177,15 @@ app.get('/user', (req,res) => {
         password = req.query.password
 
     console.log('INFO: User logging in ')
+
     client.query('SELECT password FROM users WHERE username = $1',
     [username], (err, psql_res)=>{
-        if(err){
+        if (err) {
             console.log('ERR: Login query error ' + err)
             res.status(500)
             return
         }
-        if (psql_res.rows.length === 0 ){
+        if (psql_res.rows.length === 0 ) {
             console.log('INFO: Username does not exist')
             res.status(400).json({error : 'Username does not exist'})
             return
@@ -200,18 +201,21 @@ app.post('/user/:username', (req,res) => {
     const 
         username = req.body.username,
         password = req.body.password,
-        email = req.body.email  
+        email = req.body.email
+
     console.log(`INFO: Creating user ${username}`)
 
     bcrypt.hash(
         password, 
         10, 
         (err, hash)=>{ 
-        if (err){
+        if (err) {
             res.status(500)
             return
         }
+
         console.log('INFO: Querying postgres for username')
+
         client.query(
             'SELECT * FROM users WHERE username = $1', 
                 [username],
@@ -313,6 +317,7 @@ app.post('/files/:username',
                     res.sendStatus(500)
                     return
                 }
+                
                 console.log("Data " + data)
                 res.sendStatus(200)
                 return
