@@ -1,5 +1,5 @@
 # FileShare
-
+**ReadME is currently being edited and may not contain all information**
 FileShare is a full-stack, single-page file-sharing application built using Node/Express and JavaScript that allows users to upload or download files to and AWS using EC2 with S3 Buckets and share files using a UUID link. 
 
 
