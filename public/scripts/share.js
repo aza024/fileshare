@@ -1,22 +1,15 @@
-
-console.log('Javascript is loaded')
-
 isImage = (extension) => {
     return extension === 'png' ||
     extension === 'jpg' ||
     extension === 'gif'
-
 }
-
 
 isVideo = (extension) => {
     return extension === 'mp4' ||
     extension === 'ogg'
-
 }
 
 previewVideo = (arr, filename, fileId) => {
-    console.log('previewing video')
     let byteArray = new Uint8Array(arr),
         objTo = document.getElementById('previewDiv'),
         divtest = document.createElement("video")
@@ -80,20 +73,19 @@ getUsername = (url) => {
     const lastIndex2 = modifiedUrl.lastIndexOf('/')
     const modifiedUrl2 = modifiedUrl.substring(0, lastIndex2)
 
-
     const lastIndex3 = modifiedUrl2.lastIndexOf('/')
     return modifiedUrl2.substring(lastIndex3 + 1)
 }
 
 downloadfile = (username, filename, fileId, success, error) => {
     $.ajax({
-      dataType: 'json',
-      method: 'GET',
-      url:`/files/${username}/${filename}/${fileId}`,
-      success,
-      error
+        dataType: 'json',
+        method: 'GET',
+        url:`/files/${username}/${filename}/${fileId}`,
+        success,
+        error
     })
-  }
+}
 
 const currentUrl = window.location.href.replace('shareFile', 'files');
 const filename = getFileName(currentUrl)
@@ -108,8 +100,6 @@ if (isImage(extension) || isVideo(extension)) {
     let previewBtnText = document.createTextNode('Preview')
 
     previewBtn.appendChild(previewBtnText)
-
-    // $(previewBtn).on('click',)
     
     document.getElementById('previewDiv').appendChild(previewBtn)
 
@@ -124,28 +114,24 @@ textH3.appendChild(text)
 document.getElementById('shareText').appendChild(textH3)
 
 $(`#previewBtn`).on('click',()=>{
-    console.log('clicked preview button')
-    
     const username = getUsername(currentUrl)
-
-    console.log(currentUrl)
     const filename = getFileName(currentUrl)
     const fileId = getFileId(currentUrl);
     downloadfile(
-      username, 
-      filename,
-      fileId,
-      (res) => {
-        const extension = filename.split('.').pop()
-        document.getElementById('previewDiv').innerHTML = ''
+        username, 
+        filename,
+        fileId,
+        (res) => {
+            const extension = filename.split('.').pop()
+            document.getElementById('previewDiv').innerHTML = ''
 
-        if (isImage(extension)) {
-          previewImage(res.Body.data, filename, fileId)
-        } else if (isVideo(extension)) {
-          previewVideo(res.Body.data, filename, fileId)
-        }
-      },
-      (res) => {console.log('Error')}
+            if (isImage(extension)) {
+                previewImage(res.Body.data, filename, fileId)
+            } else if (isVideo(extension)) {
+                previewVideo(res.Body.data, filename, fileId)
+            }
+        },
+        (res) => {console.log('Error')}
     )
 })
 
@@ -153,7 +139,6 @@ $('#fileDownloadButton').click((e) => {
     e.preventDefault()
     console.log('INFO: Downloading File')
     const currentUrl = window.location.href.replace('shareFile', 'files');
-    console.log(currentUrl)
     const filename = getFileName(currentUrl)
     
     $.ajax({
@@ -163,7 +148,6 @@ $('#fileDownloadButton').click((e) => {
         success: (res) => {
             console.log('INFO: Successfully downloaded file: ' + JSON.stringify(res))
             createdownload(res.Body.data, filename)
-
         },
         error: (err) => {
             console.log('ERR: Failed to download file: ' + 

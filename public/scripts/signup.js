@@ -6,10 +6,6 @@ let newDocBtn = document.getElementById('newDocBtnWrapper').innerHTML
 document.getElementById('uploadbanner').innerHTML = ''
 document.getElementById('newDocBtnWrapper').innerHTML = ''
 
-console.log('newDocBtn ' + newDocBtn)
-
-
-
 jQuery(document).ready(function($){
 
     if (localStorage.getItem('logged-in')){
@@ -23,17 +19,10 @@ jQuery(document).ready(function($){
             uploadButtonOnClick('#uploadBtn')
 
         $('#newDocBtn').click((e) => {
-            console.log('in .trigger')
             $('.modal-wrapper').toggleClass('open')
             $('.page-wrapper').toggleClass('blur')
-
-            console.log('btn close')
-            console.log($('.btn-close trigger'))
-
             $('.modal-wrapper').on('click', function(e){
-                console.log($(e.target))
                 if( $(e.target).is($('.modal-wrapper')) || $(e.target).is('.btn-close') ) {
-                    console.log('a')
                     $('.modal-wrapper').toggleClass('open')
                     $('.page-wrapper').toggleClass('blur')
                 } 
@@ -42,9 +31,7 @@ jQuery(document).ready(function($){
             $(document).keyup(function(e){
                 //Close when esc key is pressed
                 if(e.which=='27'){
-                    console.log('a')
                     $('.modal-wrapper').toggleClass('open')
-
                     $('.page-wrapper').toggleClass('blur')
                 }
             });
@@ -141,7 +128,6 @@ $('#signin-form').on('submit',function(e){
         },
         success: function(res){
             let token = res.token
-            console.log(res.token)
             localStorage.setItem('usertoken', token);
             localStorage.setItem('username', username);
             localStorage.setItem('logged-in', true)
@@ -155,22 +141,19 @@ $('#signin-form').on('submit',function(e){
 })
 
 $('#sign-up-submit').on('click', function(e){
-        e.preventDefault();
-    
+    e.preventDefault();
+
     let username = ($('#signup-username').val()),
         email = ($('#signup-email').val()),
         password = ($('#signup-password').val())
 
-    
     if(!signUpVal()){
         console.log('WARN: Invalid signup')
         return false
     } else {
-
         $.ajax({
             dataType: 'json',
             method: 'POST',
-            // changed from /user
             url:`/user/${username}`,
             data:{
                 username,
@@ -191,10 +174,9 @@ $('#sign-up-submit').on('click', function(e){
                 localStorage.setItem('logged-in', true);
             },
             error: function(res){
-                console.log('RES', res)
-                console.log('Error:' + JSON.stringify(res))
+                console.log('ERROR:' + JSON.stringify(res))
                 document.getElementById("si gnup-errMsg").innerHTML = "Account already exists with provided username or email."
-                console.log('acct exist')
+                console.log('ERROR: Account already exists')
             }
         })
     }
@@ -249,7 +231,7 @@ signUpVal = () => {
         username = document.getElementById('signup-username').value,
         password = document.getElementById('signup-password').value
         email = document.getElementById('signup-email').value;
-
+    // Console.logs left to demonstrate sharing with UUID functionality
     console.log(username)
     console.log(password)
     console.log(email)
@@ -257,11 +239,13 @@ signUpVal = () => {
     if (username == '' || password == '' || email == '' ){
         document.getElementById("signup-errMsg").innerHTML = "Please complete the form.";
         return false;
-    } 
+    }
+    
     if (email.length > 60) {
         document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters";
         return false;
-    } 
+    }
+ 
     if (validatePassword(password) == false){
         document.getElementById("signup-errMsg").innerHTML = "Password must be between eight and thirty characters, contain a lowercase letter, an uppercase letter, one numeric character and one special character.";
         return false;

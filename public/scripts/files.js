@@ -574,6 +574,7 @@ previewImage = (arr, filename,fileId) => {
       objTo = document.getElementById(`${fileId}picPreview`),
       divtest = document.createElement("img"),
       img = document.createElement('img')
+
   const 
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }))
 
@@ -584,6 +585,7 @@ previewImage = (arr, filename,fileId) => {
 
 createdownload = (arr, filename) => {
   var byteArray = new Uint8Array(arr);
+  
   const 
     filenameEdit = filename,
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
