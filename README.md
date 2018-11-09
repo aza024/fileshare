@@ -52,9 +52,6 @@ file system.
 **Sort**
 FileShare has many other features such as the ability to view stored files in user browsers - view images or play mp4 files. 
 Multiple forms of searching and sorting are supported, allowing users to find their files very quickly.
-
-
-
   
 
 ## Ongoing Improvements
