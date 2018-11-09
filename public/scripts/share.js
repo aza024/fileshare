@@ -29,6 +29,7 @@ previewImage = (arr, filename,fileId) => {
         objTo = document.getElementById(`previewDiv`),
         divtest = document.createElement("img"),
         img = document.createElement('img')
+
     const 
         url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }))
 
@@ -92,17 +93,14 @@ const filename = getFileName(currentUrl)
 const extension = filename.split('.').pop()
 
 if (isImage(extension) || isVideo(extension)) { 
-
-    document.getElementById('previewDiv').innerHTML = ''
     let previewBtn = document.createElement('button')
-    previewBtn.setAttribute('id', 'previewBtn')
-
     let previewBtnText = document.createTextNode('Preview')
 
-    previewBtn.appendChild(previewBtnText)
-    
-    document.getElementById('previewDiv').appendChild(previewBtn)
+    document.getElementById('previewDiv').innerHTML = ''
+    previewBtn.setAttribute('id', 'previewBtn')
 
+    previewBtn.appendChild(previewBtnText)
+    document.getElementById('previewDiv').appendChild(previewBtn)
 }
 
 const username = getUsername(currentUrl)

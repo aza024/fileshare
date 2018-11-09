@@ -256,13 +256,10 @@ signUpVal = () => {
         "Email requires an @ sign";
         return false;
     }
-    
-    console.log('valid')
     return true;
     // TODO: CHECK TO SEE IF WE HAVE AN EXISTING USER W. SAME CREDENTIALS
     // else if (console.log){
     //     document.getElementById("signup-errMsg").innerHTML = "An existing user has with those credentials."
     //     return false;
     // } 
-    
 }

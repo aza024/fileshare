@@ -24,23 +24,28 @@ AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey:
 app.use(express.static('public'))
 app.use(bodyParser());
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    }
+);
 
 // ------------------APP.GET----------------------
-app.get('/', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');});
-app.get('', (req, res) => {res.sendFile(__dirname + '/public/views/signup.html');})
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/views/signup.html');
+    }
+);
+
+app.get('', (req, res) => {
+    res.sendFile(__dirname + '/public/views/signup.html');
+    }
+);
+
 app.get('/shareFile/:username/:filename/:uuid', (req, res) => {
     console.log('INFO: Sharing file')
     res.sendFile(__dirname + '/public/views/share.html');
-    // Return share.html
-    // share.html will just be a Download button
-    // Download button.on('click') will make get rquest like this:
-    // '/files/:username/:filename/:uuid'
-    // Populate the username, filename, uuid from the url itself
-})
+    }
+);
 
 app.get('/files/:username/:filename/:uuid', (req, res)=>{
     //URI Encoding to prevent invalid chars for user & filename in S3 path
@@ -79,7 +84,7 @@ app.get('/files/:username/:filename/:uuid', (req, res)=>{
     })
 })
 //call jwt token
-app.get('/listfiles/:username', verifyToken, (req, res)=> {
+app.get('/listfiles/:username', verifyToken, (req, res) => {
     const username = encodeURIComponent(req.params.username)
     console.log('INFO: Handling list files req for: ' + username)
     s3.listObjects({ 
@@ -87,17 +92,15 @@ app.get('/listfiles/:username', verifyToken, (req, res)=> {
         Prefix:`userfiles/${username}/`
     },
     (err,data)=>{
-        if(err){
+        if (err) {
             console.log("ERR: S3.listFile " + err)
             res.status(500)
             return 
         }
         // Filenames were URI encoded before upload, decode so they are
         // readable by humans
-        for (let i=0; i<data.Contents.length; i++) {
+        for (let i = 0; i < data.Contents.length; i++) {
             let decodedFilename = decodeURIComponent(data.Contents[i].Key)
-            console.log('decoded file name:  ' + decodedFilename)
-
             const 
                 lastUU = decodedFilename.lastIndexOf('__'),
                 uuid = decodedFilename.slice(lastUU + 2),
@@ -266,7 +269,7 @@ app.post('/files/:username',
             req.token, 
             process.env.SECRET_KEY, 
             (err, authData)=>{
-            if (err){
+            if (err) {
                 console.log('ERR: FORBIDDEN')
                 res.sendStatus(403).json({error: "FORBIDDEN"})
                 return
@@ -274,16 +277,15 @@ app.post('/files/:username',
             let name = null,
                 data = null
         
-            if(!req.file){
+            if (!req.file) {
                 name = req.body.filename
                 data = req.body.content
-            } else{
+            } else {
                 name = req.file.originalname
                 data = req.file.buffer
             }
         
-            console.log('uploading name' + name)
-            if(!name || !data){
+            if (!name || !data) {
                 console.log('ERR: Name or Data not valid')
                 res.sendStatus(400).json({error: 'Invalid Name or Data'})
                 return
@@ -291,17 +293,20 @@ app.post('/files/:username',
         
             const uuid = uuidv4()
             const username = req.params.username
-            if (!username){
+
+            if (!username) {
                 console.log("ERR: Username required")
                 res.sendStatus(400).json({error : 'Username Required'})
                 return
             }
+
             const urlName = encodeURIComponent(`${name}__${uuid}`)
             const params = {
                 Bucket: "fileshare-uploads",
                 Key: `userfiles/${username}/${urlName}`,
                 Body: data
             }
+
             s3.putObject(params, (err, data) => {
                 if (err){
                     console.log("Error " + err)
@@ -319,7 +324,7 @@ app.post('/account', verifyToken, (req,res) => {
     jwt.verify(req.token, 
         process.env.SECRET_KEY, 
         (err, authData)=>{
-        if(err) {
+        if (err) {
             res.sendStatus(403)
         } else {
             res.json({
@@ -342,7 +347,7 @@ app.get('/files/delete/:username/:filename/:uuid', verifyToken,(req,res) => {
         req.token, 
         process.env.SECRET_KEY, 
         (err, authData)=>{
-            if(err) {
+            if (err) {
                 console.log('ERR: Delete Err')
                 res.sendStatus(403)
                 return
@@ -360,7 +365,7 @@ app.get('/files/delete/:username/:filename/:uuid', verifyToken,(req,res) => {
                     }
                 };    
                 s3.deleteObjects(deleteParam, (err, data) => {
-                    if(err) { 
+                    if (err) { 
                         console.log('ERR: Delete req failed with '+ err)
                         return (err)
                     }
@@ -378,20 +383,17 @@ app.get('/files/delete/:username/:filename/:uuid', verifyToken,(req,res) => {
 function verifyToken (req, res, next) {
     //Get auth header value
     const bearerHeader = req.headers['authorization']
-    if(
-        typeof bearerHeader !== 'undefined'){
-            const 
-                bearer = bearerHeader.split(' '),
-                bearerToken = bearer[1]
-            req.token = bearerToken
-            next()
+    if (typeof bearerHeader !== 'undefined') {
+        const 
+            bearer = bearerHeader.split(' '),
+            bearerToken = bearer[1]
+        req.token = bearerToken
+        next()
     } else {
         console.log('ERR: FORBIDDEN')
         res.sendStatus(403).json({error : 'ERR: Unauthorized to view this page'})
     }
 }
 
-app.listen(3001, () => {
-    console.log('Listening on port 3001')
-})
+app.listen(3001, () => { console.log('Listening on port 3001') })
 
