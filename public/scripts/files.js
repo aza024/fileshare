@@ -92,7 +92,6 @@ downloadBtn = (filename, fileId) => {
   })
 }
 
-
 deleteBtn = (filename, fileId) => {
   const username = localStorage.getItem('username')
   let deleteBtn = $(`#${fileId}Btn`)
@@ -144,18 +143,19 @@ class FileDisplayManager{
       }
     }
 
-    if (removeIdx != null){
+    if (removeIdx != null) {
       this.fileList.splice(removeIdx, 1)
     }
+
     removeIdx = null
     for(let i = 0; i < this.toDisplay.length; i++ ){
       var file = this.toDisplay[i]
-      if (filename === file.filename){
+      if (filename === file.filename) {
         removeIdx = i;
         break;
       }
     }
-    if (removeIdx != null){
+    if (removeIdx != null) {
       this.toDisplay.splice(removeIdx, 1)
     }
   }
@@ -247,8 +247,8 @@ class FileDisplayManager{
 
     for(let i = 0; i < this.fileList.length; i++){
       let 
-      file = this.fileList[i], 
-      filename = file.filename
+        file = this.fileList[i], 
+        filename = file.filename
 
       if(filename.indexOf(str)!=-1){
         this.toDisplay.push(file)
@@ -290,9 +290,7 @@ class FileDisplayManager{
                     <div class = "${fileId}prevbtn"></div>
                     <button class = "filePgBtn" id ="${fileId}shareBtn">Share</button>
                     <div class = "shareLink" id = "${fileId}shareLink"></div>
-                </div>
-
-                
+                </div> 
             </div>
           </div>
         `
@@ -316,7 +314,6 @@ class FileDisplayManager{
       $(`#${fileId}DwlDelBtn`).css('display', 'flex')
       $(`#${fileId}DwlDelBtn`).css('flex-direction', 'column')
 
-   
       if(file.extension == 'jpg'){
         $(`#${fileId}extenCirc`).css('background-color', '#800000')
       } else if ( file.extension == 'mp4'){
@@ -327,7 +324,6 @@ class FileDisplayManager{
         $(`#${fileId}extenCirc`).css('background-color', '#563c5c')
       }
     
-  
       //CALL FUNCTION HERE TODO 
       shareBtn(file.filename, fileId)
 
@@ -360,10 +356,7 @@ class FileDisplayManager{
           (res) => {console.log('Error')}
         )
 
-
-        $(`#${fileId}picPreview`).append(
-          `<button class ="${fileId}closePicPrev">Close</button>`
-        )
+        $(`#${fileId}picPreview`).append(`<button class ="${fileId}closePicPrev">Close</button>`)
 
         $(`#${fileId}picPreview`).css('background-color','light grey')
         $(`#${fileId}picPreview`).css('text-align','center')
@@ -376,27 +369,22 @@ class FileDisplayManager{
         $(`.${fileId}closePicPrev`).css('background-color','#008080')
         $(`.${fileId}closePicPrev`).css('border-radius','5px')
         
-
         $(`.${fileId}closePicPrev`).on('click', () => {
-          console.log('close click prev')
-          $(`#${fileId}picPreview`).hide()
-          $(`.${fileId}Wrapper`).show()
+            $(`#${fileId}picPreview`).hide()
+            $(`.${fileId}Wrapper`).show()
         })
       })
-
       downloadBtn(file.filename, fileId)
       deleteBtn(file.filename, fileId)
     }
   } 
 } //end FileDisplayManager
 
-
 isImage = (extension) => {
   return extension === 'png' ||
     extension === 'jpg' ||
     extension === 'gif'
 }
-
 
 isVideo = (extension) => {
   return extension === 'mp4' ||
@@ -429,7 +417,6 @@ $('#sortListOpts').on('change', function() {
     else {
       console.log('Invalid Option')
     }
-
   displayManager.display()
 })
 
@@ -448,35 +435,37 @@ decodeUtf8 = (data) => {
 
 uploadButtonOnClick = (e) => {
     // File Upload
-    // '#uploadBtn'
     console.log($(e))
     console.log('in upload on click')
     $(e).on('click',(e)=>{
       e.preventDefault();
       console.log('click')
       let 
-      username = localStorage.getItem('username'),
+        username = localStorage.getItem('username'),
+        filename = $('#createFileForm').serialize()
 
-      filename = $('#createFileForm').serialize()
       if (!filename) {
         console.log('Empty filename')
         return
       }
+
       const data = new FormData($('#uploadbanner')[0])
 
       if (!data) {
         console.log('Empty data/filename')
         return      
       }
+
       uploadFile(
           filename,
           data, 
           function(){
               console.log("INFO:Files successfully sent!");
-              // res.status(200)
               displayManager.clear()
-              const lastSearch = displayManager.currentSearch
-              const lastSort = displayManager.currentSort
+
+              const 
+                lastSearch = displayManager.currentSearch,
+                lastSort = displayManager.currentSort
 
               loadLoginPage()
 
@@ -487,7 +476,6 @@ uploadButtonOnClick = (e) => {
           },
           function(){
               console.log("ERR: Files couldn't be sent.");
-              // res.status(200)
           }
         )
   })
@@ -504,7 +492,6 @@ loadLoginPage = () => {
       localStorage.removeItem('logged-in')
       localStorage.removeItem('usertoken')
       loggedIn = false
-
       location.reload()
     })
 
@@ -519,7 +506,6 @@ loadLoginPage = () => {
         },
         success: (res)=>{
           let files = res.Contents
-
           for(let i =0; i < files.length; i++){
             let
               modified = (files[i].LastModified),
@@ -548,11 +534,11 @@ loadLoginPage = () => {
   )
 }
 
-if (loggedIn = true){
+if (loggedIn = true) {
   loadLoginPage()
 } else {
-    let children = $('.filesInfo').remove()
-    uploadButtonOnClick('#uploadBtn')
+  let children = $('.filesInfo').remove()
+  uploadButtonOnClick('#uploadBtn')
 }
 
 previewVideo = (arr, filename, fileId) => {
@@ -566,7 +552,6 @@ previewVideo = (arr, filename, fileId) => {
   divtest.setAttribute('controls', 'controls')
   divtest.setAttribute ('src', url)
   objTo.appendChild(divtest)
-
 }
 
 previewImage = (arr, filename,fileId) => {
@@ -585,7 +570,7 @@ previewImage = (arr, filename,fileId) => {
 
 createdownload = (arr, filename) => {
   var byteArray = new Uint8Array(arr);
-  
+
   const 
     filenameEdit = filename,
     url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' })),
@@ -616,13 +601,11 @@ createFile = () => {
   document.body.removeChild(link)
 }
 
-console.log($('#newDocBtnWrapper'))
 $('#newDocBtn').click((e) => {
   $('.modal-wrapper').toggleClass('open')
   $('.page-wrapper').toggleClass('blur')
 
   $('.btn-close trigger').on('click', (e) => {
-      console.log('not working')
       $('.modal-wrapper').toggleClass('close')
   })
   return false;
