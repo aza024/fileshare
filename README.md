@@ -22,25 +22,25 @@ To run this project on your machine you'll need:
   * Run ``npm i``
   * ``npm start``
 
-
 ## Features: 
 
 **Account Creation:** 
-Upon reaching the homepage, the user has the option to sign in to their account, or create a new account. 
+
+Once a user decides to sign up for FileShare, their account is validated to ensure users can't sign up with an existing email which is used as a primary key in the Postgres Database. User passwords are securely stored passwords and hashed using BCrypt with validation on the front and backend.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
-
-Once a user decides to sign up for FileShare, their account is validated to ensure users can't sign up with the same email more than twice. User passwords are securely stored passwords and hashed using BCrypt with validation on the front and backend.
-
 ![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
 
 **Authentication:** 
 
-FileShare lets users can safely store their files using JWT tokens for authentication and securely share their files - 
-even with users that do not have a FileShare account.
+JWT tokens are used to authenticate users that are attempting to sign in. Once a user is signed in, they are given the list file permission that allows users to see files associated with their account. A capabiliites model was enforced to protect file downlaods where the ability to list or name a file gives the user the ability to download the file enforced using a UUID being attached to each file. Because of the capabilities model, it is possible for authenticated users to delgate file download permissions to non-users, making file-sharing trival and secure. This allows user to share their file with non-users using UUID. Anyone can download files from FileShare, but only if they have the UUID-based token associated with that file.
+
 ![image](https://user-images.githubusercontent.com/38674075/48247810-8b3fea00-e3a9-11e8-9061-a91d1aeae417.png)
 
 **Upload Files to AWS:**
+
+When a user clicks the 'Choose File' button, their local file system will be displayed and the user can select a file to upload. Once the user selects the file, and then clicks 'upload' the file will be uploaded to an SWS S3 bucket associated with their account and data with functions regarding the file will be rendered on their account page. 
+
 ![image](https://user-images.githubusercontent.com/38674075/48247803-854a0900-e3a9-11e8-984f-4dff4b5ddaea.png)
 ![image](https://user-images.githubusercontent.com/38674075/48247801-82e7af00-e3a9-11e8-9765-a9de05c8c54e.png)
 ![image](https://user-images.githubusercontent.com/38674075/48247795-7fecbe80-e3a9-11e8-9d3a-8329463cb0fa.png)
@@ -56,6 +56,9 @@ even with users that do not have a FileShare account.
 ![image](https://user-images.githubusercontent.com/38674075/48247756-60559600-e3a9-11e8-8d01-ad90dc56a12e.png)
 
 **Preview Images and Videos**
+
+For file extensions of .img, .png, .jpg, or .jpg, users can view the image that they uploaded. Users can play videos of mp4 file types.
+
 ![image](https://user-images.githubusercontent.com/38674075/48247785-76635680-e3a9-11e8-993f-7ef6ecc87fe7.png)
 13
 
@@ -89,7 +92,8 @@ file system.
 ![image](https://user-images.githubusercontent.com/38674075/48247788-795e4700-e3a9-11e8-9c12-d652c14a14d8.png)
 
 **Sort**
-FileShare has many other features such as the ability to view stored files in user browsers - view images or play mp4 files. 
+In additon to sorting files, each file extension is categorized with a different color for visual representation of file types.
+FileShare has many other features such as the ability to view stored files in user browsers. 
 Multiple forms of searching and sorting are supported, allowing users to find their files very quickly.
 
 11
@@ -109,3 +113,5 @@ Multiple forms of searching and sorting are supported, allowing users to find th
 - Revoke access to shared files
 - Support for editing files
 - Add spell check to in browser text file creation
+- Revoke access to shared files
+- Implement folder system 
