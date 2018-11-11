@@ -26,10 +26,12 @@ To run this project on your machine you'll need:
 ## Features: 
 
 **Account Creation:** 
+Upon reaching the homepage, the user has the option to sign in to their account, or create a new account. 
+
+![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
 
 Once a user decides to sign up for FileShare, their account is validated to ensure users can't sign up with the same email more than twice. User passwords are securely stored passwords and hashed using BCrypt with validation on the front and backend.
 
-![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
 ![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
 
 **Authentication:** 
