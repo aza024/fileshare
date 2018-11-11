@@ -29,10 +29,10 @@ To run this project on your machine you'll need:
 Once a user decides to sign up for FileShare, their account is validated to ensure users can't sign up with an existing email which is used as a primary key in the Postgres Database. User passwords are securely stored passwords and hashed using BCrypt with validation on the front and backend.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
-*FileShare Landing page with options to sign in or sign up*
+> *FileShare Landing page with options to sign in or sign up*
 
 ![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
-*Sign Up portion of the modal allows users to create accounts, validating input on the front and back end*
+> *Sign Up portion of the modal allows users to create accounts, validating input on the front and back end*
 ## Authentication:
 
 JWT tokens are used to authenticate users that are attempting to sign in. Once a user is signed in, they are given the list file permission that allows users to see files associated with their account. A capabiliites model was enforced to protect file downlaods where the ability to list or name a file gives the user the ability to download the file enforced using a UUID being attached to each file. Because of the capabilities model, it is possible for authenticated users to delgate file download permissions to non-users, making file-sharing trival and secure. This allows user to share their file with non-users using UUID. Anyone can download files from FileShare, but only if they have the UUID-based token associated with that file.
