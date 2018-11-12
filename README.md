@@ -162,7 +162,7 @@ In additon to sorting files, each file extension is categorized with a different
 *Will reslove when moved to React*
 - Allow user to revoke access to shared files
 *Create table to map UUID's and time shared with user. Allow user to see all generated UUID's and revoke access if desired*
-### Following Improvement Ideas require further research ###
+### The following improvement ideas require further research: ###
 - Support for editing files
 - Add spell check to in browser text file creation
 - Implement folder system 
