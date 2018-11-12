@@ -142,7 +142,7 @@ In additon to sorting files, each file extension is categorized with a different
 ![image](https://user-images.githubusercontent.com/38674075/48247782-73686600-e3a9-11e8-844f-9b23c25ffdad.png)
 > *Files are sorted from smallest to largest file size*  
 
-## Ongoing Improvements
+## Ongoing Improvements:
 - Transition from a Single Page App using jQuery to use ReactJS:
 *Requires replacing all jQuery with React Components and transitioning selectors into component lifecycle methods.*
 - Allow users to preview text files:
