@@ -150,15 +150,20 @@ In additon to sorting files, each file extension is categorized with a different
 - Expand and restrict user files that can be uploaded: 
 *First, decision of which files to restrict should be made, then conditions will be written to prevent upload of specific proprietary file types.
 - Improve UX/UI Design
-**
+*Eventually flex files so two will appear in each row, add icons for file types.*
 - Accommodate multiple Uploads/Downloads/Shared Files
-- Modal Functionality - Change function declarations to use ES6 format. Used function declarations to use $this function for simplicity in designing modal
+*Add conditional statement for when a link for 'Upload Another File' is clicked, another file can be uploaded*
+- Update Modal function declarations to use ES6 format
+*Used function declarations to use $this function for simplicity in designing modal*
 - Send confirmation email upon signup to prevent attackers from signing up for an account that does not belong to the user.
 - Prevent user from uploading duplicate files
+*Check to see if user already uploaded file with filename, if they have, send error message, otherwise, allow upload*
 - Resolve page redirection refreshing issues upon inital login
+*Will reslove when moved to React*
 - Allow user to revoke access to shared files
+*Create table to map UUID's and time shared with user. Allow user to see all generated UUID's and revoke access if desired*
+### Following Improvement Ideas require further research ###
 - Support for editing files
 - Add spell check to in browser text file creation
-- Revoke access to shared files
 - Implement folder system 
 - Public Hosting: FileShare is not publically hosted. To prepare for hosting, legal research into storing user files needs to be completed, along with functionallity changes to support a more significant user-base.
