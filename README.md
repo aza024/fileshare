@@ -1,5 +1,4 @@
 # FileShare
-**ReadME is currently being edited. Please check back soon for completion**
 FileShare is a full-stack, single-page file-sharing application built using Node/Express and JavaScript that allows users to upload or download files to and AWS using EC2 with S3 Buckets and share files using a UUID link. 
 
 ## Built With: 
@@ -144,10 +143,14 @@ In additon to sorting files, each file extension is categorized with a different
 > *Files are sorted from smallest to largest file size*  
 
 ## Ongoing Improvements
-- Transition from a Single Page App using jQuery to use ReactJS
-- Allow users to preview text files
-- Expand and restrict user files that can be uploaded
+- Transition from a Single Page App using jQuery to use ReactJS:
+*Requires replacing all jQuery with React Components and transitioning selectors into component lifecycle methods.*
+- Allow users to preview text files:
+*Change requires decision on how much of the file should be shared for multi-page files.* 
+- Expand and restrict user files that can be uploaded: 
+*First, decision of which files to restrict should be made, then conditions will be written to prevent upload of specific proprietary file types.
 - Improve UX/UI Design
+**
 - Accommodate multiple Uploads/Downloads/Shared Files
 - Modal Functionality - Change function declarations to use ES6 format. Used function declarations to use $this function for simplicity in designing modal
 - Send confirmation email upon signup to prevent attackers from signing up for an account that does not belong to the user.
@@ -158,3 +161,4 @@ In additon to sorting files, each file extension is categorized with a different
 - Add spell check to in browser text file creation
 - Revoke access to shared files
 - Implement folder system 
+- Public Hosting: FileShare is not publically hosted. To prepare for hosting, legal research into storing user files needs to be completed, along with functionallity changes to support a more significant user-base.
