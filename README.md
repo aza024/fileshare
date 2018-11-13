@@ -142,10 +142,17 @@ In additon to sorting files, each file extension is categorized with a different
 ![image](https://user-images.githubusercontent.com/38674075/48247782-73686600-e3a9-11e8-844f-9b23c25ffdad.png)
 > *Files are sorted from smallest to largest file size*  
 
+<<<<<<< HEAD
 #### Implementation: 
 The Search and Sort features were implemented using a class called FileDisplayManager that is used to encapsulate the logic for determining which files to display allowing for composition of search and sort features. 
 
 The FileDisplayManager Class can be viewed here: 
+=======
+## Noteworthy Code: 
+The Search and Sort features were implemented using a class called FileDisplayManager that is used to encapsulate the logic for determining which files to display allowing for composition of search and sort features. 
+
+The FileDisplayManager can be viewed here: 
+>>>>>>> 6a495b9d8fa0ee83df47dccfe460e5d0fcb0f51e
 https://github.com/aza024/fileshare/blob/master/public/scripts/files.js#L123
 
 ## Ongoing Improvements:
