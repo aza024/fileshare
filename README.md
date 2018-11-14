@@ -1,8 +1,8 @@
 # FileShare
-FileShare is a full-stack, single-page file-sharing application built using Node/Express and JavaScript that allows users to upload or download files to and AWS using EC2 with S3 Buckets and share files using a UUID link. 
+FileShare is a full-stack, single-page file-sharing application built using Node/Express and JavaScript that allows users to upload or download files to and AWS using EC2 with S3 Buckets and share files using a UUID link.
 
-## Built With: 
-* Javascript 
+## Built With:
+* Javascript
 * jQuery
 * Node/Express
 * PostgreSQL (store account information)
@@ -15,29 +15,29 @@ FileShare is a full-stack, single-page file-sharing application built using Node
 * Multer (handle file uploads)
 * URIencode (allows files to be passed to URL in proper formatting)
 
-## Cloning the Project: 
-To run this project on your local computer you'll need: 
-  * An AWS account along with an EC2 instance with S3 buckets for file storage.
-  * An instance of a PostgreSQL database to hold user credentials using user model: 
-  
+## Cloning the Project:
+To run this project on your local computer you'll need:
+ * An AWS account along with an EC2 instance with S3 buckets for file storage.
+ * An instance of a PostgreSQL database to hold user credentials using user model:
+ *Implementation of AWS and PostgreSQL setup can be viewed here: https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bdc/server.js#L16*
   ```javascript
-  users{
-    pk_user_id = int, 
-    username = varchar(30), 
-    password = bytea, 
-    email = varchar(60), 
-    user_id = uuid
-  }
-  ```
+ users{
+   pk_user_id = int,
+   username = varchar(30),
+   password = bytea,
+   email = varchar(60),
+   user_id = uuid
+ }
+ ```
 
-  * Run command: ``npm i``
-  * Followed by: ``npm start``
+ * Run command: ``npm i``
+ * Followed by: ``npm start``
 
-## Features: 
+## Features:
 
-## Account Creation: 
+## Account Creation:
 
-Once a user decides to sign up for FileShare, their username and email address are validated to ensure users can't sign up with existing credentials. New users enter a username, email address, and password for account creation and new users enter their username and password to log into their account. User passwords are securely stored and hashed using BCrypt and validated on the front and backend to provide feedback and data integrity. The modal was created using jQuery, HTML, and CSS. 
+Once a user decides to sign up for FileShare, their username and email address are validated to ensure users can't sign up with existing credentials. New users enter a username, email address, and password for account creation and new users enter their username and password to log into their account. User passwords are securely stored and hashed using BCrypt and validated on the front and backend to provide feedback and data integrity. The modal was created using jQuery, HTML, and CSS.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
 > *FileShare Landing page with options to 'Sign In' to their account or 'Sign Up' for an account.*
@@ -48,6 +48,10 @@ Once a user decides to sign up for FileShare, their username and email address a
 ## Secure Authentication:
 
 JWT tokens are used to authenticate users that are attempting to sign in. Once a user is signed in, they are given the 'list file' permission which allows users to see files associated with their account. A capabiliites model was enforced to protect file downlaods where the ability to list or name a file gives the user the ability to download the file. The capabilities model is enforced using a UUID that is attached to each filename for sharing purposes. Because of the capabilities model, authenticated users can delgate file download permissions to non-users making file-sharing trival and secure when a user shares a file with non-users using UUID's. Anyone can download files from FileShare, but only if they have the UUID-based token associated with that file.
+
+The link to the following code demonstrates use of a validating a JWT Token by calling the function verifyToken() in the URL to check to see if the user has a token. If the user does not have a token, they should be denied from visiting that link.
+
+https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bdc/server.js#L87
 
 ![image](https://user-images.githubusercontent.com/38674075/48247810-8b3fea00-e3a9-11e8-9061-a91d1aeae417.png)
 > *'Sign In' modal feature requesting username and password from person attempting to sign into their account.*
@@ -67,7 +71,7 @@ When a user clicks the 'Choose File' button, a GUI interface of their local file
 
 ## Download Files from AWS:
 
-Once a user uploads a file, when they click the 'Download' button, the associated file will be downloaded to the download folder specified in their browser, typically the 'Downloads' folder. 
+Once a user uploads a file, when they click the 'Download' button, the associated file will be downloaded to the download folder specified in their browser, typically the 'Downloads' folder.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247789-7bc0a100-e3a9-11e8-8ab2-e71d083ee8bf.png)
 > *After clicking the 'Download' button, the file is downloaded to local file system as displayed in the bottom left corner of this image.*
@@ -78,7 +82,7 @@ Once a user uploads a file, when they click the 'Download' button, the associate
 
 ## Preview Images and Videos:
 
-Users can view the image that they uploaded for file extensions of .img, .png, .jpg, or .jpg. Users can play videos of mp4 file types in their browser. Eventually, documents will be rendered. 
+Users can view the image that they uploaded for file extensions of .img, .png, .jpg, or .jpg. Users can play videos of mp4 file types in their browser. Eventually, documents will be rendered.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247756-60559600-e3a9-11e8-8d01-ad90dc56a12e.png)
 > *.jpg files can be previewed in the users browser*
@@ -87,7 +91,7 @@ Users can view the image that they uploaded for file extensions of .img, .png, .
 > *.mp4 video files can be previewed and played in the users browser*
 
 
-## Sharing Files: 
+## Sharing Files:
 
 Each file is associated with a secure UUID link which gives non-users who have the link the option to preview or download the shared files.
 
@@ -108,7 +112,7 @@ Each file is associated with a secure UUID link which gives non-users who have t
 
 ## .txt File Creation In Browser:
 
-Users have the option to create a .txt file directly in the browser which they can then uploa the file to AWS, or download the file to their local file system.
+Users have the option to create a .txt file directly in the browser which they can then uploa the file to AWS, or download the file to their local file system. This feature was particularly exciting to implement because all functions necessary for this feature already existed, they were simply reused and modified to create a new feature.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247778-706d7580-e3a9-11e8-9543-bff5a01af8f8.png)
 > *When green ‘+’ icon is clicked, a file editor will appear in a modal*
@@ -122,7 +126,7 @@ Users have the option to create a .txt file directly in the browser which they c
 ## Search:
 
 Multiple forms of searching and sorting are supported, allowing users to find their files very quickly.
-When a user inputs text into the 'Search' bar, all files that contain the input string from the search bar and will be rendered in the file list area. 
+When a user inputs text into the 'Search' bar, all files that contain the input string from the search bar and will be rendered in the file list area.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247788-795e4700-e3a9-11e8-9c12-d652c14a14d8.png)
 > *Files containing the string ‘DEM’ in their name are rendered in the list files area*
@@ -130,37 +134,36 @@ When a user inputs text into the 'Search' bar, all files that contain the input 
 ## Sort:
 Fileshare can sort file lists five different ways by selecting the dropdown menu and selecting one of the following sort options:
 
-* Most Recent 
-* Least Recent 
+* Most Recent
+* Least Recent
 * Alphabetic
-* Reverse Alphabetic 
+* Reverse Alphabetic
 * File Size
 
 Once a user selects an options, the files are reordered according to the selection.
 In additon to sorting files, each file extension is categorized with a different color for visual representation of file types.
 
 ![image](https://user-images.githubusercontent.com/38674075/48247782-73686600-e3a9-11e8-844f-9b23c25ffdad.png)
-> *Files are sorted from smallest to largest file size*  
+> *Files are sorted from smallest to largest file size* 
 
-<<<<<<< HEAD
-#### Implementation: 
-The Search and Sort features were implemented using a class called FileDisplayManager that is used to encapsulate the logic for determining which files to display allowing for composition of search and sort features. 
+The Search and Sort features were implemented using a class called FileDisplayManager that is used to encapsulate the logic for determining which files to display allowing for composition of search and sort features.
 
-The FileDisplayManager Class can be viewed here: 
-=======
-## Noteworthy Code: 
-The Search and Sort features were implemented using a class called FileDisplayManager that is used to encapsulate the logic for determining which files to display allowing for composition of search and sort features. 
+The FileDisplayManager can be viewed here:
+https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bdc/public/scripts/files.js#L123
 
-The FileDisplayManager can be viewed here: 
->>>>>>> 6a495b9d8fa0ee83df47dccfe460e5d0fcb0f51e
-https://github.com/aza024/fileshare/blob/master/public/scripts/files.js#L123
+## Styling Challenges:
+
+Styling FileShare was a good learning experience because the FileShare is a single-page app that generated HTML elements in JavaScript and required styling utilizing jQuery. The purpose for writing FileShare in jQuery is for eventual transition to React.  Writing a SPA using jQuery and JS was a valuable experience because this exercise helped me understand state and why React is so powerful and useful. 
+
+Styling for elements generated in Javascript using jQuery can be seen here:
+https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bdc/public/scripts/files.js#L299
 
 ## Ongoing Improvements:
 - Transition from a Single Page App using jQuery to use ReactJS:
 *Requires replacing all jQuery with React Components and transitioning selectors into component lifecycle methods.*
 - Allow users to preview text files:
-*Change requires decision on how much of the file should be shared for multi-page files.* 
-- Expand and restrict user files that can be uploaded: 
+*Change requires decision on how much of the file should be shared for multi-page files.*
+- Expand and restrict user files that can be uploaded:
 *First, decision of which files to restrict should be made, then conditions will be written to prevent upload of specific proprietary file types.
 - Improve UX/UI Design
 *Eventually flex files so two will appear in each row, add icons for file types.*
@@ -178,5 +181,7 @@ https://github.com/aza024/fileshare/blob/master/public/scripts/files.js#L123
 ### The following improvement ideas require further research: ###
 - Support for editing files
 - Add spell check to in browser text file creation
-- Implement folder system 
+- Implement folder system
 - Public Hosting: FileShare is not publically hosted. To prepare for hosting, legal research into storing user files needs to be completed, along with functionallity changes to support a more significant user-base.
+
+

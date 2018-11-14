@@ -247,12 +247,13 @@ app.post('/user/:username', (req,res) => {
                                     username,
                                     email
                                 }
+                                console.log('key ' + process.env.SECRET_KEY)
                                 jwt.sign({user}, 
                                     process.env.SECRET_KEY, 
                                     { expiresIn: '12h'}, 
                                     (err,token)=>{
                                     res.json({token})
-                                    window.location.replace('views/files.html')
+                                    // window.location.replace('views/files.html')
                                     res.status(200)
                                     return
                                 });

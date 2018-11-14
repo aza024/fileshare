@@ -495,7 +495,8 @@ loadLoginPage = () => {
       location.reload()
     })
 
-    console.log(localStorage.getItem('usertoken'))
+    console.log('username is: ' + localStorage.getItem('username'))
+    const username = localStorage.getItem('username')
     $.ajax({
         dataType: 'json',
         method: 'GET',
