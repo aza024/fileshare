@@ -109,7 +109,7 @@ let textP = document.createElement(`p`)
 let textP2 = document.createElement(`p`)
 
 let text = document.createTextNode(`${username}`)
-let text2 = document.createTextNode(`has shared the file`)
+let text2 = document.createTextNode(`has shared the file:`)
 let text3 = document.createTextNode(`${filename}`)
 let text4 = document.createTextNode(`with you!`)
 

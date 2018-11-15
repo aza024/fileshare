@@ -64,12 +64,16 @@ h1, h2, h4{
     text-align: center;
 }
 
+h3{
+    color: #333333;
+}
+
 .bold{
     color: #008080;
     font-family: 'Lato' sans-serif !important; 
     letter-spacing: .5px;
-    font-size: 1.25em;
-    font-style: italic;
+    font-size: 1.5em;
+    /* font-style: italic; */
 }
 
 .header{
@@ -112,4 +116,28 @@ nav{
     width: 20vw;
     height: 20vh;
     border: 1px solid #008080;
+}
+
+@media only screen and (max-width: 758px) {
+    .shareContainer{
+        flex-direction: column;
+    }
+    .shareImg{
+        width: 100vw;
+        height: 50vh;
+        background-position: center;
+        background-size: cover;
+    }
+    #shareBkd{
+        width: 100vw;
+        height: 50vh;
+    }
+    .shareInfo{
+        display: flex;
+        flex-direction: row;
+    }
+    .header{
+        flex-direction: column;
+    }
+   
 }
