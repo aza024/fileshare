@@ -85,7 +85,7 @@ Once a user uploads a file, when they click the 'Download' button, the associate
 
 Users can view the image that they uploaded for file extensions of .img, .png, .jpg, or .jpg. Users can play videos of mp4 file types in their browser. Eventually, documents will be rendered.
 
-s
+
 > *.jpg files can be previewed in the users browser*
 
 ![image](https://user-images.githubusercontent.com/38674075/48247785-76635680-e3a9-11e8-993f-7ef6ecc87fe7.png)
