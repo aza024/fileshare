@@ -26,12 +26,13 @@ previewVideo = (arr, filename, fileId) => {
 previewImage = (arr, filename,fileId) => {
     let byteArray = new Uint8Array(arr),
         objTo = document.getElementById(`previewDiv`),
-        divtest = document.createElement("img"),
+        divtest = document.createElement('img'),
         img = document.createElement('img')
 
     const 
         url = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/octet-stream' }))
 
+    divtest.className = "imageFmt"
     img.setAttribute('src', url)
     divtest.setAttribute ('src', url)
     objTo.appendChild(divtest)
@@ -103,11 +104,24 @@ if (isImage(extension) || isVideo(extension)) {
 
 const username = getUsername(currentUrl)
 let textH3 = document.createElement(`h3`)
-let text = document.createTextNode(`${username} has shared ${filename} with you!`)
+let textH2 = document.createElement(`h3`)
+let textP = document.createElement(`p`)
+let textP2 = document.createElement(`p`)
+
+let text = document.createTextNode(`${username}`)
+let text2 = document.createTextNode(`has shared the file`)
+let text3 = document.createTextNode(`${filename}`)
+let text4 = document.createTextNode(`with you!`)
 
 textH3.appendChild(text)
+textP.appendChild(text2)
+textH2.appendChild(text3)
+textP2.appendChild(text4)
 
 document.getElementById('shareText').appendChild(textH3)
+document.getElementById('shareText2').appendChild(textP)
+document.getElementById('shareText3').appendChild(textH2)
+document.getElementById('shareText4').appendChild(textP2)
 
 $(`#previewBtn`).on('click',()=>{
     const username = getUsername(currentUrl)

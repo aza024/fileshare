@@ -273,22 +273,35 @@ class FileDisplayManager{
             <div class = "fileWrapper" id = ${fileId}Wrapper>
               <div id = "${fileId}fileInfo"> 
                 <div class = "fileExt"> 
-                  <h1 id="${fileId}extenCirc">.${escapeHtml(file.extension)}</h1>
+                  <h1 id="${fileId}extenCirc">
+                    .${escapeHtml(file.extension)}
+                  </h1>
                 </div>
+
                 <div class = "fileDetail">
-                  <h3>Filename: <span class = "lighter">${escapeHtml(file.filename)}</span></h3>
+                  <h3>Filename: 
+                    <span class = "lighter">
+                      ${escapeHtml(file.filename)}
+                    </span>
+                  </h3>
 
                   <div id="${fileId}DwlDelBtn">
-                    <div class = "dlBtnAppend" id = ${fileId}Btn></div>
+                    <div class = "dlBtnAppend" id = ${fileId}Btn>
+                    </div>
                   </div>
 
-                  <h3>Uploaded: <span class = "lighter">${formattedDate}</span></h3>
+                  <h3>Uploaded: 
+                    <span class = "lighter">${formattedDate}</span>
+                  </h3>
 
                   <h3>Size: <span class = "lighter">${file.size} bytes </span> </h3>
 
                   <div id="${fileId}sharePrev" class = "sharePrev">
                     <div class = "${fileId}prevbtn"></div>
-                    <button class = "filePgBtn" id ="${fileId}shareBtn">Share</button>
+                      <button class = "filePgBtn" id ="${fileId}shareBtn">
+                        Share
+                      </button>
+
                     <div class = "shareLink" id = "${fileId}shareLink"></div>
                 </div> 
             </div>
@@ -324,11 +337,9 @@ class FileDisplayManager{
         $(`#${fileId}extenCirc`).css('background-color', '#563c5c')
       }
     
-      //CALL FUNCTION HERE TODO 
       shareBtn(file.filename, fileId)
 
       if (isImage(file.extension) || isVideo(file.extension)) {
-        // $(`.${fileId}fileInfo`).css('background-color','red')
         $(`.${fileId}prevbtn`).append(
           `<div id = "preview">
             <button class = "filePgBtn" id = "${fileId}prevBtn"> Preview </button>

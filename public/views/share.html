@@ -17,21 +17,41 @@
 
 <body>
     <nav>
-        <div class = 'fileshare'>    
-            <i class="fas fa-cloud-download-alt"></i>
-            <h1> FileShare</h1>
+        <div class = 'fileshare'>  
+            <div class = "header">  
+                <img class = "logo"src = "/images/FSLogo.png">
+                <h4>Not a member? Sign up 
+                        <a href ="localhost:3001">here</a>!
+                </h4>
+            </div>
+            
         </div>
     </nav>
-    
-    <div id ="shareBkd">
-        <div id ="shareText"></div>
+
+    <div class = "shareContainer">
+
+        <div class = "shareImg" ></div>
         
-        <button class = "filePgBt" id="fileDownloadButton">Download</button>
-            <div id='previewDiv'></div>
-    
-        <div id = "shareMsg">
-            <h4>Not a member? Sign up <a href ="localhost:3001">here.</a></h4>
+        <div id ="shareBkd">
+            <h2 class = "bold">Welcome to FileShare!</h2>
+
+            <div class = "whitebg">
+                <div class = "lato" id ="shareText0"></div>
+                <div class = "lato" id ="shareText"></div>
+                <div class = "lato" id ="shareText2"></div>
+                <div class = "lato" id ="shareText3"></div>
+                <div class = "lato" id ="shareText4"></div>
+            </div>
+
+           
+                <button class = "filePgBt" id="fileDownloadButton">Download</button>
+                <div id = 'previewDiv'></div>
+            
         </div>
     </div>
+
+    
+    <div id = 'previewArea'></div>
+
 </body>
 </html>

@@ -480,8 +480,10 @@ img{
   background-color: #008080;
   border: 2px solid #008080;
   font-size: 1.25em;
-  border-radius: 5px;
+  box-shadow: 1px 1px #888888;
   font-family: "Roboto", sans-serif !important;
+  font-weight: lighter;
+  letter-spacing: 1px;
 }
 
 .filePgBtn:hover{
@@ -504,7 +506,7 @@ img{
   background-color: #008080;
   color: white;
   border: 2px solid #008080;
-  border-radius: 28px;
+  box-shadow: 1px 1px #888888;
   height: 1.5em;
   margin-top: 1.5em;
 }
@@ -518,7 +520,7 @@ img{
   background-color: #800000;
   color:white;
   border: 1px solid #800000;
-  border-radius: 5px;
+  box-shadow: 1px 1px #888888;
 }
 
 .deleteBtn:hover{
@@ -541,7 +543,7 @@ img{
   color:white;
   border: 1px solid #008040;
   padding: .5em;
-  border-radius: 5px;
+  box-shadow: 1px 1px #888888;
 }
 
 .downBtn:hover, #uploadBtn:hover{

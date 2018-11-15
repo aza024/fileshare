@@ -8,43 +8,83 @@ body{
     height: 100%;
 }
 
-#fileDownloadButton, #previewBtn {
-    background-color:#008080;
-    color: white; 
-    border-radius: 50%;
-    padding: 1.5em;
-    font-size: 1.5em;
-    border: 1px solid white;
+#fileDownloadButton{
+    margin-top: 4em;
 }
 
-#fileDownloadButton:hover{
+#fileDownloadButton, #previewBtn {
+    color:white;
+    background-color: #008080; 
+    box-shadow: 1px 1px white;
+    padding: 1em;
+    font-size: 1em;
+    font-family: "Lato";
+    letter-spacing: 1px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+#fileDownloadButton:hover, #previewBtn:hover{
     background-color: white;
     color:#008080;
     border: 2px solid #008080;
 }
+
 #previewBtn{
-   margin: 2em;
-   padding-left: 1.75em;
-   padding-right: 1.85em;
+    margin: 2em;
+    padding-left: 1.75em;
+    padding-right: 1.85em;
 }
 
+.shareContainer{
+    display: flex;
+}
 
+.shareImg{
+    position: relative;
+    background-image: url("/images/sharingfiles.jpg") !important;
+    height: 80vh;
+    width:65vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 2em;
+    border: 1px solid #008080;
+}
 
-h1, h4{
+h1, h2, h4{
     font-family: 'Roboto', sans-serif;
     text-align: center;
 }
+/* .whitebg{
+    font-weight: bolder;
+    background-color: #F8F8FF;
+    border-top: 1px solid #008080;
+    border-bottom: 1px solid #008080;
+    /* box-shadow: 2px 2px lightgrey; */
+/* } */
 
+.bold{
+    color: #008080;
+}
+h3{
+    font-family: 'Lato' sans-serif !important;
+}
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .fileshare{
     display: flex;
-    justify-content: center;
+    justify-content: center; 
 }
-i{
-    color:#008080;
-    font-size: 40px;
-    margin-top: .5em;
-    margin-right: .1em;
+
+.logo{
+    height: 100px;
+    width: 350px;
 }
+
 
 #shareText{
     margin: 2.5em;
@@ -53,15 +93,21 @@ i{
 #shareBkd{
     background-color: #F7F9FA;
     height: 100vh;
-    margin: 1.5em;
-    padding: 1em;
+    width: 30vw;
+    height: 80vh;
+    border: 1px solid #008080;
 }
+
 #shareMsg{
-    margin: 2em;
+    margin-top: 7em;
 }
-
-
 
 nav{
     background-color: white;
+}
+
+.imageFmt{
+    width: 20vw;
+    height: 20vh;
+    border: 1px solid #008080;
 }
