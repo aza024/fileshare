@@ -6,8 +6,6 @@
     box-sizing: border-box;
   }
 
-*{ font-family: 'Playfair Display', serif !important; }
-
 body{
   margin-left: 5%;
   margin-right: 5%;
@@ -18,15 +16,63 @@ ul, li {
   padding: 0;
 }
 
+h3, .homeName{
+  font-family: 'Roboto' sans-serif !important;
+}
+
+.pgh1, .pgh2, .pgh3{
+  width: 50%;
+  margin: 2.5em;
+}
+
 .homeName{
-  font-family: 'Roboto', sans-serif !important;
   text-align: center;
   font-size: 3em;
 }
 
+.fshdr{ 
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 2em;
+}
+
+.fsHeader{
+  display: flex;
+  justify-content: space-between;
+}
+
+.hstext{
+  color: white;
+  opacity: 1 !important;
+}
+
 .homeSafe{
-  color: #008080;
-  font-family: 'Source Sans Pro', sans-serif !important;
+  margin-top: 11.25em;
+  background: #008080;
+  font-family: 'Oxygen', sans-serif !important;
+  z-index: 100;
+  padding: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  height: 40%;
+  opacity: .85;
+}
+
+.bg{
+    position: relative;
+    background-image: url("/images/sharefile.jpg") !important;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: .7;
+    z-index: -1;
+    display: flex;
+}
+
+.filesharecols{
+  background:#e8e9ed;
 }
 
 .homeLogo{
@@ -52,11 +98,17 @@ a.signup{ padding: 200px; }
 }
 
 .clouds{
-  width:45%;
-  height: 40%;
+  width: 200px;
+  height: 60px;
 }
 
+.aboutfs{
+  display: flex;
 
+}
+.filesharecols{
+  font-family: 'Oxygen', sans-serif;
+}
 .main-nav a {
   display: block;
   height: 50px;
@@ -65,7 +117,7 @@ a.signup{ padding: 200px; }
   text-decoration: none;
   border-radius: 30px;
   line-height: 45px;
-  color: #FFF;
+  color: #008080;
   width: 50%;
   display: flex;
   text-align: center;
@@ -76,24 +128,19 @@ a.signup{ padding: 200px; }
 }
   
   .main-nav li:nth-child(1) a {
-      background: #008080;
-      border: 2px solid #008080;
+      background: white;
       width: max-content;
-  }
-  .main-nav li:nth-child(1) a:hover {
-      background: #fff;
-      color: #008080;
   }
   
   .main-nav li:nth-child(2) a {
-    background: #008080;
-    border: 2px solid #fff;
+    background: #fff;
+    color:#008080;
     width: max-content;
   }
-  .main-nav li:nth-child(2) a:hover {
-      background: #fff;
+  .main-nav li:nth-child(2) a:hover, .main-nav li:nth-child(1) a:hover {
+      background: #008080;
       border: 2px solid;
-      color: #008080
+      color: #fff;
   }
   
   .user-modal {
@@ -418,7 +465,9 @@ a.signup{ padding: 200px; }
 /* ------------------------------
 ----------PROFILE PAGE-----------
 --------------------------------- */
-.fileInfo{ border: 1px solid black; }
+/* .fileInfo{ 
+  border: 1px solid black; 
+  background-color: white;} */
 
 img{
   width: 250px;
@@ -426,23 +475,34 @@ img{
 }
 
 .filePgBtn{
-  color: #008080;
+  color: white;
+  background-color: #008080;
   border: 2px solid #008080;
   font-size: 1.25em;
   border-radius: 5px;
   font-family: "Roboto", sans-serif !important;
 }
 
+.filePgBtn:hover{
+  background-color: white; 
+  color: #008080;
+  transform: scale(1.1);
+}
+
 #fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts {
   font-size: 1.25em;
   font-family: "Roboto", sans-serif !important;
-  text-transform: uppercase !important;
+
 }
+#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn{
+    text-transform: uppercase !important;
+}
+
 
 .logout{
   background-color: #008080;
   color: white;
-  border: 3px solid #008080;
+  border: 2px solid #008080;
   border-radius: 28px;
   height: 1.5em;
   margin-top: 1.5em;
@@ -454,19 +514,19 @@ img{
 }
 
 .deleteBtn{
-  color: #800000;
-  background-color:white;
+  background-color: #800000;
+  color:white;
   border: 1px solid #800000;
   border-radius: 5px;
 }
 
 .deleteBtn:hover{
-  background-color: #800000;
-  color: white;
+  color: #800000;
+  background-color: white;
+  transform: scale(1.1);
 }
 
 .fileWrapper:hover{
-  transform: scale(1.1);
   margin-top: 1em;
   border: 3px solid #008080;
 }
@@ -476,16 +536,17 @@ img{
   text-transform: uppercase !important;
   letter-spacing: 1.618px;
   font-weight: 100 !important;
-  color: #008040;
-  background-color:white;
+  background-color: #008040;
+  color:white;
   border: 1px solid #008040;
   padding: .5em;
   border-radius: 5px;
 }
 
 .downBtn:hover, #uploadBtn:hover{
-  background-color: #008040;
-  color: white;
+  color: #008040;
+  background-color: white;
+  transform: scale(1.1);
 }
 
 .profNav{
@@ -512,6 +573,7 @@ img{
   width: 300px;
   border: 1px solid #004080;
   border-radius: 15px;
+  padding: .25em;
 }
 
 .sharePrev{ display:flex }
@@ -535,6 +597,14 @@ img{
 @media only screen and (max-width: 680px) {
   .searchSort{ flex-direction: column; }
 }
+
+@media only screen and (max-width: 500px){
+  .clouds{
+    height: 50px; 
+    width: 100px;
+  }
+}
+
 
 .fileUpLoadForm{ margin-bottom: 4%; }
 
@@ -562,3 +632,18 @@ img{
 }
 
 #newDocBtn{ font-size: 2em; }
+
+h3{
+  color: #343642;
+  
+}
+
+.lighter{
+  font-weight: lighter;
+}
+
+
+.authBtns{
+  display: flex;
+  justify-content: center;
+}

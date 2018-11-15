@@ -32,10 +32,9 @@ jQuery(document).ready(function($){
                     $('.page-wrapper').toggleClass('blur')
                 }
             });
-
             return false;
         })
-    }
+    } else {$('.uploadNewDoc').css('display','none')}
 })
 
 // ----------------------------------------

@@ -65,7 +65,6 @@ downloadfile = (username, filename, fileId, success, error) => {
 }
 
 getShareUrl = (username, filename, uuid) => {
-  // AWS-TODO
   return `http://localhost:3001/shareFile/${username}/${filename}/${uuid}`
 }
 
@@ -277,14 +276,15 @@ class FileDisplayManager{
                   <h1 id="${fileId}extenCirc">.${escapeHtml(file.extension)}</h1>
                 </div>
                 <div class = "fileDetail">
-                  <h3 class="bold">Filename: ${escapeHtml(file.filename)}</h3>
+                  <h3>Filename: <span class = "lighter">${escapeHtml(file.filename)}</span></h3>
 
                   <div id="${fileId}DwlDelBtn">
                     <div class = "dlBtnAppend" id = ${fileId}Btn></div>
                   </div>
 
-                  <h3>Last Modified Date: ${formattedDate}</h3>
-                  <h3>Size: ${file.size} bytes </h3>
+                  <h3>Uploaded: <span class = "lighter">${formattedDate}</span></h3>
+
+                  <h3>Size: <span class = "lighter">${file.size} bytes </span> </h3>
 
                   <div id="${fileId}sharePrev" class = "sharePrev">
                     <div class = "${fileId}prevbtn"></div>
@@ -434,8 +434,6 @@ decodeUtf8 = (data) => {
 
 uploadButtonOnClick = (e) => {
     // File Upload
-    console.log($(e))
-    console.log('in upload on click')
     $(e).on('click',(e)=>{
       e.preventDefault();
       console.log('click')
@@ -481,8 +479,7 @@ uploadButtonOnClick = (e) => {
 }
 
 loadLoginPage = () => {
-    //end ajax
-    console.log(loadLoginPage)
+    //End ajax
     uploadButtonOnClick('#uploadBtn')
 
     $('.logout').on('click',()=>{
@@ -494,7 +491,6 @@ loadLoginPage = () => {
       location.reload()
     })
 
-    console.log('username is: ' + localStorage.getItem('username'))
     const username = localStorage.getItem('username')
     $.ajax({
         dataType: 'json',
