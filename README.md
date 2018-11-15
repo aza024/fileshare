@@ -39,7 +39,10 @@ To run this project on your local computer you'll need:
 
 Once a user decides to sign up for FileShare, their username and email address are validated to ensure users can't sign up with existing credentials. New users enter a username, email address, and password for account creation and new users enter their username and password to log into their account. User passwords are securely stored and hashed using BCrypt and validated on the front and backend to provide feedback and data integrity. The modal was created using jQuery, HTML, and CSS.
 
-![image](https://user-images.githubusercontent.com/38674075/48247812-8ed37100-e3a9-11e8-8a04-6832ac2ca394.png)
+![image]
+<img width="1351" alt="screen shot 2018-11-15 at 4 55 27 am" src="https://user-images.githubusercontent.com/38674075/48554282-ddde4200-e892-11e8-93a4-f73f1ce0dbc9.png">
+
+<img width="1338" alt="screen shot 2018-11-15 at 4 55 43 am" src="https://user-images.githubusercontent.com/38674075/48554283-ddde4200-e892-11e8-8e7b-d31e35dfa083.png">
 > *FileShare Landing page with options to 'Sign In' to their account or 'Sign Up' for an account.*
 
 ![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
@@ -84,7 +87,7 @@ Once a user uploads a file, when they click the 'Download' button, the associate
 
 Users can view the image that they uploaded for file extensions of .img, .png, .jpg, or .jpg. Users can play videos of mp4 file types in their browser. Eventually, documents will be rendered.
 
-![image](https://user-images.githubusercontent.com/38674075/48247756-60559600-e3a9-11e8-8d01-ad90dc56a12e.png)
+s
 > *.jpg files can be previewed in the users browser*
 
 ![image](https://user-images.githubusercontent.com/38674075/48247785-76635680-e3a9-11e8-993f-7ef6ecc87fe7.png)
