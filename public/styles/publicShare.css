@@ -10,11 +10,14 @@ body{
 
 #fileDownloadButton{
     margin-top: 4em;
+    color:#008080;
+    background-color: white; 
+    border: 1px solid #008080;
 }
 
+
+
 #fileDownloadButton, #previewBtn {
-    color:white;
-    background-color: #008080; 
     box-shadow: 1px 1px white;
     padding: 1em;
     font-size: 1em;
@@ -22,6 +25,7 @@ body{
     letter-spacing: 1px;
     font-weight: bolder;
     text-transform: uppercase;
+    box-shadow: 1px 1px lightgray;
 }
 
 #fileDownloadButton:hover, #previewBtn:hover{
@@ -34,6 +38,9 @@ body{
     margin: 2em;
     padding-left: 1.75em;
     padding-right: 1.85em;
+    color:white;
+    background-color: #008080; 
+    border: 1px solid white;
 }
 
 .shareContainer{
@@ -56,20 +63,15 @@ h1, h2, h4{
     font-family: 'Roboto', sans-serif;
     text-align: center;
 }
-/* .whitebg{
-    font-weight: bolder;
-    background-color: #F8F8FF;
-    border-top: 1px solid #008080;
-    border-bottom: 1px solid #008080;
-    /* box-shadow: 2px 2px lightgrey; */
-/* } */
 
 .bold{
     color: #008080;
+    font-family: 'Lato' sans-serif !important; 
+    letter-spacing: .5px;
+    font-size: 1.25em;
+    font-style: italic;
 }
-h3{
-    font-family: 'Lato' sans-serif !important;
-}
+
 .header{
     display: flex;
     align-items: center;
