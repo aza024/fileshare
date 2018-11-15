@@ -41,7 +41,7 @@ Once a user decides to sign up for FileShare, their username and email address a
 
 ![image](https://user-images.githubusercontent.com/38674075/48554282-ddde4200-e892-11e8-93a4-f73f1ce0dbc9.png)
 
-![image](https://user-images.githubusercontent.com/38674075/48554283-ddde4200-e892-11e8-8e7b-d31e35dfa083.png)
+![image](https://user-images.githubusercontent.com/38674075/48554656-d5d2d200-e893-11e8-9d27-7a02b2dbc239.png)
 > *FileShare Landing page with options to 'Sign In' to their account or 'Sign Up' for an account.*
 
 ![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
