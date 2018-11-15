@@ -391,7 +391,6 @@ isVideo = (extension) => {
     extension === 'ogg'
 }
 
-
 $('#search').keyup(function(){
   let str = $(this).val()
     displayManager.search(str)
@@ -585,7 +584,6 @@ createdownload = (arr, filename) => {
   document.body.removeChild(link)
 }
 
-
 createFile = () => {
   const 
     data = document.getElementById('txt').value,
@@ -639,7 +637,7 @@ shareBtn = (filename, fileId) => {
     console.log('clicked')
 
     console.log(filename)
-    // Remove any shared link if it exists
+    // Remove any shared link (if it exists)
     document.getElementById(`${fileId}shareLink`).innerHTML = ''
     // Create href
     let hrefUrl = document.createElement("a")

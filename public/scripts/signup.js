@@ -1,5 +1,3 @@
-
-
 let uploadbanner = document.getElementById('uploadbanner').innerHTML
 let newDocBtn = document.getElementById('newDocBtnWrapper').innerHTML
 
@@ -7,17 +5,16 @@ document.getElementById('uploadbanner').innerHTML = ''
 document.getElementById('newDocBtnWrapper').innerHTML = ''
 
 jQuery(document).ready(function($){
-
     if (localStorage.getItem('logged-in')){
         $form_modal.removeClass('is-visible');
+
         $('.profile-page').addClass('is-visible')
         $('.landing-page').css('display','none')
-        document
-            .getElementById('uploadbanner').innerHTML = uploadbanner
-        document
-            .getElementById('newDocBtnWrapper').innerHTML = newDocBtn
-            uploadButtonOnClick('#uploadBtn')
 
+        document.getElementById('uploadbanner').innerHTML = uploadbanner
+        document.getElementById('newDocBtnWrapper').innerHTML = newDocBtn
+        uploadButtonOnClick('#uploadBtn')
+        
         $('#newDocBtn').click((e) => {
             $('.modal-wrapper').toggleClass('open')
             $('.page-wrapper').toggleClass('blur')
@@ -29,22 +26,21 @@ jQuery(document).ready(function($){
             });
         
             $(document).keyup(function(e){
-                //Close when esc key is pressed
+                //Close when ESC key is pressed
                 if(e.which=='27'){
                     $('.modal-wrapper').toggleClass('open')
                     $('.page-wrapper').toggleClass('blur')
                 }
             });
+
             return false;
         })
     }
 })
 
-// #TODO Change function declaration to es6 format
 // ----------------------------------------
 // -------------------Modal----------------
 // ----------------------------------------
-// Global Variables
 var $form_modal = $('.user-modal'),
     $form_login = $form_modal.find('#login'),
     $form_signup = $form_modal.find('#signup'),
@@ -59,34 +55,34 @@ var $form_modal = $('.user-modal'),
             $(this).children('ul').toggleClass('is-visible');
         } else {
             $main_nav.children('ul').removeClass('is-visible');
-        //show modal layer
+        //Show modal layer
             $form_modal.addClass('is-visible'); 
-        //show the selected form
+        //Show the selected form
         ($(e.target).is('.signup') ) ? signup_selected() : login_selected();
         }
     });
 
-    //close modal
+    //Close modal
     $('.user-modal').on('click', function(e){
         if( $(e.target).is($form_modal) || $(e.target).is('.close-form') ) {
             $form_modal.removeClass('is-visible');
         } 
     });
 
+   //Close when ESC key is pressed
     $(document).keyup(function(e){
-        //Close when esc key is pressed
         if(e.which=='27'){
             $form_modal.removeClass('is-visible');
         }
     });
 
-    // switch tabs
+    // Switch tabs [sign-in <---> sign-up]
     $form_modal_tab.on('click', function(e) {
         e.preventDefault();
         ( $(e.target).is( $tab_login ) ) ? login_selected() : signup_selected();
     });
 
-    //hide or show password
+    //Hide/Show Password
     $('.hide-password').on('click', function(){
         var $this= $(this),
         $password_field = $this.prev('input');
@@ -109,15 +105,18 @@ var $form_modal = $('.user-modal'),
         $tab_login.removeClass('selected');
         $tab_signup.addClass('selected');
     }
+
 // ----------------------------------------
 // ---------------End Modal----------------
 // ----------------------------------------
 
-// Validate user in DB
+// Validate user in Database
 $('#signin-form').on('submit',function(e){
     e.preventDefault();
+
     let username = ($('#signin-username').val()),
         password = ($('#signin-password').val())
+
     $.ajax({
         dataType: 'json',
         method: 'GET',
@@ -161,8 +160,8 @@ $('#sign-up-submit').on('click', function(e){
                 password
             },
             success: function(res){
-                console.log(res)
                 let token = res.token
+
                 localStorage.setItem('username', username);
                 localStorage.setItem('usertoken', token);
                 localStorage.setItem('useremail', email);
@@ -175,14 +174,14 @@ $('#sign-up-submit').on('click', function(e){
             },
             error: function(res){
                 console.log('ERROR:' + JSON.stringify(res))
-                document.getElementById("si gnup-errMsg").innerHTML = "Account already exists with provided username or email."
+                document.getElementById("signup-errMsg").innerHTML = "Account already exists with provided username or email."
                 console.log('ERROR: Account already exists')
             }
         })
     }
 })
 
-// sign in form validation
+// Sign-in form validation
 signInVal = () => {
     var username = document.getElementById('signin-username').value
     var password = document.getElementById('signin-password').value
@@ -192,6 +191,7 @@ signInVal = () => {
 
     if (username == '' || password == ''){
         document.getElementById("signin-errMsg").innerHTML = "Please enter a username or password."
+
         return false;
     } else {
         return true; 
@@ -200,6 +200,7 @@ signInVal = () => {
 
 validateEmail= (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     return re.test(String(email).toLowerCase());
 }
 
@@ -210,6 +211,7 @@ validatePassword = (password) => {
 
     const specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*"]
     let hasSpecialChar = false
+
     for (let i = 0; i < specialCharacters.length; i++) {
         const specialChar = specialCharacters[i];
         if (password.indexOf(specialChar) != 0) {
@@ -222,7 +224,6 @@ validatePassword = (password) => {
     if(!hasSpecialChar) {
         return false
     }
-
     return true
 }
 
@@ -231,6 +232,7 @@ signUpVal = () => {
         username = document.getElementById('signup-username').value,
         password = document.getElementById('signup-password').value
         email = document.getElementById('signup-email').value;
+
     // Console.logs left to demonstrate sharing with UUID functionality
     console.log(username)
     console.log(password)
@@ -238,28 +240,27 @@ signUpVal = () => {
 
     if (username == '' || password == '' || email == '' ){
         document.getElementById("signup-errMsg").innerHTML = "Please complete the form.";
+
         return false;
     }
     
     if (email.length > 60) {
         document.getElementById("signup-errMsg").innerHTML = "Email must be less than 60 characters";
+
         return false;
     }
- 
+
     if (validatePassword(password) == false){
         document.getElementById("signup-errMsg").innerHTML = "Password must be between eight and thirty characters, contain a lowercase letter, an uppercase letter, one numeric character and one special character.";
+
         return false;
     }
 
     if(email.indexOf('@')<=0){
         document.getElementById("signup-errMsg").innerHTML =
         "Email requires an @ sign";
+
         return false;
     }
     return true;
-    // TODO: CHECK TO SEE IF WE HAVE AN EXISTING USER W. SAME CREDENTIALS
-    // else if (console.log){
-    //     document.getElementById("signup-errMsg").innerHTML = "An existing user has with those credentials."
-    //     return false;
-    // } 
 }

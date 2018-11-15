@@ -20,7 +20,6 @@ previewVideo = (arr, filename, fileId) => {
         divtest.setAttribute('controls', 'controls')
         divtest.setAttribute ('src', url)
         objTo.appendChild(divtest)
-
 }
 
 
@@ -64,7 +63,6 @@ getFileName = (url) => {
 
     const lastIndex2 = modifiedUrl.lastIndexOf('/')
     return modifiedUrl.substring(lastIndex2 + 1)
-
 }
 
 getUsername = (url) => {
