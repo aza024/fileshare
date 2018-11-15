@@ -101,15 +101,12 @@ Each file is associated with a secure UUID link which gives non-users who have t
 
 ![image](https://user-images.githubusercontent.com/38674075/48247751-59c71e80-e3a9-11e8-9a8c-6b0435f83847.png)
 > *Local storage for a logged-in user*
+![image](https://user-images.githubusercontent.com/38674075/48580452-1b16f400-e8d4-11e8-9940-a3bec238171e.png)
+*When a non-user obtains a link for a shared file, no information exists in local storage. The non-user can preview or download the file that was shared with them.*
+
 
 ![image](https://user-images.githubusercontent.com/38674075/48580444-17836d00-e8d4-11e8-93cf-6339461eb1e9.png)
-> *Image Download*
-
-![image](https://user-images.githubusercontent.com/38674075/48580452-1b16f400-e8d4-11e8-9940-a3bec238171e.png)
-> *When a non-user obtains a link for a shared file, no information exists in local storage. The non-user can preview or download the file that was shared with them.*
-
-![image](https://user-images.githubusercontent.com/38674075/48247719-3bf9b980-e3a9-11e8-9ea8-f4129ba8b67d.png)
-> *User previewing an image from shared file*
+> *User previewing a shared image*
 
 ## .txt File Creation In Browser:
 
