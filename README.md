@@ -183,7 +183,8 @@ https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bd
 - Public Hosting: FileShare is not publically hosted. To prepare for hosting, legal research into storing user files needs to be completed, along with functionallity changes to support a more significant user-base.
 
 Credits: 
-- Pexels.com for stock images,
-- Fontawesome.com for icons,
+- Special thanks to Justin Castilla and Dalton Hart for their incredible instruction, support, and advice during General Assembly's Web Development Immersive Bootcamp.
+- Pexels.com for stock images
+- Fontawesome.com for icons
 - CodyHouse.com for modal tutorial
 
