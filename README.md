@@ -177,9 +177,15 @@ https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bd
 - Implement folder system
 - Public Hosting: FileShare is not publically hosted. To prepare for hosting, legal research into storing user files needs to be completed, along with functionallity changes to support a more significant user-base.
 
-Credits: 
+## Credits: 
 - Special thanks to Justin Castilla and Dalton Hart for their incredible instruction, support, and advice during General Assembly's Web Development Immersive Bootcamp.
-- Pexels.com for stock images
-- Fontawesome.com for icons
-- CodyHouse.com for modal tutorial
+- pexels.com for stock images
+- fontawesome.com for icons
+- codyHouse.com for modal tutorial
+
+## Contact: 
+
+Thank you so much for taking time to read about FileShare. If you have any questions or suggestions for improvements, I'd love to hear from you! 
+- Twitter: @azza024
+
 
