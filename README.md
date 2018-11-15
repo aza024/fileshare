@@ -101,7 +101,7 @@ Each file is associated with a secure UUID link which gives non-users who have t
 
 ![image](https://user-images.githubusercontent.com/38674075/48247751-59c71e80-e3a9-11e8-9a8c-6b0435f83847.png)
 > *Local storage for a logged-in user*
-![image](https://user-images.githubusercontent.com/38674075/48580452-1b16f400-e8d4-11e8-9940-a3bec238171e.png)
+![image](https://user-images.githubusercontent.com/38674075/48580667-b019ed00-e8d4-11e8-8e4c-b919a2187c09.png)
 *When a non-user obtains a link for a shared file, no information exists in local storage. The non-user can preview or download the file that was shared with them.*
 
 
