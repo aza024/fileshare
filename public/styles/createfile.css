@@ -73,9 +73,7 @@ a.btn:hover{
 }
 
 .head{
-  /* width:90%; */
   height:32px;
-  /* margin:1.5em; */
   overflow:hidden;
   background: #008080;
 }

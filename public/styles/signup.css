@@ -600,7 +600,9 @@ img{
   padding-top: 1.9em;
 }
 
-
+.buttonLink, .sharePrev{
+  display:flex;
+}
 
 @media only screen and (max-width: 901px) {
   .searchSort{ flex-direction: column; }
@@ -653,7 +655,6 @@ img{
 
 h3{
   color: #343642;
-  
 }
 
 .lighter{

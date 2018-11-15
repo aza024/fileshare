@@ -291,19 +291,29 @@ class FileDisplayManager{
                   </div>
 
                   <h3>Uploaded: 
-                    <span class = "lighter">${formattedDate}</span>
+                    <span class = "lighter">
+                      ${formattedDate}
+                    </span>
                   </h3>
 
-                  <h3>Size: <span class = "lighter">${file.size} bytes </span> </h3>
+                  <h3>
+                    Size: 
+                    <span class = "lighter">
+                        ${file.size} bytes 
+                    </span> 
+                  </h3>
 
-                  <div id="${fileId}sharePrev" class = "sharePrev">
-                    <div class = "${fileId}prevbtn"></div>
-                      <button class = "filePgBtn" id ="${fileId}shareBtn">
-                        Share
-                      </button>
+                  <div class = "buttonLink">
+                    <div id="${fileId}sharePrev" class = "sharePrev">
+                      <div class = "${fileId}prevbtn"></div>
+                        <button class = "filePgBtn" id ="${fileId}shareBtn">
+                          Share
+                        </button>
 
-                    <div class = "shareLink" id = "${fileId}shareLink"></div>
+                      
+                    </div>
                 </div> 
+                <div class = "shareLink" id = "${fileId}shareLink"></div>
             </div>
           </div>
         `
@@ -367,18 +377,18 @@ class FileDisplayManager{
           (res) => {console.log('Error')}
         )
 
-        $(`#${fileId}picPreview`).append(`<button class ="${fileId}closePicPrev">Close</button>`)
+        $(`#${fileId}picPreview`).append(`<button class ="${fileId}closePicPrev">X</button>`)
 
         $(`#${fileId}picPreview`).css('background-color','light grey')
         $(`#${fileId}picPreview`).css('text-align','center')
         $(`#${fileId}picPreview`).css('margin','2.5%')
         $(`.${fileId}closePicPrev`).css('color','white')
         $(`.${fileId}closePicPrev`).css('border','1px solid #008080')
-        $(`.${fileId}closePicPrev`).css('padding','.1em')
+        $(`.${fileId}closePicPrev`).css('padding','.25em')
         $(`.${fileId}closePicPrev`).css('margin-right','1em')
         $(`.${fileId}closePicPrev`).css('font-size','1.5em')
         $(`.${fileId}closePicPrev`).css('background-color','#008080')
-        $(`.${fileId}closePicPrev`).css('border-radius','5px')
+       
         
         $(`.${fileId}closePicPrev`).on('click', () => {
             $(`#${fileId}picPreview`).hide()
@@ -641,9 +651,6 @@ shareBtn = (filename, fileId) => {
 
   $(`#${fileId}shareBtn`).on('click', (e) => {
     e.preventDefault();
-    console.log('clicked')
-
-    console.log(filename)
     // Remove any shared link (if it exists)
     document.getElementById(`${fileId}shareLink`).innerHTML = ''
     // Create href
