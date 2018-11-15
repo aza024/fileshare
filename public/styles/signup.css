@@ -299,7 +299,10 @@ a.signup{ padding: 200px; }
     -o-appearance: none;
     appearance: none;
   }
-  .form input.has-border:focus {
+  #filename, #txt {
+    border: 1px solid #008080;
+  }
+  .form input.has-border:focus, {
     border-color: #343642;
     box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
     outline: none;
@@ -478,12 +481,13 @@ img{
 .filePgBtn{
   color: white;
   background-color: #008080;
-  border: 2px solid #008080;
+  border: 1px solid #008080;
   font-size: 1.25em;
-  box-shadow: 1px 1px #888888;
-  font-family: "Roboto", sans-serif !important;
-  font-weight: lighter;
+  box-shadow: 1px 1px #008080;
+  font-family:"Roboto", sans-serif !important;
+  font-weight: bold;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .filePgBtn:hover{
@@ -492,15 +496,15 @@ img{
   transform: scale(1.1);
 }
 
-#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts {
+#fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn, #search, #sortListOpts,.filePgBtn {
   font-size: 1.25em;
   font-family: "Roboto", sans-serif !important;
-
+  font-weight: bolder;
 }
+
 #fileUpload, .logout, .deleteBtn, .downBtn, #uploadBtn{
     text-transform: uppercase !important;
 }
-
 
 .logout{
   background-color: #008080;
@@ -536,19 +540,20 @@ img{
 
 .downBtn, #uploadBtn{
   font-family: "Roboto", sans-serif !important;
+  font-weight: bold;
   text-transform: uppercase !important;
   letter-spacing: 1.618px;
   font-weight: 100 !important;
-  background-color: #008040;
-  color:white;
+  color: #008040;
+  background-color:white;
   border: 1px solid #008040;
   padding: .5em;
   box-shadow: 1px 1px #888888;
 }
 
 .downBtn:hover, #uploadBtn:hover{
-  color: #008040;
-  background-color: white;
+  background-color: #008040;
+  color: white;
   transform: scale(1.1);
 }
 

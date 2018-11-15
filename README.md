@@ -112,14 +112,11 @@ Each file is associated with a secure UUID link which gives non-users who have t
 
 Users have the option to create a .txt file directly in the browser which they can then uploa the file to AWS, or download the file to their local file system. This feature was particularly exciting to implement because all functions necessary for this feature already existed, they were simply reused and modified to create a new feature.
 
-![image](https://user-images.githubusercontent.com/38674075/48247778-706d7580-e3a9-11e8-9543-bff5a01af8f8.png)
+![image](https://user-images.githubusercontent.com/38674075/48584699-536fff80-e8df-11e8-992d-29dd8cd29c75.png)
 > *When green ‘+’ icon is clicked, a file editor will appear in a modal*
 
-![image](https://user-images.githubusercontent.com/38674075/48247774-6d728500-e3a9-11e8-8f98-6b9551426443.png)
+![image](https://user-images.githubusercontent.com/38674075/48584700-536fff80-e8df-11e8-823a-e39827b57439.png)
 > *Users enter a filename with extension and file body. They can click 'Upload' to upload to their account and AWS or download, and download the file to their local file system.*
-
-![image](https://user-images.githubusercontent.com/38674075/48247770-69defe00-e3a9-11e8-9aac-44269717bb93.png)
-> *Newly created file downloaded file system specified in browser settings*
 
 ## Search:
 

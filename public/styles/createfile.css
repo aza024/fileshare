@@ -77,7 +77,7 @@ a.btn:hover{
   height:32px;
   /* margin:1.5em; */
   overflow:hidden;
-  background:grey;
+  background: #008080;
 }
 
 .btn-close{
