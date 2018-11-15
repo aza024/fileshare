@@ -22,7 +22,8 @@ h3, .homeName{
 
 .pgh1, .pgh2, .pgh3{
   width: 50%;
-  margin: 2.5em;
+  color: #008080;
+  padding: 1em;
 }
 
 .homeName{
@@ -46,7 +47,7 @@ h3, .homeName{
 }
 
 .homeSafe{
-  margin-top: 11.25em;
+  margin-top: 7.5em;
   background: #008080;
   font-family: 'Oxygen', sans-serif !important;
   z-index: 100;
@@ -62,7 +63,7 @@ h3, .homeName{
 .bg{
     position: relative;
     background-image: url("/images/sharefile.jpg") !important;
-    height: 100vh;
+    height: 65vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -72,7 +73,7 @@ h3, .homeName{
 }
 
 .filesharecols{
-  background:#e8e9ed;
+  background:#eef2f4;
 }
 
 .homeLogo{
@@ -104,8 +105,8 @@ a.signup{ padding: 200px; }
 
 .aboutfs{
   display: flex;
-
 }
+
 .filesharecols{
   font-family: 'Oxygen', sans-serif;
 }
