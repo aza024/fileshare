@@ -40,10 +40,10 @@ To run this project on your local computer you'll need:
 Once a user decides to sign up for FileShare, their username and email address are validated to ensure users can't sign up with existing credentials. New users enter a username, email address, and password for account creation and new users enter their username and password to log into their account. User passwords are securely stored and hashed using BCrypt and validated on the front and backend to provide feedback and data integrity. The modal was created using jQuery, HTML, and CSS.
 
 
-![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
+![image](https://user-images.githubusercontent.com/38674075/48555409-f8fe8100-e895-11e8-94a0-2278978942c3.png)
 > *FileShare Landing page with options to 'Sign In' to their account or 'Sign Up' for an account.*
 
-![image](https://user-images.githubusercontent.com/38674075/48555409-f8fe8100-e895-11e8-94a0-2278978942c3.png)
+![image](https://user-images.githubusercontent.com/38674075/48247810-8b3fea00-e3a9-11e8-9061-a91d1aeae417.png)
 > *Sign Up portion of the modal allows users to create an account, providing feedback about data that was entered incorrectly.*
 
 ## Secure Authentication:
@@ -52,9 +52,9 @@ JWT tokens are used to authenticate users that are attempting to sign in. Once a
 
 The link to the following code demonstrates use of a validating a JWT Token by calling the function verifyToken() in the URL to check to see if the user has a token. If the user does not have a token, they should be denied from visiting that link.
 
-https://github.com/aza024/fileshare/blob/fa1f80330388233045fec305be5a0b0502824bdc/server.js#L87
 
-![image](https://user-images.githubusercontent.com/38674075/48247810-8b3fea00-e3a9-11e8-9061-a91d1aeae417.png)
+
+![image](https://user-images.githubusercontent.com/38674075/48247807-88dd9000-e3a9-11e8-9f9b-917fad0e17ab.png)
 > *'Sign In' modal feature requesting username and password from person attempting to sign into their account.*
 
 ## Upload Files to AWS:
